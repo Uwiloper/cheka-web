@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Cheka - Validación automatizada de pagos en tiempo real" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		
+		<!-- Google Fonts: Mulish -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+		<!-- Script de detección automática del tema del navegador -->
+		<script is:inline>
+			if (typeof window !== 'undefined') {
+				const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				if (isSystemDark) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+				
+				// Escuchar cambios en tiempo real si el usuario cambia el tema de su sistema
+				window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+					if (event.matches) {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+				});
+			}
+		</script>
+	</head>
+	<body class="bg-cheka-light-bg dark:bg-cheka-dark-bg text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-300 pt-20">
+		<slot />
+	</body>
+</html>

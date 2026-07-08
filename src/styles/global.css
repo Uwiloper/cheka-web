@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  /* Nuestro color principal pantonizado */
+  --color-cheka-primary: #24da8d;
+  
+  /* Colores del modo oscuro */
+  --color-cheka-dark-bg: #090D16;
+  --color-cheka-dark-card: #111827;
+  --color-cheka-dark-border: #1F2937;
+  
+  /* Colores del modo claro */
+  --color-cheka-light-bg: #F8FAFC;
+  --color-cheka-light-card: #FFFFFF;
+  --color-cheka-light-border: #E2E8F0;
+  
+  /* Fuente Mulish por defecto */
+  --font-sans: "Mulish", system-ui, sans-serif;
+}

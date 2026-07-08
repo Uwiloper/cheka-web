@@ -1,0 +1,29 @@
+{
+  "links": [
+    { "name": "Funcionalidades", "url": "#funcionalidades", "type": "link" },
+    { "name": "Planes", "url": "#planes", "type": "link" },
+    {
+      "name": "Recursos",
+      "type": "dropdown",
+      "items": [
+        { 
+          "name": "Guía", 
+          "url": "/guia", 
+          "icon": "book", 
+          "colorTheme": "green" 
+        },
+        { 
+          "name": "Documentación", 
+          "url": "/docs", 
+          "icon": "code", 
+          "colorTheme": "blue" 
+        }
+      ]
+    },
+    { "name": "Contacto", "url": "#contacto", "type": "link" }
+  ],
+  "buttons": {
+    "login": { "name": "Ingresar", "url": "https://visornotificaciones.web.app/dashboard.html" },
+    "register": { "name": "Registrarse", "url": "https://visornotificaciones.web.app/dashboard.html" }
+  }
+}
