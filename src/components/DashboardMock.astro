@@ -1,0 +1,378 @@
+---
+// src/components/DashboardMock.astro
+import dashboardData from '../data/dashboard.json';
+---
+
+<div id="dash-wrapper" class="relative w-full aspect-video max-w-[1100px] mx-auto group shrink-0" style="perspective: 2500px; touch-action: pan-y;">
+  
+  <div class="absolute -inset-10 bg-gradient-to-tr from-[#10b981]/15 via-transparent to-[#3b82f6]/10 blur-[120px] pointer-events-none dark:from-[#10b981]/20 dark:to-[#3b82f6]/15"></div>
+
+  <div id="dash-3d-container" class="w-full h-full transition-transform duration-200 ease-out transform-origin-center">
+    
+    <div id="dash-scaler" class="absolute top-0 left-0 w-[1000px] h-[562.5px] origin-top-left rounded-[24px] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_50px_100px_rgba(0,0,0,0.8)] border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#0F172A] flex transition-colors duration-500">
+      
+      <aside class="w-[220px] bg-white dark:bg-[#0B1120] border-r border-slate-200 dark:border-white/5 flex flex-col justify-between relative z-10 shrink-0">
+        <div class="flex flex-col h-full">
+          <div class="p-6 mb-2 shrink-0 flex items-center h-[70px]">
+            <img src={dashboardData.config.logoLight} alt="cheka logo" class="h-8 block dark:hidden object-contain" />
+            <img src={dashboardData.config.logoDark} alt="cheka logo" class="h-8 hidden dark:block object-contain" />
+          </div>
+
+          <nav class="flex flex-col gap-1 px-4 flex-1">
+            <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#10b981]/10 text-[#10b981]">
+              <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z"></path></svg>
+              <span class="text-[13px] font-semibold tracking-wide">Resumen</span>
+            </div>
+            {[
+              { name: 'Bandeja', path: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+              { name: 'Transacciones', path: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
+              { name: 'Analíticas', path: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+              { name: 'Dispositivos', path: 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z' },
+              { name: 'Clientes', path: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
+            ].map((item) => (
+              <div class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-[#94a3b8] dark:hover:bg-white/5 transition-colors">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={item.path}></path></svg>
+                <span class="text-[13px] font-medium tracking-wide truncate">{item.name}</span>
+              </div>
+            ))}
+          </nav>
+
+          <div class="p-4 mt-auto">
+            <div id="plan-container" class="bg-gradient-to-br from-slate-100 to-white dark:from-[#1E293B] dark:to-[#0F172A] border border-slate-200 dark:border-white/10 rounded-xl p-4 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span id="plan-name" class="text-[11px] font-bold text-slate-800 dark:text-white uppercase tracking-wider truncate">Plan Empresa</span>
+                <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse shrink-0"></span>
+              </div>
+              <p id="plan-desc" class="text-[10px] text-slate-500 dark:text-[#64748b] leading-tight mb-3">Transacciones ilimitadas.</p>
+              <button class="w-full py-1.5 bg-slate-200 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-white text-[11px] font-semibold rounded-lg transition-colors border border-slate-300 dark:border-white/5">
+                Gestionar plan
+              </button>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-white/5">
+              <div class="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-slate-300 dark:border-white/10">
+                <img id="user-avatar" src="" alt="Usuario" class="w-full h-full object-cover transition-opacity duration-500" />
+              </div>
+              <div class="flex flex-col overflow-hidden min-w-0">
+                <span id="user-name" class="text-[13px] font-semibold text-slate-800 dark:text-white truncate">Carlos M.</span>
+                <span id="user-role" class="text-[11px] text-slate-500 dark:text-[#64748b] truncate">Admin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="w-[780px] p-6 flex flex-col gap-4 bg-slate-50 dark:bg-[#0F172A] relative">
+        <header class="flex items-center justify-between h-[40px] shrink-0">
+          <h1 class="text-[22px] font-bold text-slate-800 dark:text-white tracking-tight">Resumen</h1>
+          <div class="flex items-center gap-3 bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-white/5 px-4 py-2 rounded-xl shadow-sm dark:shadow-none">
+            <svg class="w-4 h-4 text-slate-400 dark:text-[#94a3b8]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span id="date-display" class="text-[12px] font-medium text-slate-600 dark:text-[#94a3b8] transition-all">08 may - 14 may 2026</span>
+          </div>
+        </header>
+
+        <div class="grid grid-cols-4 gap-4 h-[90px] shrink-0">
+          <div class="bg-white dark:bg-[#1E293B] rounded-[16px] p-4 border border-slate-200 dark:border-white/5 flex flex-col justify-between shadow-sm dark:shadow-none">
+            <p class="text-[11px] font-medium text-slate-500 dark:text-[#94a3b8] truncate">Ingresos hoy</p>
+            <div class="flex items-end justify-between flex-wrap gap-1">
+              <p class="text-[20px] font-bold text-slate-800 dark:text-white tracking-tight leading-none truncate">S/ <span id="kpi-ingresos">0.00</span></p>
+              <div class="flex items-center gap-0.5 text-[#10b981] bg-[#10b981]/10 px-1.5 py-0.5 rounded text-[10px] font-semibold">+12.3%</div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#1E293B] rounded-[16px] p-4 border border-slate-200 dark:border-white/5 flex flex-col justify-between shadow-sm dark:shadow-none">
+            <p class="text-[11px] font-medium text-slate-500 dark:text-[#94a3b8] truncate">Gastos</p>
+            <div class="flex items-end justify-between flex-wrap gap-1">
+              <p class="text-[20px] font-bold text-slate-800 dark:text-white tracking-tight leading-none truncate">S/ <span id="kpi-gastos">0.00</span></p>
+              <div class="flex items-center gap-0.5 text-[#f43f5e] bg-[#f43f5e]/10 px-1.5 py-0.5 rounded text-[10px] font-semibold">-1.2%</div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-[#1E293B] rounded-[16px] p-4 border border-slate-200 dark:border-white/5 flex flex-col justify-between shadow-sm dark:shadow-none">
+            <p class="text-[11px] font-medium text-slate-500 dark:text-[#94a3b8] truncate">Transacciones</p>
+            <p class="text-[20px] font-bold text-slate-800 dark:text-white tracking-tight leading-none truncate" id="kpi-tx">0</p>
+          </div>
+          <div class="bg-white dark:bg-[#1E293B] rounded-[16px] p-4 border border-slate-200 dark:border-white/5 flex flex-col justify-between shadow-sm dark:shadow-none">
+            <p class="text-[11px] font-medium text-slate-500 dark:text-[#94a3b8] truncate">Ticket Promedio</p>
+            <p class="text-[20px] font-bold text-slate-800 dark:text-white tracking-tight leading-none truncate">S/ <span id="kpi-ticket">0.00</span></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-6 gap-4 h-[180px] shrink-0">
+          <div class="col-span-3 bg-white dark:bg-[#1E293B] rounded-[16px] border border-slate-200 dark:border-white/5 p-4 flex flex-col shadow-sm dark:shadow-none">
+            <h3 class="text-[13px] font-bold text-slate-800 dark:text-white mb-2 shrink-0">Ingresos vs Gastos</h3>
+            <div class="flex-1 w-full relative min-h-0">
+              <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                <defs>
+                  <linearGradient id="grad-green" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" /><stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <line x1="0" y1="50" x2="100" y2="50" class="stroke-slate-200 dark:stroke-[#334155]" stroke-width="0.5" stroke-dasharray="2 2" />
+                <path id="chart-gastos" fill="none" stroke="#f43f5e" stroke-width="2" style="transition: d 1s cubic-bezier(0.4, 0, 0.2, 1);" d="M0,90 C20,95 30,85 50,90 C70,95 85,85 100,88" />
+                <path id="chart-ingresos-fill" fill="url(#grad-green)" style="transition: d 1s cubic-bezier(0.4, 0, 0.2, 1);" d="M0,70 C15,45 30,60 50,30 C70,0 85,30 100,10 L100,100 L0,100 Z" />
+                <path id="chart-ingresos-line" fill="none" stroke="#10b981" stroke-width="2.5" style="transition: d 1s cubic-bezier(0.4, 0, 0.2, 1);" d="M0,70 C15,45 30,60 50,30 C70,0 85,30 100,10" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="col-span-1 bg-white dark:bg-[#1E293B] rounded-[16px] border border-slate-200 dark:border-white/5 p-3 flex flex-col items-center shadow-sm dark:shadow-none">
+            <h3 class="text-[11px] font-bold text-slate-800 dark:text-white w-full text-left mb-2">Uso App</h3>
+            <div class="relative w-16 h-16 shrink-0 my-auto">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 42 42">
+                <circle cx="21" cy="21" r="15.915" fill="transparent" class="stroke-slate-100 dark:stroke-[#0F172A]" stroke-width="8" />
+                <circle id="donut-yape" cx="21" cy="21" r="15.915" fill="transparent" stroke="#10b981" stroke-width="8" stroke-dasharray="50 50" stroke-dashoffset="0" style="transition: all 1s ease;" />
+                <circle id="donut-plin" cx="21" cy="21" r="15.915" fill="transparent" stroke="#f43f5e" stroke-width="8" stroke-dasharray="20 80" stroke-dashoffset="-50" style="transition: all 1s ease;" />
+                <circle id="donut-bcp" cx="21" cy="21" r="15.915" fill="transparent" stroke="#f97316" stroke-width="8" stroke-dasharray="15 85" stroke-dashoffset="-70" style="transition: all 1s ease;" />
+              </svg>
+            </div>
+            <div class="w-full mt-2" id="app-list"></div>
+          </div>
+
+          <div class="col-span-2 bg-white dark:bg-[#1E293B] rounded-[16px] border border-slate-200 dark:border-white/5 p-4 flex flex-col shadow-sm dark:shadow-none">
+            <h3 class="text-[13px] font-bold text-slate-800 dark:text-white mb-3">Dispositivos</h3>
+            <div id="devices-container" class="relative w-full h-full"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 h-[140px] shrink-0">
+          <div class="col-span-2 bg-white dark:bg-[#1E293B] rounded-[16px] border border-slate-200 dark:border-white/5 p-4 flex flex-col shadow-sm dark:shadow-none">
+            <h3 class="text-[13px] font-bold text-slate-800 dark:text-white mb-2">Últimas Transacciones</h3>
+            <div class="relative w-full h-full">
+              <div id="tx-container" class="absolute inset-0"></div>
+            </div>
+          </div>
+
+          <div class="col-span-1 flex flex-col h-full">
+            <div class="bg-white dark:bg-[#1E293B] rounded-[16px] border border-slate-200 dark:border-white/5 p-4 flex flex-col h-full shadow-sm dark:shadow-none overflow-hidden">
+              <h3 class="text-[12px] font-bold text-slate-800 dark:text-white mb-3">Top Clientes</h3>
+              <div id="top-clients" class="relative w-full h-full"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ dashboardData }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    const wrapper = document.getElementById('dash-wrapper');
+    const container3D = document.getElementById('dash-3d-container');
+    const scaler = document.getElementById('dash-scaler');
+    
+    // --- 1. ESCALADO AUTOMÁTICO (Responsive) ---
+    const resizeObserver = new ResizeObserver(entries => {
+      for(let entry of entries) {
+        // La relación se basa en los 1000px nativos del componente
+        const scaleRatio = entry.contentRect.width / 1000;
+        scaler.style.transform = `scale(${scaleRatio})`;
+      }
+    });
+    if (wrapper) resizeObserver.observe(wrapper);
+
+    // --- 2. EFECTO 3D (Mouse / Touch Tracking) ---
+    function handleMove(e) {
+      if (!wrapper || !container3D) return;
+      
+      const rect = wrapper.getBoundingClientRect();
+      // Detectar evento táctil o de mouse
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      // Porcentaje de movimiento (-1 a 1)
+      let x = (clientX - centerX) / (rect.width / 2);
+      let y = (clientY - centerY) / (rect.height / 2);
+
+      // Límites para que no gire de más si el usuario se mueve rápido
+      x = Math.max(-1, Math.min(1, x));
+      y = Math.max(-1, Math.min(1, y));
+
+      // Grados de rotación máximos (12 grados)
+      const rotateX = y * -12; // Invertido para que "persiga" al mouse/dedo
+      const rotateY = x * 12;
+
+      container3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+
+    function resetMove() {
+      if (container3D) {
+        container3D.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      }
+    }
+
+    // Eventos Desktop
+    wrapper.addEventListener('mousemove', handleMove);
+    wrapper.addEventListener('mouseleave', resetMove);
+    
+    // Eventos Mobile
+    wrapper.addEventListener('touchmove', handleMove, { passive: true });
+    wrapper.addEventListener('touchend', resetMove);
+
+
+    // --- 3. LÓGICA DE ANIMACIÓN DE DATOS ---
+    const iconSvgs = {
+      mobile: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`,
+      tablet: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>`,
+      desktop: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`
+    };
+
+    let cycleIndex = 0;
+    
+    const elDate = document.getElementById('date-display');
+    const elUserName = document.getElementById('user-name');
+    const elUserRole = document.getElementById('user-role');
+    const elUserAvatar = document.getElementById('user-avatar');
+    const elPlanName = document.getElementById('plan-name');
+    const elPlanDesc = document.getElementById('plan-desc');
+    const elIngresos = document.getElementById('kpi-ingresos');
+    const elGastos = document.getElementById('kpi-gastos');
+    const elTx = document.getElementById('kpi-tx');
+    const elTicket = document.getElementById('kpi-ticket');
+
+    function animateValue(obj, start, end, duration, isCurrency = false) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const easeProgress = progress * (2 - progress);
+        const current = (easeProgress * (end - start) + start);
+        obj.innerHTML = isCurrency ? current.toFixed(2) : Math.floor(current);
+        if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    function generateChartPath(baseLine, volatility) {
+      let pts = [[0, baseLine]];
+      for (let i = 1; i <= 5; i++) pts.push([i * 20, baseLine + (Math.random() - 0.5) * volatility]);
+      let dLine = `M${pts[0][0]},${pts[0][1]} `;
+      let dFill = `M${pts[0][0]},${pts[0][1]} `;
+      for (let i = 0; i < pts.length - 1; i++) {
+        let xMid = (pts[i][0] + pts[i+1][0]) / 2;
+        dLine += `C${xMid},${pts[i][1]} ${xMid},${pts[i+1][1]} ${pts[i+1][0]},${pts[i+1][1]} `;
+        dFill += `C${xMid},${pts[i][1]} ${xMid},${pts[i+1][1]} ${pts[i+1][0]},${pts[i+1][1]} `;
+      }
+      dFill += `L100,100 L0,100 Z`;
+      return { dLine, dFill };
+    }
+
+    function updateDashboard() {
+      // Para evitar errores en caso de que dashboardData.dashboards no esté definido
+      if (!dashboardData || !dashboardData.dashboards || dashboardData.dashboards.length === 0) return;
+
+      const currentDash = dashboardData.dashboards[cycleIndex];
+
+      if (elDate) elDate.innerText = currentDash.date;
+      if (elUserName) elUserName.innerText = currentDash.user.name;
+      if (elUserRole) elUserRole.innerText = currentDash.user.role;
+      if (elUserAvatar) elUserAvatar.src = currentDash.user.avatar;
+      if (elPlanName) elPlanName.innerText = currentDash.plan.name;
+      if (elPlanDesc) elPlanDesc.innerText = currentDash.plan.desc;
+
+      if (elIngresos) animateValue(elIngresos, parseFloat(elIngresos.innerText.replace(/,/g, '')) || 0, currentDash.kpis.ingresos, 1000, true);
+      if (elGastos) animateValue(elGastos, parseFloat(elGastos.innerText.replace(/,/g, '')) || 0, currentDash.kpis.gastos, 1000, true);
+      if (elTx) animateValue(elTx, parseInt(elTx.innerText.replace(/,/g, '')) || 0, currentDash.kpis.tx, 1000);
+      if (elTicket) animateValue(elTicket, parseFloat(elTicket.innerText.replace(/,/g, '')) || 0, currentDash.kpis.ticket, 1000, true);
+
+      const cIng = generateChartPath(40, 40);
+      const cGas = generateChartPath(80, 20);
+      document.getElementById('chart-ingresos-line')?.setAttribute('d', cIng.dLine);
+      document.getElementById('chart-ingresos-fill')?.setAttribute('d', cIng.dFill);
+      document.getElementById('chart-gastos')?.setAttribute('d', cGas.dLine);
+
+      if (currentDash.apps && currentDash.apps.length >= 3) {
+        let sum = currentDash.apps.reduce((a, b) => a + b.val, 0);
+        let pYape = (currentDash.apps[0].val / sum) * 100;
+        let pPlin = (currentDash.apps[1].val / sum) * 100;
+        let pBcp = (currentDash.apps[2].val / sum) * 100;
+        
+        let dYape = document.getElementById('donut-yape');
+        let dPlin = document.getElementById('donut-plin');
+        let dBcp = document.getElementById('donut-bcp');
+
+        if(dYape) dYape.style.strokeDasharray = `${pYape} ${100-pYape}`;
+        if(dPlin) { dPlin.style.strokeDasharray = `${pPlin} ${100-pPlin}`; dPlin.style.strokeDashoffset = `-${pYape}`; }
+        if(dBcp) { dBcp.style.strokeDasharray = `${pBcp} ${100-pBcp}`; dBcp.style.strokeDashoffset = `-${pYape + pPlin}`; }
+
+        const appList = document.getElementById('app-list');
+        if (appList) {
+            appList.innerHTML = `
+            <div class="flex items-center justify-between text-[9px] mb-0.5"><div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></div>Yape</div><span class="text-slate-800 dark:text-white font-bold">${Math.round(pYape)}%</span></div>
+            <div class="flex items-center justify-between text-[9px] mb-0.5"><div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-[#f43f5e]"></div>Plin</div><span class="text-slate-800 dark:text-white font-bold">${Math.round(pPlin)}%</span></div>
+            <div class="flex items-center justify-between text-[9px] mb-0.5"><div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-[#f97316]"></div>BCP</div><span class="text-slate-800 dark:text-white font-bold">${Math.round(pBcp)}%</span></div>
+            `;
+        }
+      }
+
+      if (currentDash.devices) {
+        updateList('devices-container', currentDash.devices.map((d, i) => {
+            const colors = ['bg-[#10b981]/10 text-[#10b981]', 'bg-amber-500/10 text-amber-600 dark:text-amber-500', 'bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-500'];
+            const iconSvg = iconSvgs[d.icon] || iconSvgs.desktop;
+            
+            return `<div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 w-full absolute transition-all" style="top: ${i * 38}px;">
+            <div class="flex items-center gap-2.5">
+                <div class="w-6 h-6 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400">${iconSvg}</div>
+                <p class="text-[11px] font-bold text-slate-800 dark:text-white">${d.name}</p>
+            </div>
+            <span class="px-1.5 py-0.5 text-[9px] font-bold rounded ${colors[d.code]}">${d.status}</span>
+            </div>`;
+        }), 'slide-left');
+      }
+
+      if (currentDash.transactions) {
+        updateList('tx-container', currentDash.transactions.map((t, i) => {
+            const cols = ['text-[#10b981] bg-[#10b981]/10', 'text-[#f43f5e] bg-[#f43f5e]/10', 'text-[#f97316] bg-[#f97316]/10'];
+            return `<div class="flex items-center justify-between border-b border-slate-100 dark:border-white/5 w-full absolute transition-all pb-1.5" style="top: ${i * 32}px;">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-white w-1/3 truncate">${t.client}</span>
+                <span class="px-1.5 py-0.5 text-[9px] font-bold rounded ${cols[t.appIdx]} mx-auto">${t.app}</span>
+                <span class="text-[11px] font-bold text-slate-800 dark:text-white w-1/3 text-right">S/ ${t.amount.toFixed(2)}</span>
+            </div>`;
+        }), 'slide-vertical');
+      }
+
+      if (currentDash.topClients) {
+        updateList('top-clients', currentDash.topClients.map((c, i) => `
+            <div class="flex items-center justify-between absolute w-full transition-all duration-700" style="top: ${i * 32}px;">
+            <div class="flex items-center gap-2.5">
+                <div class="w-4 h-4 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-[9px] font-bold">${i+1}</div>
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-white">${c.name}</span>
+            </div>
+            <span class="text-[10px] font-bold text-[#10b981]">S/ ${c.amount}</span>
+            </div>
+        `), 'flip-vertical');
+      }
+
+      cycleIndex = (cycleIndex + 1) % dashboardData.dashboards.length;
+    }
+
+    function updateList(containerId, itemsHtmlArray, animType) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      
+      Array.from(container.children).forEach(child => {
+        child.style.opacity = '0';
+        if(animType === 'slide-left') child.style.transform = 'translateX(-10px)';
+        if(animType === 'slide-vertical' || animType === 'flip-vertical') child.style.transform = 'translateY(10px)';
+      });
+      
+      setTimeout(() => {
+        container.innerHTML = itemsHtmlArray.join('');
+        Array.from(container.children).forEach(child => {
+          child.style.opacity = '0';
+          if(animType === 'slide-left') child.style.transform = 'translateX(10px)';
+          if(animType === 'slide-vertical') child.style.transform = 'translateY(-10px)';
+          
+          void child.offsetWidth;
+          
+          child.style.opacity = '1';
+          child.style.transform = 'translate(0,0)';
+        });
+      }, 400);
+    }
+
+    updateDashboard();
+    setInterval(updateDashboard, 4000);
+  });
+</script>

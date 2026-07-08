@@ -1,0 +1,86 @@
+{
+  "config": {
+    "logoLight": "/assets/icons/logocheka-light.svg",
+    "logoDark": "/assets/icons/logocheka-dark.svg"
+  },
+  "dashboards": [
+    {
+      "user": { "name": "Ana G.", "role": "Caja Sur", "avatar": "https://i.pravatar.cc/100?img=9" },
+      "date": "08 may - 14 may 2026",
+      "plan": { "name": "Empresa", "desc": "Transacciones ilimitadas. 12 días." },
+      "kpis": { "ingresos": 12540.50, "gastos": 140.00, "tx": 342, "ticket": 36.60 },
+      "apps": [
+        { "name": "Yape", "color": "#10b981", "val": 60 },
+        { "name": "Plin", "color": "#f43f5e", "val": 25 },
+        { "name": "BCP", "color": "#f97316", "val": 15 }
+      ],
+      "devices": [
+        { "name": "Caja Principal", "status": "Activo", "code": 0, "icon": "desktop" },
+        { "name": "Tablet Sur", "status": "Sin internet", "code": 1, "icon": "tablet" },
+        { "name": "Móvil Ana", "status": "Activo", "code": 0, "icon": "mobile" }
+      ],
+      "transactions": [
+        { "client": "Roberto Sánchez", "app": "Yape", "appIdx": 0, "amount": 120.00 },
+        { "client": "María González", "app": "Plin", "appIdx": 1, "amount": 45.50 },
+        { "client": "Carlos Ruiz", "app": "BCP", "appIdx": 2, "amount": 85.00 }
+      ],
+      "topClients": [
+        { "name": "Distribuidora XYZ", "amount": 4500 },
+        { "name": "Jorge Pérez", "amount": 2100 },
+        { "name": "Constructora Alfa", "amount": 1350 }
+      ]
+    },
+    {
+      "user": { "name": "Carlos M.", "role": "Admin", "avatar": "https://i.pravatar.cc/100?img=11" },
+      "date": "15 may - 21 may 2026",
+      "plan": { "name": "Pro", "desc": "Reportes avanzados. 20 días." },
+      "kpis": { "ingresos": 28450.20, "gastos": 850.50, "tx": 512, "ticket": 55.50 },
+      "apps": [
+        { "name": "Yape", "color": "#10b981", "val": 40 },
+        { "name": "Plin", "color": "#f43f5e", "val": 40 },
+        { "name": "BCP", "color": "#f97316", "val": 20 }
+      ],
+      "devices": [
+        { "name": "Caja Central", "status": "Activo", "code": 0, "icon": "desktop" },
+        { "name": "Móvil Carlos", "status": "Activo", "code": 0, "icon": "mobile" },
+        { "name": "Caja Norte", "status": "Inactivo", "code": 2, "icon": "desktop" }
+      ],
+      "transactions": [
+        { "client": "Tech Store SAC", "app": "BCP", "appIdx": 2, "amount": 1250.00 },
+        { "client": "Lucía Fernández", "app": "Yape", "appIdx": 0, "amount": 15.00 },
+        { "client": "Minimarket Sol", "app": "Plin", "appIdx": 1, "amount": 340.20 }
+      ],
+      "topClients": [
+        { "name": "Tech Store SAC", "amount": 12500 },
+        { "name": "Comercial Centro", "amount": 8400 },
+        { "name": "Importaciones Sur", "amount": 5200 }
+      ]
+    },
+    {
+      "user": { "name": "Lucía P.", "role": "Caja Norte", "avatar": "https://i.pravatar.cc/100?img=5" },
+      "date": "22 may - 28 may 2026",
+      "plan": { "name": "Negocio", "desc": "Hasta 3 cajas. 5 días restantes." },
+      "kpis": { "ingresos": 8230.00, "gastos": 45.00, "tx": 128, "ticket": 64.20 },
+      "apps": [
+        { "name": "Yape", "color": "#10b981", "val": 80 },
+        { "name": "Plin", "color": "#f43f5e", "val": 10 },
+        { "name": "BCP", "color": "#f97316", "val": 10 }
+      ],
+      "devices": [
+        { "name": "Caja 1", "status": "Activo", "code": 0, "icon": "desktop" },
+        { "name": "Tablet Norte", "status": "Activo", "code": 0, "icon": "tablet" },
+        { "name": "Respaldo", "status": "Sin internet", "code": 1, "icon": "desktop" }
+      ],
+      "transactions": [
+        { "client": "Juan Méndez", "app": "Yape", "appIdx": 0, "amount": 25.00 },
+        { "client": "Bodega Anita", "app": "Yape", "appIdx": 0, "amount": 115.00 },
+        { "client": "Pedro Castillo", "app": "BCP", "appIdx": 2, "amount": 90.00 }
+      ],
+      "topClients": [
+        { "name": "Bodega Anita", "amount": 1800 },
+        { "name": "Juan Méndez", "amount": 650 },
+        { "name": "Minimarket Sol", "amount": 420 }
+      ]
+    }
+  ]
+}

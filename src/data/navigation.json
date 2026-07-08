@@ -24,6 +24,6 @@
   ],
   "buttons": {
     "login": { "name": "Ingresar", "url": "https://visornotificaciones.web.app/dashboard.html" },
-    "register": { "name": "Registrarse", "url": "https://visornotificaciones.web.app/dashboard.html" }
+    "register": { "name": "Registrarse", "url": "#registro" }
   }
 }
