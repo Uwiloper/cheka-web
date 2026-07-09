@@ -5,71 +5,69 @@
   },
   "dashboards": [
     {
-      "user": { "name": "Ana G.", "role": "Caja Sur", "avatar": "https://i.pravatar.cc/100?img=9" },
+      "user": { "name": "Ana G.", "role": "Admin", "avatar": "/assets/images/anag.png" },
       "date": "08 may - 14 may 2026",
-      "plan": { "name": "Empresa", "desc": "Transacciones ilimitadas. 12 días." },
+      "plan": { "name": "Empresa", "desc": "12 días restantes." },
       "kpis": { "ingresos": 12540.50, "gastos": 140.00, "tx": 342, "ticket": 36.60 },
       "apps": [
-        { "name": "Yape", "color": "#10b981", "val": 60 },
-        { "name": "Plin", "color": "#f43f5e", "val": 25 },
+        { "name": "Plin", "color": "#10b981", "val": 60 },
+        { "name": "Yape", "color": "#f43f5e", "val": 25 },
         { "name": "BCP", "color": "#f97316", "val": 15 }
       ],
       "devices": [
         { "name": "Caja Principal", "status": "Activo", "code": 0, "icon": "desktop" },
-        { "name": "Tablet Sur", "status": "Sin internet", "code": 1, "icon": "tablet" },
-        { "name": "Móvil Ana", "status": "Activo", "code": 0, "icon": "mobile" }
+        { "name": "Huancayo", "status": "Sin internet", "code": 1, "icon": "mobile" },
+        { "name": "Lima", "status": "Activo", "code": 0, "icon": "mobile" }
       ],
       "transactions": [
-        { "client": "Roberto Sánchez", "app": "Yape", "appIdx": 0, "amount": 120.00 },
-        { "client": "María González", "app": "Plin", "appIdx": 1, "amount": 45.50 },
-        { "client": "Carlos Ruiz", "app": "BCP", "appIdx": 2, "amount": 85.00 }
+        { "client": "Roberto Sánchez", "app": "BCP", "appIdx": 0, "amount": 2600.00 },
+        { "client": "María González", "app": "Scotiabank", "appIdx": 1, "amount": 1750.50 },
+        { "client": "Carlos Ruiz", "app": "BBVA", "appIdx": 2, "amount": 532.00 }
       ],
       "topClients": [
-        { "name": "Distribuidora XYZ", "amount": 4500 },
-        { "name": "Jorge Pérez", "amount": 2100 },
-        { "name": "Constructora Alfa", "amount": 1350 }
+        { "name": "Mikro sac", "amount": 25000 },
+        { "name": "Fierros Alfa", "amount": 18503 },
+        { "name": "W&L eirl", "amount": 4500 }
       ]
     },
     {
-      "user": { "name": "Carlos M.", "role": "Admin", "avatar": "https://i.pravatar.cc/100?img=11" },
+      "user": { "name": "Carlos M.", "role": "Bodega", "avatar": "/assets/images/carlosm.png" },
       "date": "15 may - 21 may 2026",
-      "plan": { "name": "Pro", "desc": "Reportes avanzados. 20 días." },
+      "plan": { "name": "Gratuito", "desc": "Reinicio en 3 dias." },
       "kpis": { "ingresos": 28450.20, "gastos": 850.50, "tx": 512, "ticket": 55.50 },
       "apps": [
-        { "name": "Yape", "color": "#10b981", "val": 40 },
-        { "name": "Plin", "color": "#f43f5e", "val": 40 },
-        { "name": "BCP", "color": "#f97316", "val": 20 }
+        { "name": "Yape", "color": "#10b981", "val": 80 },
+        { "name": "Plin", "color": "#f43f5e", "val": 15 },
+        { "name": "sip", "color": "#f97316", "val": 5 }
       ],
       "devices": [
-        { "name": "Caja Central", "status": "Activo", "code": 0, "icon": "desktop" },
-        { "name": "Móvil Carlos", "status": "Activo", "code": 0, "icon": "mobile" },
-        { "name": "Caja Norte", "status": "Inactivo", "code": 2, "icon": "desktop" }
+        { "name": "Caja", "status": "Activo", "code": 0, "icon": "mobile" }
       ],
       "transactions": [
-        { "client": "Tech Store SAC", "app": "BCP", "appIdx": 2, "amount": 1250.00 },
-        { "client": "Lucía Fernández", "app": "Yape", "appIdx": 0, "amount": 15.00 },
+        { "client": "Ana Garcia", "app": "BCP", "appIdx": 2, "amount": 120.00 },
+        { "client": "Lucía Cruz", "app": "Yape", "appIdx": 0, "amount": 15.00 },
         { "client": "Minimarket Sol", "app": "Plin", "appIdx": 1, "amount": 340.20 }
       ],
       "topClients": [
-        { "name": "Tech Store SAC", "amount": 12500 },
-        { "name": "Comercial Centro", "amount": 8400 },
-        { "name": "Importaciones Sur", "amount": 5200 }
+        { "name": "Ana Garcia", "amount": 520 },
+        { "name": "Lucia Cruz", "amount": 180 },
+        { "name": "Felipe Quispe", "amount": 70 }
       ]
     },
     {
-      "user": { "name": "Lucía P.", "role": "Caja Norte", "avatar": "https://i.pravatar.cc/100?img=5" },
+      "user": { "name": "Mar & Restaurant.", "role": "Caja Norte", "avatar": "/assets/images/maryrestaurant.png" },
       "date": "22 may - 28 may 2026",
-      "plan": { "name": "Negocio", "desc": "Hasta 3 cajas. 5 días restantes." },
+      "plan": { "name": "Negocio", "desc": "5 días restantes." },
       "kpis": { "ingresos": 8230.00, "gastos": 45.00, "tx": 128, "ticket": 64.20 },
       "apps": [
-        { "name": "Yape", "color": "#10b981", "val": 80 },
-        { "name": "Plin", "color": "#f43f5e", "val": 10 },
-        { "name": "BCP", "color": "#f97316", "val": 10 }
+        { "name": "BBVA", "color": "#10b981", "val": 50 },
+        { "name": "Plin", "color": "#f43f5e", "val": 30 },
+        { "name": "iO", "color": "#f97316", "val": 20 }
       ],
       "devices": [
-        { "name": "Caja 1", "status": "Activo", "code": 0, "icon": "desktop" },
-        { "name": "Tablet Norte", "status": "Activo", "code": 0, "icon": "tablet" },
-        { "name": "Respaldo", "status": "Sin internet", "code": 1, "icon": "desktop" }
+        { "name": "Caja Principal", "status": "Activo", "code": 0, "icon": "desktop" },
+        { "name": "La Molina", "status": "Activo", "code": 0, "icon": "mobile" },
+        { "name": "Miraflores", "status": "Sin internet", "code": 1, "icon": "mobile" }
       ],
       "transactions": [
         { "client": "Juan Méndez", "app": "Yape", "appIdx": 0, "amount": 25.00 },
@@ -77,9 +75,9 @@
         { "client": "Pedro Castillo", "app": "BCP", "appIdx": 2, "amount": 90.00 }
       ],
       "topClients": [
-        { "name": "Bodega Anita", "amount": 1800 },
-        { "name": "Juan Méndez", "amount": 650 },
-        { "name": "Minimarket Sol", "amount": 420 }
+        { "name": "Replay sac", "amount": 5820 },
+        { "name": "imagenartis sac", "amount": 3715 },
+        { "name": "Ana Tucto", "amount": 1500 }
       ]
     }
   ]

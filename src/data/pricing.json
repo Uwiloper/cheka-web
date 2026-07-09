@@ -1,0 +1,72 @@
+{
+  "header": {
+    "title": "Precios simples, sin sorpresas",
+    "description": "Empieza gratis y mejora tu plan a medida que tu negocio crece. Ahorra 20% con la facturación anual."
+  },
+  "plans": [
+    {
+      "id": "gratis",
+      "name": "Gratis",
+      "priceMonthly": "0",
+      "priceAnnual": "0",
+      "description": "Perfecto para probar la plataforma y pequeños emprendedores.",
+      "isPopular": false,
+      "button": {
+        "text": "Comenzar Gratis",
+        "url": "#registro",
+        "style": "outline"
+      },
+      "features": [
+        { "name": "Notificaciones ilimitadas", "included": true },
+        { "name": "Con anuncios", "included": true },
+        { "name": "Soporte Yape y Plin", "included": true },
+        { "name": "Historial de 24 horas", "included": true },
+        { "name": "Experiencia sin anuncios", "included": false },
+        { "name": "Exportación a Excel", "included": false }
+      ]
+    },
+    {
+      "id": "negocio",
+      "name": "Negocio",
+      "priceMonthly": "39.90",
+      "priceAnnual": "399.00",
+      "description": "La herramienta definitiva para negocios que quieren control total.",
+      "isPopular": true,
+      "badge": "MÁS ELEGIDO",
+      "button": {
+        "text": "Prueba gratis de 14 días",
+        "url": "#checkout",
+        "style": "primary"
+      },
+      "features": [
+        { "name": "Notificaciones ilimitadas", "included": true },
+        { "name": "Experiencia SIN anuncios", "included": true, "highlight": true },
+        { "name": "Todas las apps (BCP, BBVA...)", "included": true },
+        { "name": "Historial de 30 días", "included": true },
+        { "name": "Exportación a Excel", "included": true },
+        { "name": "Soporte prioritario WhatsApp", "included": true }
+      ]
+    },
+    {
+      "id": "empresa",
+      "name": "Empresa",
+      "priceMonthly": "Personalizado",
+      "priceAnnual": "Personalizado",
+      "description": "Para cadenas y franquicias con alto volumen de operaciones.",
+      "isPopular": false,
+      "button": {
+        "text": "Solicitar cotización",
+        "url": "#contacto",
+        "style": "outline"
+      },
+      "features": [
+        { "name": "Todo lo del plan Negocio", "included": true },
+        { "name": "Múltiples locales", "included": true },
+        { "name": "Cajas y dispositivos ilimitados", "included": true },
+        { "name": "Cuentas para empleados", "included": true },
+        { "name": "Historial ilimitado", "included": true },
+        { "name": "Integración API", "included": true }
+      ]
+    }
+  ]
+}
