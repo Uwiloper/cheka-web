@@ -17,11 +17,11 @@
         "style": "outline"
       },
       "features": [
-        { "name": "Notificaciones ilimitadas", "included": true },
-        { "name": "Con anuncios", "included": true },
-        { "name": "Soporte Yape y Plin", "included": true },
         { "name": "Historial de 24 horas", "included": true },
-        { "name": "Experiencia sin anuncios", "included": false },
+        { "name": "Con anuncios", "included": true },
+        { "name": "Notificaciones ilimitadas", "included": true },
+        { "name": "Soporte Yape y Plin", "included": true },
+        { "name": "Analíticas", "included": false },
         { "name": "Exportación a Excel", "included": false }
       ]
     },
@@ -47,11 +47,12 @@
         { "name": "Soporte prioritario WhatsApp", "included": true }
       ]
     },
+    
     {
       "id": "empresa",
       "name": "Empresa",
-      "priceMonthly": "Personalizado",
-      "priceAnnual": "Personalizado",
+      "priceMonthly": "Hablemos",
+      "priceAnnual": "Hablemos",
       "description": "Para cadenas y franquicias con alto volumen de operaciones.",
       "isPopular": false,
       "button": {

@@ -1,0 +1,64 @@
+{
+  "header": {
+    "title": "Compatible con las principales apps y bancos del Perú",
+    "indicatorText": "Arrastra para explorar"
+  },
+  "apps": [
+    { 
+      "name": "Yape", 
+      "logoLight": "/assets/icons/banks/yape.svg", 
+      "logoDark": "/assets/icons/banks/yape-dark.svg" 
+    },
+    { 
+      "name": "Plin", 
+      "logoLight": "/assets/icons/banks/plin.svg", 
+      "logoDark": "/assets/icons/banks/plin-dark.svg" 
+    },
+    { 
+      "name": "Sip", 
+      "logoLight": "/assets/icons/banks/sip.svg", 
+      "logoDark": "/assets/icons/banks/sip-dark.svg" 
+    },
+    { 
+      "name": "Ligo", 
+      "logoLight": "/assets/icons/banks/ligo.svg", 
+      "logoDark": "/assets/icons/banks/ligo-dark.svg" 
+    },
+    { 
+      "name": "BCP", 
+      "logoLight": "/assets/icons/banks/bcp.svg", 
+      "logoDark": "/assets/icons/banks/bcp-dark.svg" 
+    },
+    { 
+      "name": "BBVA", 
+      "logoLight": "/assets/icons/banks/bbva.svg", 
+      "logoDark": "/assets/icons/banks/bbva-dark.svg" 
+    },
+    { 
+      "name": "Interbank", 
+      "logoLight": "/assets/icons/banks/interbank.svg", 
+      "logoDark": "/assets/icons/banks/interbank-dark.svg" 
+    },
+    { 
+      "name": "Scotiabank", 
+      "logoLight": "/assets/icons/banks/scotiabank.svg", 
+      "logoDark": "/assets/icons/banks/scotiabank-dark.svg" 
+    },
+    { 
+      "name": "Culqui", 
+      "logoLight": "/assets/icons/banks/culqui.svg", 
+      "logoDark": "/assets/icons/banks/culqui-dark.svg" 
+    },
+    
+    { 
+      "name": "Niubiz", 
+      "logoLight": "/assets/icons/banks/niubiz.svg", 
+      "logoDark": "/assets/icons/banks/niubiz-dark.svg" 
+    },
+    { 
+      "name": "Izipay", 
+      "logoLight": "/assets/icons/banks/izipay.svg", 
+      "logoDark": "/assets/icons/banks/izipay-dark.svg" 
+    }
+  ]
+}

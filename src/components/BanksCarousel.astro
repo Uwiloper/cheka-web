@@ -1,0 +1,190 @@
+---
+// src/components/BanksCarousel.astro
+import banksData from '../data/banks.json';
+
+const { header, apps } = banksData;
+
+// Duplicamos el array 4 veces para el scroll infinito perfecto
+const displayApps = [...apps, ...apps, ...apps, ...apps];
+---
+
+<section class="py-16 bg-slate-50 dark:bg-[#0A0F1C] transition-colors duration-300 border-y border-slate-200 dark:border-white/5 overflow-hidden">
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
+    <h3 class="text-sm md:text-base font-semibold text-slate-500 dark:text-slate-400">
+      {header.title}
+    </h3>
+  </div>
+
+  <div class="relative w-full max-w-[1600px] mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+    
+    <div 
+  id="banks-slider" 
+  class="flex gap-8 sm:gap-12 px-4 cursor-grab active:cursor-grabbing overflow-x-hidden no-scrollbar select-none items-center py-4"
+>
+      {displayApps.map((app) => (
+        /* Se le dio min-w suficiente para que respiren.
+           transition-transform y scale-125 para que crezcan más al hacer hover.
+        */
+        <div class="flex items-center justify-center transition-transform duration-300 hover:scale-170 shrink-0 group min-w-[120px] md:min-w-[200px]">
+          
+          <img 
+            src={app.logoLight} 
+            alt={`Logo de ${app.name}`} 
+            class="h-8 md:h-20 object-contain block dark:hidden opacity-50 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none drop-shadow-sm" 
+            draggable="false"
+          />
+          
+          <img 
+            src={app.logoDark} 
+            alt={`Logo de ${app.name}`} 
+            class="h-8 md:h-20 object-contain hidden dark:block opacity-50 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none drop-shadow-sm" 
+            draggable="false"
+          />
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+  <div class="flex items-center justify-center gap-2 mt-8 text-slate-400 dark:text-slate-500 text-[13px] font-medium">
+    
+    <svg class="w-5 h-5 icon-mouse animate-swipe" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+    </svg>
+    
+    <svg class="w-5 h-5 icon-touch animate-swipe" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path>
+    </svg>
+    
+    <span>{header.indicatorText}</span>
+  </div>
+
+</section>
+
+<style>
+  /* Ocultar scrollbar */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  
+  /* Animación personalizada de Izquierda a Derecha */
+  @keyframes swipe-horizontal {
+    0%, 100% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+  }
+  .animate-swipe {
+    animation: swipe-horizontal 2s ease-in-out infinite;
+  }
+
+  /* Lógica de Mostrar/Ocultar iconos según dispositivo */
+  .icon-mouse { display: block; }
+  .icon-touch { display: none; }
+
+  /* Si el dispositivo es táctil (Celulares/Tablets) */
+  @media (pointer: coarse) {
+    .icon-mouse { display: none; }
+    .icon-touch { display: block; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('banks-slider');
+    if (!slider) return;
+
+    let isDown = false;
+    let startX;
+    let animationId;
+    let momentumId;
+    
+    const autoSpeed = 0.5;
+    let velX = 0;
+    
+    const getResetPoint = () => slider.scrollWidth / 4;
+
+    function checkBoundary() {
+      if (slider.scrollLeft <= 0) {
+        slider.scrollLeft += getResetPoint();
+      } else if (slider.scrollLeft >= getResetPoint() * 2) {
+        slider.scrollLeft -= getResetPoint();
+      }
+    }
+
+    function autoScroll() {
+      slider.scrollLeft += autoSpeed;
+      checkBoundary();
+      animationId = requestAnimationFrame(autoScroll);
+    }
+
+    function beginMomentum() {
+      slider.scrollLeft -= velX;
+      checkBoundary();
+      
+      velX *= 0.95; // Fricción
+      
+      if (Math.abs(velX) > 0.5) {
+        momentumId = requestAnimationFrame(beginMomentum);
+      } else {
+        autoScroll();
+      }
+    }
+
+    autoScroll();
+
+    // MOUSE EVENTS
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(momentumId);
+      startX = e.pageX;
+      velX = 0;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      if (!isDown) return;
+      isDown = false;
+      beginMomentum();
+    });
+
+    slider.addEventListener('mouseup', () => {
+      if (!isDown) return;
+      isDown = false;
+      beginMomentum();
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX;
+      velX = (x - startX) * 1.2; 
+      slider.scrollLeft -= velX;
+      checkBoundary();
+      startX = x;
+    });
+
+    // TOUCH EVENTS
+    slider.addEventListener('touchstart', (e) => {
+      isDown = true;
+      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(momentumId);
+      startX = e.touches[0].pageX;
+      velX = 0;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', () => {
+      if (!isDown) return;
+      isDown = false;
+      beginMomentum();
+    });
+
+    slider.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX;
+      velX = (x - startX) * 1.5; 
+      slider.scrollLeft -= velX;
+      checkBoundary();
+      startX = x;
+    }, { passive: true });
+  });
+</script>
