@@ -11,16 +11,16 @@
     ],
     "suffix": "validados en automático"
   },
-  "description": "Elimina el error humano y el fraude en tus pagos digitales. Cheka conecta tus dispositivos Android con un panel web inteligente para monitorear Yape, Plin, Sipe, BBVA, BCP y más en tiempo real.",
+  "description": "Adiós al error humano y fraude en tus pagos digitales. Cheka conecta tus dispositivos Android con un panel web inteligente y privado para monitorear tu pagos en tiempo real.",
   "buttons": {
     "primary": { "text": "Ingresar al panel →", "url": "https://visornotificaciones.web.app/dashboard.html" },
     "secondary": { "text": "Solicitar acceso", "url": "#registro" }
   },
   "trust": {
     "avatars": [
-      "https://i.pravatar.cc/100?img=11",
-      "https://i.pravatar.cc/100?img=5",
-      "https://i.pravatar.cc/100?img=8"
+      "/assets/images/carlosm.png",
+      "/assets/images/maryrestaurant.png",
+      "/assets/images/anag.png"
     ],
     "highlight": "+200",
     "text": "negocios confían"

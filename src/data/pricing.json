@@ -9,20 +9,18 @@
       "name": "Gratis",
       "priceMonthly": "0",
       "priceAnnual": "0",
-      "description": "Perfecto para probar la plataforma y pequeños emprendedores.",
+      "description": "Perfecto para probar la plataforma y familiarizarte.",
       "isPopular": false,
       "button": {
         "text": "Comenzar Gratis",
-        "url": "#registro",
+        "urlMonthly": "/registro",
+        "urlAnnual": "/registro",
         "style": "outline"
       },
       "features": [
         { "name": "Historial de 24 horas", "included": true },
         { "name": "Con anuncios", "included": true },
-        { "name": "Notificaciones ilimitadas", "included": true },
-        { "name": "Soporte Yape y Plin", "included": true },
-        { "name": "Analíticas", "included": false },
-        { "name": "Exportación a Excel", "included": false }
+        { "name": "Notificaciones ilimitadas", "included": true }
       ]
     },
     {
@@ -35,37 +33,53 @@
       "badge": "MÁS ELEGIDO",
       "button": {
         "text": "Prueba gratis de 14 días",
-        "url": "#checkout",
+        "urlMonthly": "https://tu-pasarela.com/pago/negocio-mensual",
+        "urlAnnual": "https://tu-pasarela.com/pago/negocio-anual",
         "style": "primary"
       },
       "features": [
-        { "name": "Notificaciones ilimitadas", "included": true },
-        { "name": "Experiencia SIN anuncios", "included": true, "highlight": true },
-        { "name": "Todas las apps (BCP, BBVA...)", "included": true },
+        { "name": "Todo lo del plan Pro", "included": true },
         { "name": "Historial de 30 días", "included": true },
-        { "name": "Exportación a Excel", "included": true },
+        { "name": "Exportación a Excel", "included": true, "highlight": true },
+        { "name": "Todas las apps bancarias", "included": true },
         { "name": "Soporte prioritario WhatsApp", "included": true }
       ]
     },
-    
     {
-      "id": "empresa",
-      "name": "Empresa",
+      "id": "pro",
+      "name": "Pro",
+      "priceMonthly": "19.90",
+      "priceAnnual": "199.00",
+      "description": "Ideal para pequeños emprendedores en crecimiento.",
+      "isPopular": false,
+      "button": {
+        "text": "Elegir Pro",
+        "urlMonthly": "https://tu-pasarela.com/pago/pro-mensual",
+        "urlAnnual": "https://tu-pasarela.com/pago/pro-anual",
+        "style": "outline"
+      },
+      "features": [
+        { "name": "Historial de 7 días", "included": true },
+        { "name": "Experiencia sin anuncios", "included": true },
+        { "name": "Soporte estándar", "included": true }
+      ]
+    },
+    {
+      "id": "empresario",
+      "name": "Empresario",
       "priceMonthly": "Hablemos",
       "priceAnnual": "Hablemos",
       "description": "Para cadenas y franquicias con alto volumen de operaciones.",
       "isPopular": false,
       "button": {
-        "text": "Solicitar cotización",
-        "url": "#contacto",
+        "text": "Contactar ventas",
+        "urlMonthly": "/contacto",
+        "urlAnnual": "/contacto",
         "style": "outline"
       },
       "features": [
-        { "name": "Todo lo del plan Negocio", "included": true },
         { "name": "Múltiples locales", "included": true },
         { "name": "Cajas y dispositivos ilimitados", "included": true },
-        { "name": "Cuentas para empleados", "included": true },
-        { "name": "Historial ilimitado", "included": true },
         { "name": "Integración API", "included": true }
       ]
     }
