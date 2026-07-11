@@ -4,9 +4,12 @@ import faqData from '../data/faq.json';
 const { header, categories, faqs } = faqData;
 ---
 
-<section id="faq" class="py-20 md:py-32 bg-white dark:bg-[#0A0F1C] transition-colors duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="faq" class="py-20 md:py-32 bg-white dark:bg-[#0A0F1C] transition-colors duration-300 overflow-hidden">
+  
+  <!-- Contenedor Animado (Inicia oculto y desplazado hacia abajo) -->
+  <div id="faq-animated-wrapper" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 opacity-0 translate-y-12 transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
     
+    <!-- Encabezado -->
     <div class="max-w-3xl mb-12 md:mb-16 text-center md:text-left">
       <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">
         {header.title}
@@ -18,20 +21,25 @@ const { header, categories, faqs } = faqData;
 
     <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
       
+      <!-- Columna Izquierda: Filtros de Categorías -->
       <aside class="w-full lg:w-1/4 shrink-0">
-        <div class="flex lg:flex-col gap-2 overflow-x-auto no-scrollbar pb-4 lg:pb-0 snap-x">
+        
+        <!-- AQUI: Diseño de Barra Sólida en móvil (fondo gris/oscuro, padding) y normal en Desktop -->
+        <div class="flex lg:flex-col gap-1 lg:gap-2 overflow-x-auto no-scrollbar snap-x bg-slate-100 dark:bg-white/5 p-1.5 rounded-[20px] lg:bg-transparent lg:dark:bg-transparent lg:p-0 lg:rounded-none">
           
+          <!-- Botón "Todos" (Activo por defecto) -->
           <button 
-            class="cat-btn group flex items-center justify-between px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 snap-start shrink-0 text-left border bg-[#10b981]/10 text-[#10b981] border-[#10b981]/20"
+            class="cat-btn group flex items-center justify-between px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 snap-start shrink-0 text-left border bg-white dark:bg-[#1E293B] shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none text-[#10b981] lg:bg-[#10b981]/10 lg:shadow-none lg:border-[#10b981]/20 border-transparent"
             data-target="all"
           >
             <span>Todos</span>
             <svg class="w-4 h-4 hidden lg:block transition-all duration-300 arrow-icon opacity-100 translate-x-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
           </button>
 
+          <!-- Resto de Categorías (Inactivas por defecto) -->
           {categories.map((cat) => (
             <button 
-              class="cat-btn group flex items-center justify-between px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 snap-start shrink-0 text-left border border-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5"
+              class="cat-btn group flex items-center justify-between px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 snap-start shrink-0 text-left border border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-black/5 dark:hover:bg-white/5 lg:hover:bg-slate-100"
               data-target={cat.id}
             >
               <span>{cat.name}</span>
@@ -42,6 +50,7 @@ const { header, categories, faqs } = faqData;
         </div>
       </aside>
 
+      <!-- Columna Derecha: Lista de Preguntas (Acordeón) -->
       <div class="w-full lg:w-3/4 flex flex-col gap-4">
         {faqs.map((faq) => (
           <div 
@@ -95,17 +104,47 @@ const { header, categories, faqs } = faqData;
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     
-    // --- LÓGICA DE FILTRADO POR CATEGORÍAS ---
+    // --- 1. ANIMACIÓN DE ENTRADA ÚNICA (IntersectionObserver + sessionStorage) ---
+    const faqWrapper = document.getElementById('faq-animated-wrapper');
+    const hasAnimated = sessionStorage.getItem('faqSectionAnimated');
+
+    if (hasAnimated) {
+      // Si ya se animó en esta sesión, quitar clases ocultas de inmediato
+      faqWrapper?.classList.remove('opacity-0', 'translate-y-12');
+    } else {
+      // Si no, observar hasta que el usuario haga scroll hacia la sección
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            faqWrapper?.classList.remove('opacity-0', 'translate-y-12');
+            sessionStorage.setItem('faqSectionAnimated', 'true');
+            observer.unobserve(entry.target); // Dejar de observar para optimizar rendimiento
+          }
+        });
+      }, { threshold: 0.15 }); // Se activa cuando el 15% de la sección es visible
+      
+      if (faqWrapper) observer.observe(faqWrapper);
+    }
+
+
+    // --- 2. LÓGICA DE FILTRADO POR CATEGORÍAS Y SCROLL CENTRADO ---
     const catBtns = document.querySelectorAll('.cat-btn');
     const faqItems = document.querySelectorAll('.faq-item');
 
-    // Clases de Tailwind para los estados
-    const activeClasses = ['bg-[#10b981]/10', 'text-[#10b981]', 'border-[#10b981]/20'];
-    const inactiveClasses = ['border-transparent', 'text-slate-500', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-white/5'];
+    // Clases adaptadas para el estilo de "Barra Sólida" en móvil y lista en desktop
+    const activeClasses = ['bg-white', 'dark:bg-[#1E293B]', 'shadow-[0_2px_8px_rgba(0,0,0,0.04)]', 'text-[#10b981]', 'lg:bg-[#10b981]/10', 'lg:shadow-none', 'lg:border-[#10b981]/20'];
+    const inactiveClasses = ['border-transparent', 'text-slate-500', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200', 'hover:bg-black/5', 'dark:hover:bg-white/5', 'lg:hover:bg-slate-100'];
 
     catBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         
+        // Efecto: Centrar el botón clickeado horizontalmente en la barra
+        btn.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+
         // 1. Resetear todos los botones a inactivos
         catBtns.forEach(b => {
           b.classList.remove(...activeClasses);
@@ -147,7 +186,7 @@ const { header, categories, faqs } = faqData;
       });
     });
 
-    // --- LÓGICA DEL ACORDEÓN ---
+    // --- 3. LÓGICA DEL ACORDEÓN ---
     const headers = document.querySelectorAll('.accordion-header');
 
     headers.forEach(header => {
@@ -181,7 +220,7 @@ const { header, categories, faqs } = faqData;
       });
     });
 
-    // Abrir el primero por defecto
+    // Abrir el primero por defecto al cargar
     if(headers.length > 0) {
       headers[0].click();
     }

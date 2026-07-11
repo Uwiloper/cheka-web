@@ -1,0 +1,25 @@
+{
+  "header": {
+    "badge": "🚀 Acceso Anticipado VIP",
+    "title": "Sé de los primeros en probar",
+    "highlight": "Cheka",
+    "description": "Automatiza la validación de tus pagos digitales antes que tu competencia. Regístrate a nuestra Beta privada y obtén beneficios exclusivos de por vida. Sin compromiso, sin tarjeta de crédito.",
+    "urgency": "🔥 Quedan pocos cupos para la primera fase Beta."
+  },
+  "form": {
+    "name": {
+      "label": "Nombre completo",
+      "placeholder": "Ej. Juan Pérez"
+    },
+    "business": {
+      "label": "Nombre de tu negocio",
+      "placeholder": "Ej. Minimarket Don Pepe"
+    },
+    "email": {
+      "label": "Correo electrónico",
+      "placeholder": "tu@correo.com"
+    },
+    "submit": "Quiero ser Beta Tester →",
+    "footer": "🔒 Tus datos están protegidos con encriptación bancaria. Cero spam, 100% privacidad."
+  }
+}

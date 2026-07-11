@@ -4,14 +4,17 @@ import navigationData from '../data/navigation.json';
 const { links, buttons } = navigationData;
 ---
 
-<header id="main-header" class="w-full fixed top-0 left-0 z-50 transition-all duration-300 ease-in-out bg-transparent border-b border-transparent py-4">
-  <div class="max-w-[1440px] mx-auto px-6 flex items-center justify-between h-12">
+<header id="main-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 ease-in-out bg-transparent border-b border-transparent py-4 px-6 sm:px-8 lg:px-10">
+  
+  <div class="w-full max-w-[1440px] mx-auto flex items-center justify-between h-12">
     
-    <a href="/" class="flex items-center gap-3 group active:scale-95 transition-transform duration-300">
+    <!-- AQUI: Le dimos un ID y clases para que inicie oculto en móvil (opacity-0) pero siempre visible en desktop (md:opacity-100) -->
+    <a id="header-logo" href="/" class="flex items-center gap-3 group active:scale-95 transition-all duration-500 opacity-0 invisible -translate-x-4 md:opacity-100 md:visible md:translate-x-0">
       <img src="/assets/icons/logocheka-light.svg" alt="Cheka Logo" class="w-28 h-auto dark:hidden transition-transform duration-300 group-hover:scale-105" />
       <img src="/assets/icons/logocheka-dark.svg" alt="Cheka Logo" class="w-28 h-auto hidden dark:block transition-transform duration-300 group-hover:scale-105" />
     </a>
 
+    <!-- Navegación Desktop -->
     <nav class="hidden md:flex items-center gap-8">
       {links.map((link) => (
         link.type === 'link' ? (
@@ -24,24 +27,30 @@ const { links, buttons } = navigationData;
               {link.name}
               <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
             </div>
-            <div class="absolute top-full left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-              <div class="bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-2xl p-2 flex flex-col gap-1">
-                {link.items?.map((item) => (
-                  <a href={item.url} class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all duration-200 group/item">
-                    <div class={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${item.colorTheme === 'green' ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-blue-500/10 text-blue-500'}`}>
-                      {item.icon === 'book' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>}
-                      {item.icon === 'code' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>}
-                    </div>
-                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover/item:text-[#10b981]">{item.name}</span>
-                  </a>
-                ))}
+            
+            <!-- Dropdown Desktop -->
+            <div class="desktop-dropdown absolute top-full left-0 w-56 pt-2 z-50">
+              <div class="overflow-hidden">
+                <div class="bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-2xl p-2 flex flex-col gap-1">
+                  {link.items?.map((item) => (
+                    <a href={item.url} class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all duration-200 group/item">
+                      <div class={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${item.colorTheme === 'green' ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-blue-500/10 text-blue-500'}`}>
+                        {item.icon === 'book' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>}
+                        {item.icon === 'code' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>}
+                      </div>
+                      <span class="text-sm font-bold text-slate-700 dark:text-slate-200 group-hover/item:text-[#10b981]">{item.name}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
+
           </div>
         )
       ))}
     </nav>
 
+    <!-- Botones Desktop -->
     <div class="hidden md:flex items-center gap-4">
       <a href={buttons.login.url} class="text-sm font-bold text-slate-700 dark:text-white px-5 py-2.5 rounded-xl border border-slate-300 dark:border-white/20 hover:border-slate-500 dark:hover:border-white/40 hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all duration-300">
         {buttons.login.name}
@@ -52,47 +61,52 @@ const { links, buttons } = navigationData;
       </a>
     </div>
 
-    <button id="mobile-menu-btn" class="md:hidden p-2.5 rounded-xl text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 active:scale-95 transition-all duration-300 focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    <!-- Botón Menú Móvil -->
+    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 active:scale-95 transition-all duration-300 focus:outline-none">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
     </button>
   </div>
 </header>
 
-<div id="mobile-menu-overlay" class="fixed inset-0 z-[100] bg-slate-50 dark:bg-[#0A0F1C] opacity-0 invisible scale-95 -translate-y-4 transition-all duration-300 ease-out md:hidden flex flex-col">
+<!-- Menú Móvil Overlay -->
+<div id="mobile-menu-overlay" class="fixed inset-0 z-[100] bg-white dark:bg-[#0A0F1C] translate-x-full invisible transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:hidden flex flex-col">
   
-  <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-white/5 bg-transparent h-[72px]">
-    
+  <div class="flex items-center justify-between px-6 sm:px-8 py-4 border-b border-slate-200 dark:border-white/5 bg-transparent h-[80px]">
     <div class="flex items-center gap-3">
       <img src="/assets/icons/logocheka-light.svg" alt="Cheka Logo" class="w-28 h-auto dark:hidden" />
       <img src="/assets/icons/logocheka-dark.svg" alt="Cheka Logo" class="w-28 h-auto hidden dark:block" />
     </div>
     
-    <button id="mobile-close-btn" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 text-slate-500 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 active:scale-90 transition-all duration-300">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <button id="mobile-close-btn" class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 active:scale-90 transition-all duration-300">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
   </div>
 
-  <div class="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-6">
+  <div class="flex-1 overflow-y-auto px-6 sm:px-8 py-8 flex flex-col gap-6">
     {links.map((link) => (
       link.type === 'link' ? (
         <a href={link.url} class="text-lg font-bold text-slate-800 dark:text-slate-200 hover:text-[#10b981] dark:hover:text-[#10b981] active:scale-95 origin-left transition-all duration-300 mobile-link">
           {link.name}
         </a>
       ) : (
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
           <button class="mobile-dropdown-btn flex items-center justify-between w-full text-lg font-bold text-slate-800 dark:text-slate-200 active:scale-95 origin-left transition-all duration-300">
             {link.name}
             <svg class="w-5 h-5 transition-transform duration-300 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
           </button>
           
-          <div class="mobile-dropdown-content hidden flex-col gap-3 pl-4 border-l-2 border-slate-200 dark:border-white/10 mt-2">
-            {link.items?.map((item) => (
-              <a href={item.url} class="flex items-center gap-3 py-2 text-base font-bold text-slate-600 dark:text-slate-400 hover:text-[#10b981] dark:hover:text-white active:scale-95 origin-left transition-all duration-300 mobile-link">
-                {item.icon === 'book' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>}
-                {item.icon === 'code' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>}
-                {item.name}
-              </a>
-            ))}
+          <div class="mobile-dropdown-content grid transition-all duration-300 ease-in-out" style="grid-template-rows: 0fr; opacity: 0;">
+            <div class="overflow-hidden">
+              <div class="flex flex-col gap-3 pl-4 border-l-2 border-slate-200 dark:border-white/10 mt-2 mb-2">
+                {link.items?.map((item) => (
+                  <a href={item.url} class="flex items-center gap-3 py-2 text-base font-bold text-slate-600 dark:text-slate-400 hover:text-[#10b981] dark:hover:text-white active:scale-95 origin-left transition-all duration-300 mobile-link">
+                    {item.icon === 'book' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>}
+                    {item.icon === 'code' && <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>}
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )
@@ -101,7 +115,7 @@ const { links, buttons } = navigationData;
     <hr class="border-slate-200 dark:border-white/10 my-4" />
 
     <div class="grid grid-cols-2 gap-4 mt-auto pb-6">
-      <a href={buttons.login.url} class="flex items-center justify-center text-sm font-bold text-slate-800 dark:text-white py-4 rounded-xl border border-slate-300 dark:border-white/20 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 active:scale-95 transition-all duration-300 shadow-sm">
+      <a href={buttons.login.url} class="flex items-center justify-center text-sm font-bold text-slate-800 dark:text-white py-4 rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 active:scale-95 transition-all duration-300 shadow-sm">
         {buttons.login.name}
       </a>
       <a href={buttons.register.url} class="flex items-center justify-center text-sm font-bold text-white dark:text-[#0F172A] bg-[#10b981] py-4 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 transition-all duration-300">
@@ -111,21 +125,45 @@ const { links, buttons } = navigationData;
   </div>
 </div>
 
+<style>
+  .desktop-dropdown {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition: grid-template-rows 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s;
+  }
+  
+  .group:hover .desktop-dropdown {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
+
 <script>
   const header = document.getElementById('main-header');
+  const logo = document.getElementById('header-logo');
   
-  // LÓGICA DE SCROLL (Solo añade fondo, sin cambiar el padding/tamaño)
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
-      header?.classList.add('bg-white/90', 'dark:bg-[#0A0F1C]/90', 'backdrop-blur-xl', 'border-slate-200', 'dark:border-white/10', 'shadow-sm');
+      // AQUI: Usamos bg-white/60 y backdrop-blur-md para un efecto glass premium más evidente
+      header?.classList.add('bg-white/60', 'dark:bg-[#0A0F1C]/70', 'backdrop-blur-md', 'border-slate-200', 'dark:border-white/10', 'shadow-sm');
       header?.classList.remove('bg-transparent', 'border-transparent');
+
+      // Aparece el logo
+      logo?.classList.remove('opacity-0', 'invisible', '-translate-x-4');
+      logo?.classList.add('opacity-100', 'visible', 'translate-x-0');
     } else {
-      header?.classList.remove('bg-white/90', 'dark:bg-[#0A0F1C]/90', 'backdrop-blur-xl', 'border-slate-200', 'dark:border-white/10', 'shadow-sm');
+      header?.classList.remove('bg-white/60', 'dark:bg-[#0A0F1C]/70', 'backdrop-blur-md', 'border-slate-200', 'dark:border-white/10', 'shadow-sm');
       header?.classList.add('bg-transparent', 'border-transparent');
+
+      // Desaparece el logo
+      logo?.classList.add('opacity-0', 'invisible', '-translate-x-4');
+      logo?.classList.remove('opacity-100', 'visible', 'translate-x-0');
     }
   });
 
-  // LÓGICA DEL MENÚ MÓVIL (Con animación de escala y deslizamiento)
   const mobileBtn = document.getElementById('mobile-menu-btn');
   const closeBtn = document.getElementById('mobile-close-btn');
   const overlay = document.getElementById('mobile-menu-overlay');
@@ -133,16 +171,14 @@ const { links, buttons } = navigationData;
   const dropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
 
   const toggleMenu = () => {
-    const isClosed = overlay?.classList.contains('opacity-0');
+    const isClosed = overlay?.classList.contains('translate-x-full');
     if (isClosed) {
-      // Abrir menú: Aparece y escala a su tamaño normal
-      overlay?.classList.remove('opacity-0', 'invisible', 'scale-95', '-translate-y-4');
-      overlay?.classList.add('opacity-100', 'visible', 'scale-100', 'translate-y-0');
+      overlay?.classList.remove('translate-x-full', 'invisible');
+      overlay?.classList.add('translate-x-0', 'visible');
       document.body.style.overflow = 'hidden'; 
     } else {
-      // Cerrar menú: Se desvanece y se encoge ligeramente hacia arriba
-      overlay?.classList.add('opacity-0', 'invisible', 'scale-95', '-translate-y-4');
-      overlay?.classList.remove('opacity-100', 'visible', 'scale-100', 'translate-y-0');
+      overlay?.classList.add('translate-x-full', 'invisible');
+      overlay?.classList.remove('translate-x-0', 'visible');
       document.body.style.overflow = '';
     }
   };
@@ -154,12 +190,20 @@ const { links, buttons } = navigationData;
   dropdownBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       const target = e.currentTarget as HTMLElement;
-      const content = target.nextElementSibling;
+      const content = target.nextElementSibling as HTMLElement;
       const arrow = target.querySelector('svg');
       
-      content?.classList.toggle('hidden');
-      content?.classList.toggle('flex');
-      arrow?.classList.toggle('rotate-180');
+      const isOpen = content.style.gridTemplateRows === '1fr';
+
+      if (isOpen) {
+        content.style.gridTemplateRows = '0fr';
+        content.style.opacity = '0';
+        arrow?.classList.remove('rotate-180');
+      } else {
+        content.style.gridTemplateRows = '1fr';
+        content.style.opacity = '1';
+        arrow?.classList.add('rotate-180');
+      }
     });
   });
 </script>
