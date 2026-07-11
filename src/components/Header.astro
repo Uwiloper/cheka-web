@@ -4,7 +4,7 @@ import navigationData from '../data/navigation.json';
 const { links, buttons } = navigationData;
 ---
 
-<header id="main-header" class="w-full fixed top-0 left-0 z-[999] transition-all duration-300 ease-in-out bg-transparent border-b border-transparent py-4">
+<header id="main-header" class="w-full fixed top-0 left-0 z-50 transition-all duration-300 ease-in-out bg-transparent border-b border-transparent py-4">
   <div class="max-w-[1440px] mx-auto px-6 flex items-center justify-between h-12">
     
     <a href="/" class="flex items-center gap-3 group active:scale-95 transition-transform duration-300">
@@ -58,7 +58,7 @@ const { links, buttons } = navigationData;
   </div>
 </header>
 
-<div id="mobile-menu-overlay" class="fixed inset-0 z-[1000] bg-slate-50 dark:bg-[#0A0F1C] opacity-0 invisible scale-95 -translate-y-4 transition-all duration-300 ease-out md:hidden flex flex-col">
+<div id="mobile-menu-overlay" class="fixed inset-0 z-[100] bg-slate-50 dark:bg-[#0A0F1C] opacity-0 invisible scale-95 -translate-y-4 transition-all duration-300 ease-out md:hidden flex flex-col">
   
   <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-white/5 bg-transparent h-[72px]">
     
@@ -114,6 +114,7 @@ const { links, buttons } = navigationData;
 <script>
   const header = document.getElementById('main-header');
   
+  // LÓGICA DE SCROLL (Solo añade fondo, sin cambiar el padding/tamaño)
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
       header?.classList.add('bg-white/90', 'dark:bg-[#0A0F1C]/90', 'backdrop-blur-xl', 'border-slate-200', 'dark:border-white/10', 'shadow-sm');
@@ -124,6 +125,7 @@ const { links, buttons } = navigationData;
     }
   });
 
+  // LÓGICA DEL MENÚ MÓVIL (Con animación de escala y deslizamiento)
   const mobileBtn = document.getElementById('mobile-menu-btn');
   const closeBtn = document.getElementById('mobile-close-btn');
   const overlay = document.getElementById('mobile-menu-overlay');
@@ -133,10 +135,12 @@ const { links, buttons } = navigationData;
   const toggleMenu = () => {
     const isClosed = overlay?.classList.contains('opacity-0');
     if (isClosed) {
+      // Abrir menú: Aparece y escala a su tamaño normal
       overlay?.classList.remove('opacity-0', 'invisible', 'scale-95', '-translate-y-4');
       overlay?.classList.add('opacity-100', 'visible', 'scale-100', 'translate-y-0');
       document.body.style.overflow = 'hidden'; 
     } else {
+      // Cerrar menú: Se desvanece y se encoge ligeramente hacia arriba
       overlay?.classList.add('opacity-0', 'invisible', 'scale-95', '-translate-y-4');
       overlay?.classList.remove('opacity-100', 'visible', 'scale-100', 'translate-y-0');
       document.body.style.overflow = '';
@@ -145,13 +149,7 @@ const { links, buttons } = navigationData;
 
   mobileBtn?.addEventListener('click', toggleMenu);
   closeBtn?.addEventListener('click', toggleMenu);
-  
-  // Al hacer clic en un enlace del móvil (como "Planes"), se cierra el menú automáticamente para que veas la sección.
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      toggleMenu();
-    });
-  });
+  mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
   dropdownBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {

@@ -17,3 +17,14 @@
   /* Fuente Mulish por defecto */
   --font-sans: "Mulish", system-ui, sans-serif;
 }
+
+html {
+  /* Hace que la navegación entre anclas (#faq, #precios) sea fluida */
+  scroll-behavior: smooth;
+  
+  /* ¡SÚPER IMPORTANTE! 
+     Como tienes un Navbar fijo arriba, esto evita que el menú tape el 
+     título de la sección cuando terminas de scrollear. 
+     (80px suele ser el alto estándar de un header, ajustalo si lo necesitas) */
+  scroll-padding-top: 80px; 
+}

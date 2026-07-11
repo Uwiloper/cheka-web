@@ -10,7 +10,7 @@
       "priceMonthly": "0",
       "priceAnnual": "0",
       "description": "Perfecto para probar la plataforma y familiarizarte.",
-      "isPopular": false,
+      "isPopular": true   ,
       "button": {
         "text": "Comenzar Gratis",
         "urlMonthly": "/registro",
@@ -65,8 +65,8 @@
       ]
     },
     {
-      "id": "empresario",
-      "name": "Empresario",
+      "id": "empresao",
+      "name": "Empresa",
       "priceMonthly": "Hablemos",
       "priceAnnual": "Hablemos",
       "description": "Para cadenas y franquicias con alto volumen de operaciones.",
