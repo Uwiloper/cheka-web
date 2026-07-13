@@ -1,0 +1,304 @@
+---
+// src/components/features/AnalyticsMock.astro
+import analyticsData from '../data/analyticsFeature.json';
+---
+
+<div id="analytics-wrapper" class="absolute inset-0 flex flex-col justify-end items-center overflow-hidden pt-4 group" style="font-family: 'Mulish', sans-serif;">
+  
+  <div class="relative w-full h-full flex items-end justify-center">
+
+    <div 
+      id="analytics-panel" 
+      class="w-[88%] md:w-[80%] lg:w-[75%] max-w-[600px] aspect-[16/11] md:aspect-[20/11] bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-white/10 border-b-0 rounded-t-[16px] sm:rounded-t-[24px] flex flex-col p-3 md:p-5 select-none relative z-10 mb-[-1px] shadow-[0_-5px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_-5px_20px_rgba(0,0,0,0.2)] transition-transform duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:-translate-x-2 md:group-hover:-translate-x-4"
+    >
+      
+      <div class="absolute bottom-0 left-0 right-0 h-[35%] bg-gradient-to-t from-white dark:from-[#1E293B] to-transparent z-10 pointer-events-none rounded-t-none"></div>
+
+      <header class="flex items-center justify-between mb-3 md:mb-4 shrink-0 relative z-20">
+        <div class="flex items-center gap-2 md:gap-3">
+          <div class="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-inner shrink-0">
+            <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+            </svg>
+          </div>
+          <span class="text-[11px] md:text-[14px] font-black text-slate-800 dark:text-white tracking-tight truncate">Ingresos vs Gastos</span>
+        </div>
+        
+        <div class="px-2 py-1 md:px-3 md:py-1.5 bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 rounded-full shrink-0">
+          <span id="chart-date" class="text-[8px] md:text-[10px] font-bold text-slate-500 dark:text-[#94a3b8] transition-opacity duration-500 whitespace-nowrap">01 May - 07 May 2026</span>
+        </div>
+      </header>
+
+      <div class="relative flex-1 w-full" id="chart-area">
+        
+        <div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0 pb-[8%]">
+          {[1, 2, 3, 4].map(() => (
+            <div class="w-full border-b border-dashed border-slate-200 dark:border-slate-700/40 h-0"></div>
+          ))}
+        </div>
+
+        <svg class="absolute inset-0 w-full h-full overflow-visible z-10" preserveAspectRatio="none" viewBox="0 0 1000 1000">
+          <defs>
+            <linearGradient id="grad-income" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#10b981" stop-opacity="0.4" />
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="grad-expense" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.15" />
+              <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          
+          <path id="path-income-fill" fill="url(#grad-income)" class="transition-all duration-1000 ease-in-out" d="M0,1000 L0,1000 L1000,1000 Z" />
+          <path id="path-income-line" fill="none" stroke="#10b981" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" class="transition-all duration-1000 ease-in-out drop-shadow-[0_4px_4px_rgba(16,185,129,0.3)]" d="M0,1000 L1000,1000" />
+          
+          <path id="path-expense-fill" fill="url(#grad-expense)" class="transition-all duration-1000 ease-in-out" d="M0,1000 L0,1000 L1000,1000 Z" />
+          <path id="path-expense-line" fill="none" stroke="#f43f5e" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 40" class="transition-all duration-1000 ease-in-out drop-shadow-[0_3px_3px_rgba(244,63,94,0.3)]" d="M0,1000 L1000,1000" />
+        </svg>
+
+        <div id="chart-cursor" class="absolute top-0 bottom-0 w-[1px] bg-gradient-to-b from-slate-400 dark:from-slate-500 to-transparent opacity-0 transition-opacity duration-200 pointer-events-none z-30" style="left: 50%;">
+          <div id="dot-income" class="absolute w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-white dark:bg-[#0F172A] border-[2px] md:border-[2.5px] border-[#10b981] rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_8px_rgba(16,185,129,0.8)] transition-all duration-75"></div>
+          <div id="dot-expense" class="absolute w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-white dark:bg-[#0F172A] border-[2px] md:border-[2.5px] border-[#f43f5e] rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_8px_rgba(244,63,94,0.8)] transition-all duration-75"></div>
+          
+          <div id="chart-tooltip" class="absolute top-0 md:top-2 -translate-x-1/2 bg-white/95 dark:bg-[#0F172A]/95 border border-slate-200 dark:border-white/10 shadow-lg rounded-lg md:rounded-xl p-2 md:p-3 min-w-[80px] md:min-w-[110px] transition-transform duration-75 backdrop-blur-sm">
+            <p id="tt-label" class="text-[8px] md:text-[10px] font-black text-slate-400 dark:text-slate-500 mb-1 md:mb-1.5 uppercase tracking-widest text-center">Lun</p>
+            <div class="flex justify-between items-center gap-3 md:gap-4 mb-0.5 md:mb-1">
+              <div class="flex items-center gap-1 md:gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+                <span class="text-[8px] md:text-[10px] font-bold text-slate-600 dark:text-slate-300">Ingreso</span>
+              </div>
+              <span id="tt-income" class="text-[9px] md:text-[11px] font-black text-slate-900 dark:text-white">S/0</span>
+            </div>
+            <div class="flex justify-between items-center gap-3 md:gap-4">
+              <div class="flex items-center gap-1 md:gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#f43f5e]"></span>
+                <span class="text-[8px] md:text-[10px] font-bold text-slate-600 dark:text-slate-300">Gasto</span>
+              </div>
+              <span id="tt-expense" class="text-[9px] md:text-[11px] font-black text-slate-900 dark:text-white">S/0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div 
+      class="absolute right-[5%] lg:right-[10%] bottom-0 mb-[-1px] w-[130px] md:w-[170px] bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 border-b-0 rounded-t-[16px] md:rounded-t-[24px] flex flex-col p-3 md:p-5 z-30 shadow-[0_-5px_25px_rgba(0,0,0,0.05)] dark:shadow-[0_-5px_25px_rgba(0,0,0,0.3)] transition-transform duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:translate-x-2 md:group-hover:translate-x-4 group-hover:-translate-y-2"
+    >
+      <h4 class="text-[11px] md:text-[13px] font-black text-slate-800 dark:text-white text-center tracking-tight mb-2 md:mb-4">Uso App</h4>
+      
+      <div class="relative w-full aspect-square mb-3 md:mb-5 flex items-center justify-center">
+        <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="16" class="text-slate-100 dark:text-slate-700/50" />
+          
+          <circle id="donut-yape" cx="50" cy="50" r="35" fill="none" stroke="#10b981" stroke-width="16" class="transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] drop-shadow-[0_2px_4px_rgba(16,185,129,0.3)]" style="stroke-dasharray: 0px 220px; stroke-dashoffset: 0px;" />
+          <circle id="donut-plin" cx="50" cy="50" r="35" fill="none" stroke="#f43f5e" stroke-width="16" class="transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] drop-shadow-[0_2px_4px_rgba(244,63,94,0.3)]" style="stroke-dasharray: 0px 220px; stroke-dashoffset: 0px;" />
+          <circle id="donut-bcp" cx="50" cy="50" r="35" fill="none" stroke="#f97316" stroke-width="16" class="transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] drop-shadow-[0_2px_4px_rgba(249,115,22,0.3)]" style="stroke-dasharray: 0px 220px; stroke-dashoffset: 0px;" />
+        </svg>
+        
+        <div class="absolute inset-0 m-auto w-[40%] h-[40%] bg-white dark:bg-[#0F172A] rounded-full shadow-inner"></div>
+      </div>
+
+      <ul class="flex flex-col gap-1.5 md:gap-2">
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5 md:gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#10b981]"></span>
+            <span class="text-[9px] md:text-[11px] font-bold text-slate-500 dark:text-slate-400">Yape</span>
+          </div>
+          <span id="legend-yape" class="text-[10px] md:text-[12px] font-black text-slate-800 dark:text-slate-200 transition-all duration-300">0%</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5 md:gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#f43f5e]"></span>
+            <span class="text-[9px] md:text-[11px] font-bold text-slate-500 dark:text-slate-400">Plin</span>
+          </div>
+          <span id="legend-plin" class="text-[10px] md:text-[12px] font-black text-slate-800 dark:text-slate-200 transition-all duration-300">0%</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5 md:gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#f97316]"></span>
+            <span class="text-[9px] md:text-[11px] font-bold text-slate-500 dark:text-slate-400">BCP</span>
+          </div>
+          <span id="legend-bcp" class="text-[10px] md:text-[12px] font-black text-slate-800 dark:text-slate-200 transition-all duration-300">0%</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script define:vars={{ analyticsData }}>
+  if (typeof window !== 'undefined') {
+    const chartArea = document.getElementById('chart-area');
+    const elDate = document.getElementById('chart-date');
+    
+    const pathIncLine = document.getElementById('path-income-line');
+    const pathIncFill = document.getElementById('path-income-fill');
+    const pathExpLine = document.getElementById('path-expense-line');
+    const pathExpFill = document.getElementById('path-expense-fill');
+    
+    const donutYape = document.getElementById('donut-yape');
+    const donutPlin = document.getElementById('donut-plin');
+    const donutBcp = document.getElementById('donut-bcp');
+    const legendYape = document.getElementById('legend-yape');
+    const legendPlin = document.getElementById('legend-plin');
+    const legendBcp = document.getElementById('legend-bcp');
+    
+    // Circunferencia del círculo (r=35 => 2 * PI * 35 = ~219.91)
+    const CIRCUMFERENCE = 2 * Math.PI * 35; 
+
+    const cursor = document.getElementById('chart-cursor');
+    const dotIncome = document.getElementById('dot-income');
+    const dotExpense = document.getElementById('dot-expense');
+    const tooltip = document.getElementById('chart-tooltip');
+    const ttLabel = document.getElementById('tt-label');
+    const ttIncome = document.getElementById('tt-income');
+    const ttExpense = document.getElementById('tt-expense');
+
+    let currentPeriodIdx = 0;
+    let currentData = [];
+    let maxVal = 1000;
+
+    function generatePaths(data, max) {
+      const W = 1000;
+      const H = 1000;
+      const step = W / (data.length - 1);
+      
+      let incLine = `M 0 ${H - (data[0].income / max) * H}`;
+      let incFill = `M 0 ${H - (data[0].income / max) * H}`;
+      let expLine = `M 0 ${H - (data[0].expense / max) * H}`;
+      let expFill = `M 0 ${H - (data[0].expense / max) * H}`;
+
+      for (let i = 0; i < data.length - 1; i++) {
+        const x1 = i * step;
+        const x2 = (i + 1) * step;
+        
+        const y1Inc = H - (data[i].income / max) * H;
+        const y2Inc = H - (data[i+1].income / max) * H;
+        const cpXInc = x1 + (x2 - x1) / 2;
+        incLine += ` C ${cpXInc} ${y1Inc}, ${cpXInc} ${y2Inc}, ${x2} ${y2Inc}`;
+        incFill += ` C ${cpXInc} ${y1Inc}, ${cpXInc} ${y2Inc}, ${x2} ${y2Inc}`;
+
+        const y1Exp = H - (data[i].expense / max) * H;
+        const y2Exp = H - (data[i+1].expense / max) * H;
+        const cpXExp = x1 + (x2 - x1) / 2;
+        expLine += ` C ${cpXExp} ${y1Exp}, ${cpXExp} ${y2Exp}, ${x2} ${y2Exp}`;
+        expFill += ` C ${cpXExp} ${y1Exp}, ${cpXExp} ${y2Exp}, ${x2} ${y2Exp}`;
+      }
+
+      incFill += ` L ${W} ${H} L 0 ${H} Z`;
+      expFill += ` L ${W} ${H} L 0 ${H} Z`;
+      return { incLine, incFill, expLine, expFill };
+    }
+
+    function updateChart() {
+      if (!analyticsData || !analyticsData.periods) return;
+      
+      const period = analyticsData.periods[currentPeriodIdx];
+      currentData = period.data;
+      maxVal = period.maxVal;
+
+      // Actualizar Fechas
+      if (elDate) {
+        elDate.classList.add('opacity-0');
+        setTimeout(() => {
+          elDate.innerText = period.date;
+          elDate.classList.remove('opacity-0');
+        }, 250);
+      }
+
+      // Actualizar Gráfico Principal
+      const paths = generatePaths(currentData, maxVal);
+      pathIncLine?.setAttribute('d', paths.incLine);
+      pathIncFill?.setAttribute('d', paths.incFill);
+      pathExpLine?.setAttribute('d', paths.expLine);
+      pathExpFill?.setAttribute('d', paths.expFill);
+
+      // Actualizar Gráfico Circular
+      // (Si no hay 'apps' en tu JSON, usaremos valores de respaldo para que siga funcionando)
+      const appsData = period.apps || [
+        { name: "Yape", percent: 45 },
+        { name: "Plin", percent: 35 },
+        { name: "BCP", percent: 20 }
+      ];
+
+      if (appsData.length >= 3) {
+        const pYape = appsData[0].percent;
+        const pPlin = appsData[1].percent;
+        const pBcp = appsData[2].percent;
+
+        if(legendYape) legendYape.innerText = `${pYape}%`;
+        if(legendPlin) legendPlin.innerText = `${pPlin}%`;
+        if(legendBcp) legendBcp.innerText = `${pBcp}%`;
+
+        // Aquí está el truco: Añadimos 'px' a los valores en JavaScript para que CSS lo acepte
+        const valYape = (pYape / 100) * CIRCUMFERENCE;
+        const valPlin = (pPlin / 100) * CIRCUMFERENCE;
+        const valBcp = (pBcp / 100) * CIRCUMFERENCE;
+
+        if (donutYape) {
+          donutYape.style.strokeDasharray = `${valYape}px ${CIRCUMFERENCE}px`;
+          donutYape.style.strokeDashoffset = `0px`;
+        }
+        
+        if (donutPlin) {
+          donutPlin.style.strokeDasharray = `${valPlin}px ${CIRCUMFERENCE}px`;
+          // El offset negativo hace que el trazo empiece DESPUÉS de donde terminó el anterior
+          donutPlin.style.strokeDashoffset = `-${valYape}px`;
+        }
+        
+        if (donutBcp) {
+          donutBcp.style.strokeDasharray = `${valBcp}px ${CIRCUMFERENCE}px`;
+          donutBcp.style.strokeDashoffset = `-${valYape + valPlin}px`;
+        }
+      }
+
+      currentPeriodIdx = (currentPeriodIdx + 1) % analyticsData.periods.length;
+    }
+
+    // Pequeño retraso inicial para que la primera animación de carga sea visible
+    setTimeout(updateChart, 100);
+    setInterval(updateChart, 4000); 
+
+    // Interactividad del Mouse (sin cambios)
+    function handlePointerMove(clientX, rect) {
+      if (!currentData || currentData.length === 0) return;
+      
+      const mouseX = clientX - rect.left;
+      const percentage = Math.max(0, Math.min(1, mouseX / rect.width));
+      const idx = Math.round(percentage * (currentData.length - 1));
+      const point = currentData[idx];
+
+      if (cursor) cursor.style.opacity = '1';
+      const snapPercentage = (idx / (currentData.length - 1)) * 100;
+      if (cursor) cursor.style.left = `${snapPercentage}%`;
+
+      if (tooltip) {
+        if (snapPercentage > 75) tooltip.style.transform = `translateX(-85%)`;
+        else if (snapPercentage < 25) tooltip.style.transform = `translateX(-15%)`;
+        else tooltip.style.transform = `translateX(-50%)`;
+      }
+
+      const yInc = 100 - (point.income / maxVal) * 100;
+      const yExp = 100 - (point.expense / maxVal) * 100;
+      
+      if (dotIncome) dotIncome.style.top = `${yInc}%`;
+      if (dotExpense) dotExpense.style.top = `${yExp}%`;
+
+      if (ttLabel) ttLabel.innerText = point.label;
+      if (ttIncome) ttIncome.innerText = `S/${point.income}`;
+      if (ttExpense) ttExpense.innerText = `S/${point.expense}`;
+    }
+
+    chartArea?.addEventListener('mousemove', (e) => {
+      handlePointerMove(e.clientX, chartArea.getBoundingClientRect());
+    });
+
+    chartArea?.addEventListener('touchmove', (e) => {
+      handlePointerMove(e.touches[0].clientX, chartArea.getBoundingClientRect());
+    });
+
+    chartArea?.addEventListener('mouseleave', () => {
+      if (cursor) cursor.style.opacity = '0';
+    });
+  }
+</script>

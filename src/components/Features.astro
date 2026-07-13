@@ -1,7 +1,10 @@
 ---
 // src/components/Features.astro
-import featuresData from '../data/features.json';
-const { header, items } = featuresData;
+import featuresData from '../data/features.json';                 //JSON principal de funcionalidades
+const { header, items } = featuresData;             
+
+import analyticsFeature from '../data/analyticsFeature.json';     //JSON de analiticas animadas
+import AnalyticsMock from './AnalyticsMock.astro';                //Analiticas animadas
 ---
 
 <section id="funcionalidades" class="relative py-24 bg-white dark:bg-[#0A0F1C] transition-colors duration-300 overflow-hidden">
@@ -40,9 +43,13 @@ const { header, items } = featuresData;
                 id={`anim-container-${item.id}`} 
                 class="flex-1 w-full mb-8 relative z-10 rounded-xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 flex items-center justify-center overflow-hidden shadow-inner"
               >
-                <span class="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">
-                  Animación: {item.id}
-                </span>
+                {item.id === 'analytics' ? (
+                  <AnalyticsMock />
+                ) : (
+                  <span class="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">
+                    Animación: {item.id}
+                  </span>
+                )}
               </div>
 
               <div class="relative z-20 flex items-start gap-4">

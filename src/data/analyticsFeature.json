@@ -1,0 +1,58 @@
+{
+  "periods": [
+    {
+      "date": "01 May - 07 May 2026",
+      "maxVal": 1000,
+      "data": [
+        { "label": "Lun", "income": 450, "expense": 120 },
+        { "label": "Mar", "income": 520, "expense": 180 },
+        { "label": "Mie", "income": 380, "expense": 250 },
+        { "label": "Jue", "income": 710, "expense": 210 },
+        { "label": "Vie", "income": 850, "expense": 300 },
+        { "label": "Sab", "income": 690, "expense": 450 },
+        { "label": "Dom", "income": 950, "expense": 200 }
+      ],
+      "apps": [
+        { "name": "Yape", "percent": 50 },
+        { "name": "Plin", "percent": 30 },
+        { "name": "BCP", "percent": 20 }
+      ]
+    },
+    {
+      "date": "08 May - 14 May 2026",
+      "maxVal": 1000,
+      "data": [
+        { "label": "Lun", "income": 300, "expense": 150 },
+        { "label": "Mar", "income": 400, "expense": 200 },
+        { "label": "Mie", "income": 650, "expense": 180 },
+        { "label": "Jue", "income": 550, "expense": 350 },
+        { "label": "Vie", "income": 900, "expense": 400 },
+        { "label": "Sab", "income": 800, "expense": 250 },
+        { "label": "Dom", "income": 980, "expense": 300 }
+      ],
+      "apps": [
+        { "name": "Yape", "percent": 65 },
+        { "name": "Plin", "percent": 20 },
+        { "name": "BCP", "percent": 15 }
+      ]
+    },
+    {
+      "date": "15 May - 21 May 2026",
+      "maxVal": 1000,
+      "data": [
+        { "label": "Lun", "income": 600, "expense": 300 },
+        { "label": "Mar", "income": 750, "expense": 250 },
+        { "label": "Mie", "income": 500, "expense": 400 },
+        { "label": "Jue", "income": 850, "expense": 200 },
+        { "label": "Vie", "income": 950, "expense": 450 },
+        { "label": "Sab", "income": 700, "expense": 350 },
+        { "label": "Dom", "income": 880, "expense": 150 }
+      ],
+      "apps": [
+        { "name": "Yape", "percent": 45 },
+        { "name": "Plin", "percent": 40 },
+        { "name": "BCP", "percent": 15 }
+      ]
+    }
+  ]
+}
