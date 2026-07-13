@@ -1,0 +1,111 @@
+---
+// src/components/Features.astro
+import featuresData from '../data/features.json';
+const { header, items } = featuresData;
+---
+
+<section id="funcionalidades" class="relative py-24 bg-white dark:bg-[#0A0F1C] transition-colors duration-300 overflow-hidden">
+  
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll opacity-0 translate-y-12 transition-all duration-700 ease-out">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#10b981]/10 border border-[#10b981]/20 text-[11px] font-black text-[#10b981] uppercase tracking-widest shadow-sm mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
+        {header.badge}
+      </div>
+      <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">
+        {header.title}
+      </h2>
+      <p class="text-lg text-slate-600 dark:text-[#94a3b8] font-medium">
+        {header.description}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 auto-rows-[280px]">
+      
+      {items.map((item, index) => (
+        <div 
+          class={`reveal-on-scroll opacity-0 translate-y-12 transition-all duration-700 ease-out flex flex-col ${item.colSpan} ${item.rowSpan}`}
+          style={`transition-delay: ${index * 100}ms;`}
+        >
+          <div class={`group relative w-full h-full rounded-[24px] p-[2px] transition-transform duration-500 hover:scale-[1.005] [transform:translateZ(0)] backface-hidden ${item.theme.glowHover}`}>
+            
+            <div class={`absolute inset-0 rounded-[24px] transition-opacity duration-500 ${item.id === 'ai' ? item.theme.borderGradient + ' opacity-100' : item.theme.borderGradient + ' opacity-0 group-hover:opacity-100'}`}></div>
+
+            <div class="relative w-full h-full rounded-[22px] p-6 sm:p-8 flex flex-col bg-slate-50 dark:bg-[#111827] overflow-hidden z-10 shadow-none">
+              
+              <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+              <div 
+                id={`anim-container-${item.id}`} 
+                class="flex-1 w-full mb-8 relative z-10 rounded-xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 flex items-center justify-center overflow-hidden shadow-inner"
+              >
+                <span class="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">
+                  Animación: {item.id}
+                </span>
+              </div>
+
+              <div class="relative z-20 flex items-start gap-4">
+                <div class={`shrink-0 mt-1 ${item.theme.iconColor}`}>
+                  <svg class="w-8 h-8 transition-transform duration-500 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" set:html={item.icon} />
+                </div>
+                
+                <div>
+                  <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 group-hover:to-slate-600 dark:group-hover:from-white dark:group-hover:to-slate-400 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p class="text-[14px] font-medium text-slate-500 dark:text-[#94a3b8] leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+
+<script>
+  if (typeof window !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-12');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const elements = document.querySelectorAll('.reveal-on-scroll');
+      elements.forEach(el => observer.observe(el));
+    });
+  }
+</script>
+
+<style is:global>
+  /* Animación Arcoíris Continua para IA (Ahora se desvanece suavemente hacia una esquina) */
+  @keyframes rainbow-border {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .rainbow-bg {
+    /* Gradiente con los colores neón que termina en transparente en la parte inferior derecha */
+    background: linear-gradient(135deg, #3b82f6, #ec4899, #f97316, transparent, transparent);
+    background-size: 300% 300%;
+    animation: rainbow-border 6s ease infinite;
+  }
+</style>

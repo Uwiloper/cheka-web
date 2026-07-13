@@ -20,11 +20,10 @@
         }
       ]
     },
-    { "name": "Contacto", "url": "#contacto", "type": "link" },
     { "name": "Preguntas", "url": "#faq", "type": "link" }
   ],
   "buttons": {
     "login": { "name": "Ingresar", "url": "https://visornotificaciones.web.app/dashboard.html" },
-    "register": { "name": "Registrarse", "url": "#registro" }
+    "register": { "name": "Registrarse", "url": "#contacto" }
   }
 }
