@@ -1,18 +1,19 @@
 ---
 // src/components/Features.astro
-import featuresData from '../data/features.json';                 //JSON principal de funcionalidades
-const { header, items } = featuresData;             
+import featuresData from '../data/features.json';
+import AnalyticsMock from './AnalyticsMock.astro';
+import FeatureModal from './FeatureModal.astro'; 
 
-import analyticsFeature from '../data/analyticsFeature.json';     //JSON de analiticas animadas
-import AnalyticsMock from './AnalyticsMock.astro';                //Analiticas animadas
+const { header, items } = featuresData;
 ---
 
-<section id="funcionalidades" class="relative py-24 bg-white dark:bg-[#0A0F1C] transition-colors duration-300 overflow-hidden">
+<section id="funcionalidades" class="relative py-24 bg-slate-50/50 dark:bg-[#0A0F1C] transition-colors duration-300 overflow-hidden">
   
-  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
+    <!-- Encabezado -->
     <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll opacity-0 translate-y-12 transition-all duration-700 ease-out">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#10b981]/10 border border-[#10b981]/20 text-[11px] font-black text-[#10b981] uppercase tracking-widest shadow-sm mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#10b981]/10 border border-[#10b981]/20 text-[11px] font-black text-[#10b981] uppercase tracking-widest mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
         {header.badge}
       </div>
@@ -24,95 +25,141 @@ import AnalyticsMock from './AnalyticsMock.astro';                //Analiticas a
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 auto-rows-[280px]">
+    <!-- Grid Flat (Sin Sombras, Solo Línea Degradada) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       
       {items.map((item, index) => (
-        <div 
-          class={`reveal-on-scroll opacity-0 translate-y-12 transition-all duration-700 ease-out flex flex-col ${item.colSpan} ${item.rowSpan}`}
-          style={`transition-delay: ${index * 100}ms;`}
+        <button 
+          class={`feature-trigger reveal-on-scroll opacity-0 translate-y-8 transition-all duration-500 ease-out group relative w-full text-left flex flex-col ${item.colSpan}`}
+          style={`transition-delay: ${index * 75}ms;`}
+          data-target={`modal-${item.id}`}
         >
-          <div class={`group relative w-full h-full rounded-[24px] p-[2px] transition-transform duration-500 hover:scale-[1.005] [transform:translateZ(0)] backface-hidden ${item.theme.glowHover}`}>
+          <!-- Línea Degradada de Fondo -->
+          <div class={`absolute inset-0 rounded-[24px] transition-opacity duration-500 ${item.id === 'ai' ? item.theme.borderGradient + ' opacity-100' : item.theme.borderGradient + ' opacity-0 group-hover:opacity-100'}`}></div>
+
+          <!-- Contenedor Principal Blanco (Diseño Totalmente Plano, sin sombras) -->
+          <div class="relative w-[calc(100%-4px)] h-[calc(100%-4px)] m-[2px] rounded-[22px] bg-white dark:bg-[#0B1120] border border-slate-200 dark:border-slate-800 group-hover:border-transparent transition-colors duration-300 overflow-hidden flex flex-col md:flex-row z-10">
             
-            <div class={`absolute inset-0 rounded-[24px] transition-opacity duration-500 ${item.id === 'ai' ? item.theme.borderGradient + ' opacity-100' : item.theme.borderGradient + ' opacity-0 group-hover:opacity-100'}`}></div>
-
-            <div class="relative w-full h-full rounded-[22px] p-6 sm:p-8 flex flex-col bg-slate-50 dark:bg-[#111827] overflow-hidden z-10 shadow-none">
+            <div class={`relative z-10 flex flex-col w-full h-full ${item.id === 'ai' ? 'md:flex-row' : ''}`}>
               
-              <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:from-white/5 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
-              <div 
-                id={`anim-container-${item.id}`} 
-                class="flex-1 w-full mb-8 relative z-10 rounded-xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 flex items-center justify-center overflow-hidden shadow-inner"
-              >
+              <!-- ÁREA VISUAL -->
+              <div class={`relative flex items-center justify-center border-b md:border-b-0 ${item.id === 'ai' ? 'md:border-r md:w-1/2 h-[260px] md:h-auto' : 'border-slate-100 dark:border-slate-800 h-[260px] w-full'}`}>
+                
                 {item.id === 'analytics' ? (
-                  <AnalyticsMock />
+                  // Contenedor simple para AnalyticsMock para evitar que se aplaste
+                  <div class="w-full h-full relative overflow-hidden pointer-events-none p-4 flex items-center justify-center">
+                     <AnalyticsMock />
+                  </div>
                 ) : (
-                  <span class="text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">
-                    Animación: {item.id}
-                  </span>
+                  <div class={`${item.theme.iconColor} opacity-40 group-hover:opacity-100 transition-opacity duration-500`}>
+                     <svg class="w-20 h-20" fill="currentColor" viewBox="0 0 24 24" set:html={item.icon} />
+                  </div>
                 )}
               </div>
 
-              <div class="relative z-20 flex items-start gap-4">
-                <div class={`shrink-0 mt-1 ${item.theme.iconColor}`}>
-                  <svg class="w-8 h-8 transition-transform duration-500 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" set:html={item.icon} />
+              <!-- ÁREA DE TEXTOS -->
+              <div class={`p-8 flex flex-col ${item.id === 'ai' ? 'md:w-1/2 justify-center' : 'justify-start'}`}>
+                
+                <!-- Icono Pequeño -->
+                <div class={`w-12 h-12 rounded-[14px] mb-5 flex items-center justify-center bg-white dark:bg-[#111827] border border-slate-100 dark:border-slate-800 ${item.theme.iconColor}`}>
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" set:html={item.icon} />
                 </div>
                 
-                <div>
-                  <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 group-hover:to-slate-600 dark:group-hover:from-white dark:group-hover:to-slate-400 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p class="text-[14px] font-medium text-slate-500 dark:text-[#94a3b8] leading-relaxed">
-                    {item.description}
-                  </p>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {item.title}
+                </h3>
+                
+                <p class="text-[14.5px] text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                  {item.description}
+                </p>
+                
+                <!-- Enlace "Ver detalle" -->
+                <div class="mt-auto flex items-center gap-1.5 text-[13px] font-bold text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  Ver detalle 
+                  <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
                 </div>
+
               </div>
 
             </div>
           </div>
-        </div>
+        </button>
       ))}
 
     </div>
   </div>
 </section>
 
+<!-- Renderizar los Modales -->
+{items.map((item) => (
+  <FeatureModal item={item} />
+))}
+
 <script>
   if (typeof window !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
+      // Intersection Observer
+      const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.remove('opacity-0', 'translate-y-12');
+            entry.target.classList.remove('opacity-0', 'translate-y-12', 'translate-y-8');
             entry.target.classList.add('opacity-100', 'translate-y-0');
-            observer.unobserve(entry.target);
+            obs.unobserve(entry.target);
           }
         });
-      }, observerOptions);
+      }, { root: null, rootMargin: '0px', threshold: 0.1 });
 
-      const elements = document.querySelectorAll('.reveal-on-scroll');
-      elements.forEach(el => observer.observe(el));
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+      // Lógica Modal
+      const triggers = document.querySelectorAll('.feature-trigger');
+      
+      function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        const content = modal.querySelector('.modal-content');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        setTimeout(() => {
+          modal.classList.remove('opacity-0');
+          if(content) content.classList.remove('scale-95');
+        }, 10);
+      }
+
+      function closeModal(modal) {
+        const content = modal.querySelector('.modal-content');
+        modal.classList.add('opacity-0');
+        if(content) content.classList.add('scale-95');
+        
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          document.body.style.overflow = ''; 
+        }, 300);
+      }
+
+      triggers.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-target');
+          if (target) openModal(target);
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('.close-modal') || target.classList.contains('modal-backdrop')) {
+          const modal = target.closest('.feature-modal');
+          if (modal) closeModal(modal);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const openModal = document.querySelector('.feature-modal:not(.hidden)');
+          if (openModal) closeModal(openModal);
+        }
+      });
     });
   }
 </script>
-
-<style is:global>
-  /* Animación Arcoíris Continua para IA (Ahora se desvanece suavemente hacia una esquina) */
-  @keyframes rainbow-border {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  .rainbow-bg {
-    /* Gradiente con los colores neón que termina en transparente en la parte inferior derecha */
-    background: linear-gradient(135deg, #3b82f6, #ec4899, #f97316, transparent, transparent);
-    background-size: 300% 300%;
-    animation: rainbow-border 6s ease infinite;
-  }
-</style>

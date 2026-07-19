@@ -6,19 +6,6 @@
   },
   "items": [
     {
-      "id": "analytics",
-      "title": "Analíticas en Tiempo Real",
-      "description": "Visualiza ingresos, gastos y market share por app bancaria al instante.",
-      "colSpan": "md:col-span-2 lg:col-span-2",
-      "rowSpan": "md:row-span-2 lg:row-span-2",
-      "icon": "<path fill-rule='evenodd' d='M2.25 2.25a.75.75 0 0 0 0 1.5H3v10.5a3 3 0 0 0 3 3h1.21l-1.172 3.513a.75.75 0 0 0 1.424.474l.329-.987h8.418l.33.987a.75.75 0 0 0 1.422-.474l-1.17-3.513H18a3 3 0 0 0 3-3V3.75h.75a.75.75 0 0 0 0-1.5H2.25Zm6.54 15h6.42l.5 1.5H8.29l.5-1.5Zm8.085-8.995a.75.75 0 1 0-.75-1.299 12.81 12.81 0 0 0-3.558 3.05L11.03 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l2.47-2.47 1.617 1.618a.75.75 0 0 0 1.146-.102 11.312 11.312 0 0 1 3.612-3.321Z' clip-rule='evenodd' />",
-      "theme": {
-        "iconColor": "text-blue-500",
-        "borderGradient": "bg-gradient-to-br from-blue-500 via-blue-500/30 to-transparent",
-        "glowHover": "group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]"
-      }
-    },
-    {
       "id": "voice",
       "title": "Alertas por Voz",
       "description": "Escucha quién te paga sin mirar la pantalla.",
@@ -29,6 +16,74 @@
         "iconColor": "text-[#10b981]",
         "borderGradient": "bg-gradient-to-br from-[#10b981] via-[#10b981]/30 to-transparent",
         "glowHover": "group-hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]"
+      },
+      "modalData": {
+        "hero": {
+          "title": "No pierdas de vista tu negocio",
+          "description": "Recibe notificaciones auditivas claras cada vez que un pago sea exitoso, permitiéndote atender a tus clientes sin distracciones.",
+          "primaryBtn": { "text": "Configurar Alertas", "url": "#" },
+          "secondaryBtn": { "text": "Ver Demo", "url": "#" },
+          "benefits": ["Notificaciones en tiempo real", "Operación manos libres"]
+        },
+        "subFeatures": [],
+        "testimonial": null
+      }
+    },
+    {
+      "id": "analytics",
+      "title": "Analíticas en Tiempo Real",
+      "description": "Visualiza ingresos, gastos y market share por app bancaria al instante.",
+      "colSpan": "md:col-span-1 lg:col-span-1",
+      "rowSpan": "lg:row-span-1",
+      "icon": "<path fill-rule='evenodd' d='M2.25 2.25a.75.75 0 0 0 0 1.5H3v10.5a3 3 0 0 0 3 3h1.21l-1.172 3.513a.75.75 0 0 0 1.424.474l.329-.987h8.418l.33.987a.75.75 0 0 0 1.422-.474l-1.17-3.513H18a3 3 0 0 0 3-3V3.75h.75a.75.75 0 0 0 0-1.5H2.25Zm6.54 15h6.42l.5 1.5H8.29l.5-1.5Zm8.085-8.995a.75.75 0 1 0-.75-1.299 12.81 12.81 0 0 0-3.558 3.05L11.03 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l2.47-2.47 1.617 1.618a.75.75 0 0 0 1.146-.102 11.312 11.312 0 0 1 3.612-3.321Z' clip-rule='evenodd' />",
+      "theme": {
+        "iconColor": "text-blue-500",
+        "borderGradient": "bg-gradient-to-br from-blue-500 via-blue-500/30 to-transparent",
+        "glowHover": "group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]"
+      },
+      "modalData": {
+        "hero": {
+          "title": "Acepta y optimiza pagos en todo el mundo",
+          "description": "Simplifica tu proceso de compra, amplía tu alcance y aumenta la conversión con herramientas que aprovechan la IA para aceptar pagos en cualquier lugar.",
+          "primaryBtn": {
+            "text": "Descubre Analytics >",
+            "url": "#"
+          },
+          "secondaryBtn": {
+            "text": "Consulta las tarifas",
+            "url": "#"
+          },
+          "benefits": [
+            "Crea una experiencia fluida en tu checkout",
+            "Expándete a nuevos mercados con mayor rapidez",
+            "Aumenta las tasas de aceptación y reduce el fraude",
+            "Unifica los pagos por Internet y en persona"
+          ]
+        },
+        "subFeatures": [
+          {
+            "icon": "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M13 7h8m0 0v8m0-8l-8 8-4-4-6 6\"></path>",
+            "text": "Aumenta la conversión con interfaces prediseñadas y análisis detallados del comportamiento de tus usuarios."
+          },
+          {
+            "icon": "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z\"></path>",
+            "text": "Mejora el rendimiento con optimizaciones dinámicas y prevención del fraude en tiempo real."
+          },
+          {
+            "icon": "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"></path>",
+            "text": "Avanza más rápido reduciendo los tiempos de inactividad con una infraestructura líder."
+          }
+        ],
+        "testimonial": {
+          "logo": "Amazon",
+          "quote": "«Encontrar un socio que pueda hacer frente no solo a los picos de volumen, sino también a otros aspectos relacionados con la escalabilidad, es fundamental.»",
+          "author": "Ben Volk",
+          "role": "Director de Aceptación global, Amazon",
+          "link": {
+            "text": "Conoce su historia >",
+            "url": "#"
+          }
+        }
       }
     },
     {
@@ -42,6 +97,17 @@
         "iconColor": "text-amber-500",
         "borderGradient": "bg-gradient-to-br from-amber-500 via-amber-500/30 to-transparent",
         "glowHover": "group-hover:shadow-[0_0_30px_rgba(245,158,11,0.15)]"
+      },
+      "modalData": {
+        "hero": {
+          "title": "Control total para los dueños",
+          "description": "Protege tu información sensible permitiendo a tus empleados verificar pagos sin tener acceso a los saldos o reportes globales.",
+          "primaryBtn": { "text": "Ver Seguridad", "url": "#" },
+          "secondaryBtn": { "text": "Más Información", "url": "#" },
+          "benefits": ["Privacidad garantizada", "Gestión de roles"]
+        },
+        "subFeatures": [],
+        "testimonial": null
       }
     },
     {
@@ -55,6 +121,17 @@
         "iconColor": "text-purple-500",
         "borderGradient": "bg-gradient-to-br from-purple-500 via-purple-500/30 to-transparent",
         "glowHover": "group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+      },
+      "modalData": {
+        "hero": {
+          "title": "Cierra tu mes sin estrés",
+          "description": "Descarga todos los movimientos financieros de tu negocio conciliados y listos para importar a tu sistema contable.",
+          "primaryBtn": { "text": "Automatizar Finanzas", "url": "#" },
+          "secondaryBtn": { "text": "Formatos Soportados", "url": "#" },
+          "benefits": ["Formatos Excel y CSV", "Compatible con SUNAT"]
+        },
+        "subFeatures": [],
+        "testimonial": null
       }
     },
     {
@@ -68,6 +145,26 @@
         "iconColor": "text-pink-500",
         "borderGradient": "rainbow-bg",
         "glowHover": "group-hover:shadow-[0_0_30px_rgba(236,72,153,0.15)]"
+      },
+      "modalData": {
+        "hero": {
+          "title": "Escala con Inteligencia Artificial",
+          "description": "Deja que la IA haga el trabajo pesado.",
+          "primaryBtn": {
+            "text": "Probar IA >",
+            "url": "#"
+          },
+          "secondaryBtn": {
+            "text": "Ver Demo",
+            "url": "#"
+          },
+          "benefits": [
+            "Respuestas automáticas",
+            "Análisis predictivo"
+          ]
+        },
+        "subFeatures": [],
+        "testimonial": null
       }
     }
   ]

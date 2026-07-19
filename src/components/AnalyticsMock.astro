@@ -1,16 +1,13 @@
 ---
 // src/components/features/AnalyticsMock.astro
-import analyticsData from '../data/analyticsFeature.json';
+// Nota: La importación del JSON se movió al bloque <script> del cliente
 ---
 
 <div id="analytics-wrapper" class="absolute inset-0 flex flex-col justify-end items-center overflow-hidden pt-4 group" style="font-family: 'Mulish', sans-serif;">
-  
   <div class="relative w-full h-full flex items-end justify-center">
 
-    <div 
-      id="analytics-panel" 
-      class="w-[88%] md:w-[80%] lg:w-[75%] max-w-[600px] aspect-[16/11] md:aspect-[20/11] bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-white/10 border-b-0 rounded-t-[16px] sm:rounded-t-[24px] flex flex-col p-3 md:p-5 select-none relative z-10 mb-[-1px] shadow-[0_-5px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_-5px_20px_rgba(0,0,0,0.2)] transition-transform duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:-translate-x-2 md:group-hover:-translate-x-4"
-    >
+    <!-- Panel Principal: Ingresos vs Gastos -->
+    <div id="analytics-panel" class="w-[88%] md:w-[80%] lg:w-[75%] max-w-[600px] aspect-[16/11] md:aspect-[20/11] bg-white dark:bg-[#1E293B] border border-slate-200 dark:border-white/10 border-b-0 rounded-t-[16px] sm:rounded-t-[24px] flex flex-col p-3 md:p-5 select-none relative z-10 mb-[-1px] shadow-[0_-5px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_-5px_20px_rgba(0,0,0,0.2)] transition-transform duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:-translate-x-2 md:group-hover:-translate-x-4">
       
       <div class="absolute bottom-0 left-0 right-0 h-[35%] bg-gradient-to-t from-white dark:from-[#1E293B] to-transparent z-10 pointer-events-none rounded-t-none"></div>
 
@@ -30,7 +27,6 @@ import analyticsData from '../data/analyticsFeature.json';
       </header>
 
       <div class="relative flex-1 w-full" id="chart-area">
-        
         <div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0 pb-[8%]">
           {[1, 2, 3, 4].map(() => (
             <div class="w-full border-b border-dashed border-slate-200 dark:border-slate-700/40 h-0"></div>
@@ -81,18 +77,17 @@ import analyticsData from '../data/analyticsFeature.json';
       </div>
     </div>
 
-    <div 
-      class="absolute right-[5%] lg:right-[10%] bottom-0 mb-[-1px] w-[130px] md:w-[170px] bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 border-b-0 rounded-t-[16px] md:rounded-t-[24px] flex flex-col p-3 md:p-5 z-30 shadow-[0_-5px_25px_rgba(0,0,0,0.05)] dark:shadow-[0_-5px_25px_rgba(0,0,0,0.3)] transition-transform duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:translate-x-2 md:group-hover:translate-x-4 group-hover:-translate-y-2"
-    >
-      <h4 class="text-[11px] md:text-[13px] font-black text-slate-800 dark:text-white text-center tracking-tight mb-2 md:mb-4">Uso App</h4>
+    <!-- Panel Secundario: Dona Uso App -->
+    <div class="absolute right-[5%] lg:right-[10%] bottom-0 mb-[-1px] w-[130px] md:w-[170px] bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md border border-slate-200 dark:border-white/10 border-b-0 rounded-t-[16px] md:rounded-t-[24px] flex flex-col p-3 md:p-5 z-30 shadow-[0_-5px_25px_rgba(0,0,0,0.05)] dark:shadow-[0_-5px_25px_rgba(0,0,0,0.3)] transition-transform duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:translate-x-2 md:group-hover:translate-x-4 group-hover:-translate-y-2">
+      <h4 class="text-[11px] md:text-[13px] font-black text-slate-800 dark:text-white text-center tracking-tight mb-2 md:mb-4">Uso por Apps</h4>
       
       <div class="relative w-full aspect-square mb-3 md:mb-5 flex items-center justify-center">
-        <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
+        <svg id="donut-chart-svg" class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="16" class="text-slate-100 dark:text-slate-700/50" />
           
-          <circle id="donut-yape" cx="50" cy="50" r="35" fill="none" stroke="#10b981" stroke-width="16" class="transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] drop-shadow-[0_2px_4px_rgba(16,185,129,0.3)]" style="stroke-dasharray: 0px 220px; stroke-dashoffset: 0px;" />
-          <circle id="donut-plin" cx="50" cy="50" r="35" fill="none" stroke="#f43f5e" stroke-width="16" class="transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] drop-shadow-[0_2px_4px_rgba(244,63,94,0.3)]" style="stroke-dasharray: 0px 220px; stroke-dashoffset: 0px;" />
-          <circle id="donut-bcp" cx="50" cy="50" r="35" fill="none" stroke="#f97316" stroke-width="16" class="transition-all duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] drop-shadow-[0_2px_4px_rgba(249,115,22,0.3)]" style="stroke-dasharray: 0px 220px; stroke-dashoffset: 0px;" />
+          <circle id="donut-yape" cx="50" cy="50" r="35" pathLength="100" fill="none" stroke="#10b981" stroke-width="16" class="drop-shadow-[0_2px_4px_rgba(16,185,129,0.3)]" style="stroke-dasharray: var(--p-yape-dash, 0 100);" />
+          <circle id="donut-plin" cx="50" cy="50" r="35" pathLength="100" fill="none" stroke="#f43f5e" stroke-width="16" class="drop-shadow-[0_2px_4px_rgba(244,63,94,0.3)]" style="stroke-dasharray: var(--p-plin-dash, 0 100); stroke-dashoffset: var(--o-plin-offset, 0);" />
+          <circle id="donut-bcp" cx="50" cy="50" r="35" pathLength="100" fill="none" stroke="#f97316" stroke-width="16" class="drop-shadow-[0_2px_4px_rgba(249,115,22,0.3)]" style="stroke-dasharray: var(--p-bcp-dash, 0 100); stroke-dashoffset: var(--o-bcp-offset, 0);" />
         </svg>
         
         <div class="absolute inset-0 m-auto w-[40%] h-[40%] bg-white dark:bg-[#0F172A] rounded-full shadow-inner"></div>
@@ -126,179 +121,177 @@ import analyticsData from '../data/analyticsFeature.json';
   </div>
 </div>
 
-<script define:vars={{ analyticsData }}>
-  if (typeof window !== 'undefined') {
-    const chartArea = document.getElementById('chart-area');
-    const elDate = document.getElementById('chart-date');
-    
-    const pathIncLine = document.getElementById('path-income-line');
-    const pathIncFill = document.getElementById('path-income-fill');
-    const pathExpLine = document.getElementById('path-expense-line');
-    const pathExpFill = document.getElementById('path-expense-fill');
-    
-    const donutYape = document.getElementById('donut-yape');
-    const donutPlin = document.getElementById('donut-plin');
-    const donutBcp = document.getElementById('donut-bcp');
-    const legendYape = document.getElementById('legend-yape');
-    const legendPlin = document.getElementById('legend-plin');
-    const legendBcp = document.getElementById('legend-bcp');
-    
-    // Circunferencia del círculo (r=35 => 2 * PI * 35 = ~219.91)
-    const CIRCUMFERENCE = 2 * Math.PI * 35; 
-
-    const cursor = document.getElementById('chart-cursor');
-    const dotIncome = document.getElementById('dot-income');
-    const dotExpense = document.getElementById('dot-expense');
-    const tooltip = document.getElementById('chart-tooltip');
-    const ttLabel = document.getElementById('tt-label');
-    const ttIncome = document.getElementById('tt-income');
-    const ttExpense = document.getElementById('tt-expense');
-
-    let currentPeriodIdx = 0;
-    let currentData = [];
-    let maxVal = 1000;
-
-    function generatePaths(data, max) {
-      const W = 1000;
-      const H = 1000;
-      const step = W / (data.length - 1);
-      
-      let incLine = `M 0 ${H - (data[0].income / max) * H}`;
-      let incFill = `M 0 ${H - (data[0].income / max) * H}`;
-      let expLine = `M 0 ${H - (data[0].expense / max) * H}`;
-      let expFill = `M 0 ${H - (data[0].expense / max) * H}`;
-
-      for (let i = 0; i < data.length - 1; i++) {
-        const x1 = i * step;
-        const x2 = (i + 1) * step;
-        
-        const y1Inc = H - (data[i].income / max) * H;
-        const y2Inc = H - (data[i+1].income / max) * H;
-        const cpXInc = x1 + (x2 - x1) / 2;
-        incLine += ` C ${cpXInc} ${y1Inc}, ${cpXInc} ${y2Inc}, ${x2} ${y2Inc}`;
-        incFill += ` C ${cpXInc} ${y1Inc}, ${cpXInc} ${y2Inc}, ${x2} ${y2Inc}`;
-
-        const y1Exp = H - (data[i].expense / max) * H;
-        const y2Exp = H - (data[i+1].expense / max) * H;
-        const cpXExp = x1 + (x2 - x1) / 2;
-        expLine += ` C ${cpXExp} ${y1Exp}, ${cpXExp} ${y2Exp}, ${x2} ${y2Exp}`;
-        expFill += ` C ${cpXExp} ${y1Exp}, ${cpXExp} ${y2Exp}, ${x2} ${y2Exp}`;
-      }
-
-      incFill += ` L ${W} ${H} L 0 ${H} Z`;
-      expFill += ` L ${W} ${H} L 0 ${H} Z`;
-      return { incLine, incFill, expLine, expFill };
-    }
-
-    function updateChart() {
-      if (!analyticsData || !analyticsData.periods) return;
-      
-      const period = analyticsData.periods[currentPeriodIdx];
-      currentData = period.data;
-      maxVal = period.maxVal;
-
-      // Actualizar Fechas
-      if (elDate) {
-        elDate.classList.add('opacity-0');
-        setTimeout(() => {
-          elDate.innerText = period.date;
-          elDate.classList.remove('opacity-0');
-        }, 250);
-      }
-
-      // Actualizar Gráfico Principal
-      const paths = generatePaths(currentData, maxVal);
-      pathIncLine?.setAttribute('d', paths.incLine);
-      pathIncFill?.setAttribute('d', paths.incFill);
-      pathExpLine?.setAttribute('d', paths.expLine);
-      pathExpFill?.setAttribute('d', paths.expFill);
-
-      // Actualizar Gráfico Circular
-      // (Si no hay 'apps' en tu JSON, usaremos valores de respaldo para que siga funcionando)
-      const appsData = period.apps || [
-        { name: "Yape", percent: 45 },
-        { name: "Plin", percent: 35 },
-        { name: "BCP", percent: 20 }
-      ];
-
-      if (appsData.length >= 3) {
-        const pYape = appsData[0].percent;
-        const pPlin = appsData[1].percent;
-        const pBcp = appsData[2].percent;
-
-        if(legendYape) legendYape.innerText = `${pYape}%`;
-        if(legendPlin) legendPlin.innerText = `${pPlin}%`;
-        if(legendBcp) legendBcp.innerText = `${pBcp}%`;
-
-        // Aquí está el truco: Añadimos 'px' a los valores en JavaScript para que CSS lo acepte
-        const valYape = (pYape / 100) * CIRCUMFERENCE;
-        const valPlin = (pPlin / 100) * CIRCUMFERENCE;
-        const valBcp = (pBcp / 100) * CIRCUMFERENCE;
-
-        if (donutYape) {
-          donutYape.style.strokeDasharray = `${valYape}px ${CIRCUMFERENCE}px`;
-          donutYape.style.strokeDashoffset = `0px`;
-        }
-        
-        if (donutPlin) {
-          donutPlin.style.strokeDasharray = `${valPlin}px ${CIRCUMFERENCE}px`;
-          // El offset negativo hace que el trazo empiece DESPUÉS de donde terminó el anterior
-          donutPlin.style.strokeDashoffset = `-${valYape}px`;
-        }
-        
-        if (donutBcp) {
-          donutBcp.style.strokeDasharray = `${valBcp}px ${CIRCUMFERENCE}px`;
-          donutBcp.style.strokeDashoffset = `-${valYape + valPlin}px`;
-        }
-      }
-
-      currentPeriodIdx = (currentPeriodIdx + 1) % analyticsData.periods.length;
-    }
-
-    // Pequeño retraso inicial para que la primera animación de carga sea visible
-    setTimeout(updateChart, 100);
-    setInterval(updateChart, 4000); 
-
-    // Interactividad del Mouse (sin cambios)
-    function handlePointerMove(clientX, rect) {
-      if (!currentData || currentData.length === 0) return;
-      
-      const mouseX = clientX - rect.left;
-      const percentage = Math.max(0, Math.min(1, mouseX / rect.width));
-      const idx = Math.round(percentage * (currentData.length - 1));
-      const point = currentData[idx];
-
-      if (cursor) cursor.style.opacity = '1';
-      const snapPercentage = (idx / (currentData.length - 1)) * 100;
-      if (cursor) cursor.style.left = `${snapPercentage}%`;
-
-      if (tooltip) {
-        if (snapPercentage > 75) tooltip.style.transform = `translateX(-85%)`;
-        else if (snapPercentage < 25) tooltip.style.transform = `translateX(-15%)`;
-        else tooltip.style.transform = `translateX(-50%)`;
-      }
-
-      const yInc = 100 - (point.income / maxVal) * 100;
-      const yExp = 100 - (point.expense / maxVal) * 100;
-      
-      if (dotIncome) dotIncome.style.top = `${yInc}%`;
-      if (dotExpense) dotExpense.style.top = `${yExp}%`;
-
-      if (ttLabel) ttLabel.innerText = point.label;
-      if (ttIncome) ttIncome.innerText = `S/${point.income}`;
-      if (ttExpense) ttExpense.innerText = `S/${point.expense}`;
-    }
-
-    chartArea?.addEventListener('mousemove', (e) => {
-      handlePointerMove(e.clientX, chartArea.getBoundingClientRect());
-    });
-
-    chartArea?.addEventListener('touchmove', (e) => {
-      handlePointerMove(e.touches[0].clientX, chartArea.getBoundingClientRect());
-    });
-
-    chartArea?.addEventListener('mouseleave', () => {
-      if (cursor) cursor.style.opacity = '0';
-    });
+<style>
+  /* Animaciones CSS controladas por variables */
+  #donut-chart-svg circle[id^="donut-"] {
+    transition: stroke-dasharray 1000ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke-dashoffset 1000ms cubic-bezier(0.4, 0, 0.2, 1);
   }
+</style>
+
+<script>
+  // 1. Importación manejada por Vite automáticamente
+  import jsonRaw from '../data/analyticsFeature.json';
+  
+  // 2. Extraemos los datos sin importar cómo Vite los envuelva
+  const analyticsData = jsonRaw.default || jsonRaw;
+
+  // 3. Referencias del DOM
+  const chartArea = document.getElementById('chart-area');
+  const elDate = document.getElementById('chart-date');
+  
+  const pathIncLine = document.getElementById('path-income-line');
+  const pathIncFill = document.getElementById('path-income-fill');
+  const pathExpLine = document.getElementById('path-expense-line');
+  const pathExpFill = document.getElementById('path-expense-fill');
+  
+  const donutChartSvg = document.getElementById('donut-chart-svg');
+  const legendYape = document.getElementById('legend-yape');
+  const legendPlin = document.getElementById('legend-plin');
+  const legendBcp = document.getElementById('legend-bcp');
+
+  const cursor = document.getElementById('chart-cursor');
+  const dotIncome = document.getElementById('dot-income');
+  const dotExpense = document.getElementById('dot-expense');
+  const tooltip = document.getElementById('chart-tooltip');
+  const ttLabel = document.getElementById('tt-label');
+  const ttIncome = document.getElementById('tt-income');
+  const ttExpense = document.getElementById('tt-expense');
+
+  let currentPeriodIdx = 0;
+  let currentData = [];
+  let maxVal = 1000;
+
+  function generatePaths(data, max) {
+    const W = 1000;
+    const H = 1000;
+    const step = W / (data.length - 1);
+    
+    let incLine = `M 0 ${H - (data[0].income / max) * H}`;
+    let incFill = `M 0 ${H - (data[0].income / max) * H}`;
+    let expLine = `M 0 ${H - (data[0].expense / max) * H}`;
+    let expFill = `M 0 ${H - (data[0].expense / max) * H}`;
+
+    for (let i = 0; i < data.length - 1; i++) {
+      const x1 = i * step;
+      const x2 = (i + 1) * step;
+      
+      const y1Inc = H - (data[i].income / max) * H;
+      const y2Inc = H - (data[i+1].income / max) * H;
+      const cpXInc = x1 + (x2 - x1) / 2;
+      incLine += ` C ${cpXInc} ${y1Inc}, ${cpXInc} ${y2Inc}, ${x2} ${y2Inc}`;
+      incFill += ` C ${cpXInc} ${y1Inc}, ${cpXInc} ${y2Inc}, ${x2} ${y2Inc}`;
+
+      const y1Exp = H - (data[i].expense / max) * H;
+      const y2Exp = H - (data[i+1].expense / max) * H;
+      const cpXExp = x1 + (x2 - x1) / 2;
+      expLine += ` C ${cpXExp} ${y1Exp}, ${cpXExp} ${y2Exp}, ${x2} ${y2Exp}`;
+      expFill += ` C ${cpXExp} ${y1Exp}, ${cpXExp} ${y2Exp}, ${x2} ${y2Exp}`;
+    }
+
+    incFill += ` L ${W} ${H} L 0 ${H} Z`;
+    expFill += ` L ${W} ${H} L 0 ${H} Z`;
+    return { incLine, incFill, expLine, expFill };
+  }
+
+  function updateChart() {
+    if (!analyticsData || !analyticsData.periods) {
+      console.warn("Analytics data not loaded correctly:", analyticsData);
+      return;
+    }
+    
+    const period = analyticsData.periods[currentPeriodIdx];
+    currentData = period.data;
+    maxVal = period.maxVal;
+
+    if (elDate) {
+      elDate.classList.add('opacity-0');
+      setTimeout(() => {
+        elDate.innerText = period.date;
+        elDate.classList.remove('opacity-0');
+      }, 250);
+    }
+
+    const paths = generatePaths(currentData, maxVal);
+    pathIncLine?.setAttribute('d', paths.incLine);
+    pathIncFill?.setAttribute('d', paths.incFill);
+    pathExpLine?.setAttribute('d', paths.expLine);
+    pathExpFill?.setAttribute('d', paths.expFill);
+
+    const appsData = period.apps || [
+      { name: "Yape", percent: 45 },
+      { name: "Plin", percent: 35 },
+      { name: "BCP", percent: 20 }
+    ];
+
+    if (appsData.length >= 3) {
+      let pYape = appsData[0].percent;
+      let pPlin = appsData[1].percent;
+      let pBcp = appsData[2].percent;
+
+      if(legendYape) legendYape.innerText = `${pYape}%`;
+      if(legendPlin) legendPlin.innerText = `${pPlin}%`;
+      if(legendBcp) legendBcp.innerText = `${pBcp}%`;
+
+      // Inyectamos las variables CSS
+      const dashYape = `${pYape} ${100 - pYape}`;
+      const dashPlin = `${pPlin} ${100 - pPlin}`;
+      const dashBcp = `${pBcp} ${100 - pBcp}`;
+      const offsetPlin = `-${pYape}`;
+      const offsetBcp = `-${pYape + pPlin}`;
+
+      donutChartSvg?.style.setProperty('--p-yape-dash', dashYape);
+      donutChartSvg?.style.setProperty('--p-plin-dash', dashPlin);
+      donutChartSvg?.style.setProperty('--p-bcp-dash', dashBcp);
+      donutChartSvg?.style.setProperty('--o-plin-offset', offsetPlin);
+      donutChartSvg?.style.setProperty('--o-bcp-offset', offsetBcp);
+    }
+
+    currentPeriodIdx = (currentPeriodIdx + 1) % analyticsData.periods.length;
+  }
+
+  // Inicialización
+  setTimeout(updateChart, 100);
+  setInterval(updateChart, 4000); 
+
+  function handlePointerMove(clientX, rect) {
+    if (!currentData || currentData.length === 0) return;
+    
+    const mouseX = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, mouseX / rect.width));
+    const idx = Math.round(percentage * (currentData.length - 1));
+    const point = currentData[idx];
+
+    if (cursor) cursor.style.opacity = '1';
+    const snapPercentage = (idx / (currentData.length - 1)) * 100;
+    if (cursor) cursor.style.left = `${snapPercentage}%`;
+
+    if (tooltip) {
+      if (snapPercentage > 75) tooltip.style.transform = `translateX(-85%)`;
+      else if (snapPercentage < 25) tooltip.style.transform = `translateX(-15%)`;
+      else tooltip.style.transform = `translateX(-50%)`;
+    }
+
+    const yInc = 100 - (point.income / maxVal) * 100;
+    const yExp = 100 - (point.expense / maxVal) * 100;
+    
+    if (dotIncome) dotIncome.style.top = `${yInc}%`;
+    if (dotExpense) dotExpense.style.top = `${yExp}%`;
+
+    if (ttLabel) ttLabel.innerText = point.label;
+    if (ttIncome) ttIncome.innerText = `S/${point.income}`;
+    if (ttExpense) ttExpense.innerText = `S/${point.expense}`;
+  }
+
+  chartArea?.addEventListener('mousemove', (e) => {
+    handlePointerMove(e.clientX, chartArea.getBoundingClientRect());
+  });
+
+  chartArea?.addEventListener('touchmove', (e) => {
+    handlePointerMove(e.touches[0].clientX, chartArea.getBoundingClientRect());
+  });
+
+  chartArea?.addEventListener('mouseleave', () => {
+    if (cursor) cursor.style.opacity = '0';
+  });
 </script>

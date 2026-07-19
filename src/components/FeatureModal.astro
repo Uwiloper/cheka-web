@@ -1,0 +1,112 @@
+---
+// src/components/FeatureModal.astro
+import AnalyticsMock from './AnalyticsMock.astro';
+
+const { item } = Astro.props;
+const modal = item.modalData;
+---
+
+<div 
+  id={`modal-${item.id}`} 
+  class="feature-modal fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6"
+  aria-hidden="true"
+>
+  <!-- Fondo borroso oscuro/claro -->
+  <div class="modal-backdrop absolute inset-0 bg-slate-900/40 dark:bg-slate-900/80 backdrop-blur-md transition-colors cursor-pointer"></div>
+  
+  <!-- Contenedor Principal Estilo Stripe -->
+  <div class="relative w-full max-w-6xl bg-white dark:bg-[#0B1120] rounded-2xl md:rounded-[32px] shadow-2xl overflow-y-auto transform scale-95 transition-transform duration-300 modal-content max-h-[95vh] border border-slate-200 dark:border-slate-800">
+    
+    <!-- Botón Cerrar -->
+    <button class="close-modal sticky top-4 float-right right-4 z-50 w-10 h-10 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors mr-4 mt-4">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <div class="px-6 py-10 md:px-16 md:py-16 clear-both">
+      <!-- 1. Hero Section (Izquierda: Textos, Derecha: Checkmarks) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <div>
+          <h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
+            {modal.hero.title}
+          </h2>
+          <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+            {modal.hero.description}
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href={modal.hero.primaryBtn.url} class="px-6 py-3 bg-[#635BFF] hover:bg-[#4B44E0] text-white font-medium rounded-lg transition-colors">
+              {modal.hero.primaryBtn.text}
+            </a>
+            <a href={modal.hero.secondaryBtn.url} class="px-6 py-3 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+              {modal.hero.secondaryBtn.text}
+            </a>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-center gap-4 lg:pl-12">
+          {modal.hero.benefits.map((benefit: string) => (
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-[#FF633E] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+              <span class="text-slate-700 dark:text-slate-300 font-medium">{benefit}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- 2. Área Visual Grande (Gráficos/Mocks) -->
+      <div class="w-full bg-slate-50 dark:bg-[#1E293B]/30 rounded-2xl md:rounded-[32px] p-8 md:p-16 mb-20 flex items-center justify-center min-h-[400px] border border-slate-100 dark:border-slate-800/50">
+        {item.id === 'analytics' ? (
+          <div class="w-full max-w-4xl relative">
+            <AnalyticsMock />
+          </div>
+        ) : (
+           <span class="text-slate-400 font-bold uppercase tracking-widest text-sm">Espacio para Interfaz Visual de {item.title}</span>
+        )}
+      </div>
+
+      <!-- 3. Sub-características (3 Columnas) -->
+      {modal.subFeatures && modal.subFeatures.length > 0 && (
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
+          {modal.subFeatures.map((feat: any) => (
+            <div>
+              <div class="w-10 h-10 rounded-lg border border-[#FF633E]/30 flex items-center justify-center text-[#FF633E] mb-5">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" set:html={feat.icon} />
+              </div>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-[15px]">
+                {feat.text}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <!-- 4. Testimonio y CTA Final -->
+      {modal.testimonial && (
+        <div class="border-t border-slate-200 dark:border-slate-800 pt-16 mt-16 text-center max-w-4xl mx-auto">
+          <h4 class="font-black text-2xl text-slate-900 dark:text-white mb-6">{modal.testimonial.logo}</h4>
+          <p class="text-xl md:text-2xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-8">
+            {modal.testimonial.quote}
+          </p>
+          <div class="mb-6">
+            <span class="font-bold text-slate-900 dark:text-white">{modal.testimonial.author}</span>, {modal.testimonial.role}
+          </div>
+          <a href={modal.testimonial.link.url} class="text-[#635BFF] hover:text-[#4B44E0] font-medium transition-colors">
+            {modal.testimonial.link.text}
+          </a>
+
+          <div class="mt-24">
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-8">Empieza a usar {item.title}</h3>
+            <div class="flex flex-wrap justify-center items-center gap-4">
+              <a href="#" class="px-6 py-3 bg-[#635BFF] hover:bg-[#4B44E0] text-white font-medium rounded-lg transition-colors">
+                Empieza ahora >
+              </a>
+              <a href="#" class="px-6 py-3 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                Contacta con ventas
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+    </div>
+  </div>
+</div>
