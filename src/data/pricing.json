@@ -20,7 +20,9 @@
       "features": [
         { "name": "Historial de 24 horas", "included": true },
         { "name": "Con anuncios", "included": true },
-        { "name": "Notificaciones ilimitadas", "included": true }
+        { "name": "50 Notificaciones", "included": true },
+        { "name": "Yape y Plin", "included": true },
+        { "name": "Compartir Notificaciones", "included": true }
       ]
     },
     {
@@ -39,10 +41,12 @@
       },
       "features": [
         { "name": "Todo lo del plan Pro", "included": true },
-        { "name": "Historial de 30 días", "included": true },
-        { "name": "Exportación a Excel", "included": true, "highlight": true },
-        { "name": "Todas las apps bancarias", "included": true },
-        { "name": "Soporte prioritario WhatsApp", "included": true }
+        { "name": "Historial de 3 meses días", "included": true },
+        { "name": "Sincronización a Excel o Google Sheets", "included": true, "highlight": true },
+        { "name": "Analíticas avanzadas", "included": true },
+        { "name": "Cajero Seguro", "included": true },
+        { "name": "Auditoría", "included": true },
+        { "name": "Soporte prioritario", "included": true }
       ]
     },
     {
@@ -60,8 +64,8 @@
       },
       "features": [
         { "name": "Historial de 7 días", "included": true },
-        { "name": "Experiencia sin anuncios", "included": true },
-        { "name": "Soporte estándar", "included": true }
+        { "name": "Analíticas básicas", "included": true },
+        { "name": "Experiencia sin anuncios", "included": true }
       ]
     },
     {

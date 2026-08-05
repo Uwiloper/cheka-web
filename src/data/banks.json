@@ -20,11 +20,6 @@
       "logoDark": "/assets/icons/banks/sip.svg" 
     },
     { 
-      "name": "Ligo", 
-      "logoLight": "/assets/icons/banks/ligo.svg", 
-      "logoDark": "/assets/icons/banks/ligo.svg" 
-    },
-    { 
       "name": "BCP", 
       "logoLight": "/assets/icons/banks/bcp.svg", 
       "logoDark": "/assets/icons/banks/bcp.svg" 
@@ -33,32 +28,6 @@
       "name": "BBVA", 
       "logoLight": "/assets/icons/banks/bbva.svg", 
       "logoDark": "/assets/icons/banks/bbva.svg" 
-    },
-    { 
-      "name": "Interbank", 
-      "logoLight": "/assets/icons/banks/interbank.svg", 
-      "logoDark": "/assets/icons/banks/interbank.svg" 
-    },
-    { 
-      "name": "Scotiabank", 
-      "logoLight": "/assets/icons/banks/scotiabank.svg", 
-      "logoDark": "/assets/icons/banks/scotiabank.svg" 
-    },
-    { 
-      "name": "Culqui", 
-      "logoLight": "/assets/icons/banks/culqui.svg", 
-      "logoDark": "/assets/icons/banks/culqui.svg" 
-    },
-    
-    { 
-      "name": "Niubiz", 
-      "logoLight": "/assets/icons/banks/niubiz.svg", 
-      "logoDark": "/assets/icons/banks/niubiz.svg" 
-    },
-    { 
-      "name": "Izipay", 
-      "logoLight": "/assets/icons/banks/izipay.svg", 
-      "logoDark": "/assets/icons/banks/izipay.svg" 
     }
   ]
 }
