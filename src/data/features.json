@@ -1,170 +1,107 @@
 {
   "header": {
     "badge": "CARACTERÍSTICAS",
-    "title": "Todo lo que necesitas para escalar",
-    "description": "Automatización, seguridad y control total en una sola plataforma."
+    "badgeStyle": "text-[var(--color-cheka-primary)] font-bold tracking-widest",
+    "title": "Todo lo que necesitas para <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-cheka-primary)] to-emerald-400 italic font-black\">escalar</span>",
+    "titleClass": "font-black text-3xl md:text-5xl lg:text-6xl tracking-tight",
+    "description": "Automatización, seguridad y control total en una sola plataforma.",
+    "descriptionClass": "font-medium text-slate-500"
   },
   "items": [
     {
       "id": "voice",
-      "title": "Alertas por Voz",
-      "description": "Escucha quién te paga sin mirar la pantalla.",
-      "colSpan": "md:col-span-1 lg:col-span-1",
-      "rowSpan": "lg:row-span-1",
-      "icon": "<path d='M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 0 1-1.06-1.06 8.25 8.25 0 0 0 0-11.668.75.75 0 0 1 0-1.06Z' />",
-      "theme": {
-        "iconColor": "text-[#10b981]",
-        "borderGradient": "bg-gradient-to-br from-[#10b981] via-[#10b981]/30 to-transparent",
-        "glowHover": "group-hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]"
+      "tag": "01 • Notificaciones",
+      "title": "Alertas por Voz en Tiempo Real",
+      "slogan": "Mantén los ojos en tu negocio, no en el celular.",
+      "titleClass": "font-black text-2xl md:text-3xl",
+      "description": "Escucha quién te paga y cuánto dinero entra sin necesidad de mirar la pantalla ni pausar tus labores.",
+      "bullets": [
+        "Soporte para Yape, Plin y BCP",
+        "Atención 100% manos libres",
+        "Volumen y voz personalizable"
+      ],
+      "media": {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1616469829941-c7200edec809?q=80&w=800&auto=format&fit=crop",
+        "alt": "Alertas por voz"
       },
-      "modalData": {
-        "hero": {
-          "title": "No pierdas de vista tu negocio",
-          "description": "Recibe notificaciones auditivas claras cada vez que un pago sea exitoso, permitiéndote atender a tus clientes sin distracciones.",
-          "primaryBtn": { "text": "Configurar Alertas", "url": "#" },
-          "secondaryBtn": { "text": "Ver Demo", "url": "#" },
-          "benefits": ["Notificaciones en tiempo real", "Operación manos libres"]
-        },
-        "subFeatures": [],
-        "testimonial": null
+      "theme": {
+        "tagColor": "text-[var(--color-cheka-primary)]",
+        "hoverBorderGradient": "hover:bg-gradient-to-br hover:from-[var(--color-cheka-primary)] hover:via-[#34d399] hover:to-[#059669]",
+        "hoverTextGradient": "group-hover:from-[var(--color-cheka-primary)] group-hover:via-[#34d399] group-hover:to-[#059669]",
+        "hoverGlow": "group-hover:shadow-[0_10px_30px_rgba(36,218,141,0.2)]"
       }
     },
     {
       "id": "analytics",
-      "title": "Analíticas en Tiempo Real",
-      "description": "Visualiza ingresos, gastos y market share por app bancaria al instante.",
-      "colSpan": "md:col-span-1 lg:col-span-1",
-      "rowSpan": "lg:row-span-1",
-      "icon": "<path fill-rule='evenodd' d='M2.25 2.25a.75.75 0 0 0 0 1.5H3v10.5a3 3 0 0 0 3 3h1.21l-1.172 3.513a.75.75 0 0 0 1.424.474l.329-.987h8.418l.33.987a.75.75 0 0 0 1.422-.474l-1.17-3.513H18a3 3 0 0 0 3-3V3.75h.75a.75.75 0 0 0 0-1.5H2.25Zm6.54 15h6.42l.5 1.5H8.29l.5-1.5Zm8.085-8.995a.75.75 0 1 0-.75-1.299 12.81 12.81 0 0 0-3.558 3.05L11.03 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l2.47-2.47 1.617 1.618a.75.75 0 0 0 1.146-.102 11.312 11.312 0 0 1 3.612-3.321Z' clip-rule='evenodd' />",
-      "theme": {
-        "iconColor": "text-blue-500",
-        "borderGradient": "bg-gradient-to-br from-blue-500 via-blue-500/30 to-transparent",
-        "glowHover": "group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]"
+      "tag": "02 • Métrica & Data",
+      "title": "Analíticas & Market Share",
+      "slogan": "Decisiones basadas en datos, no en intuición.",
+      "titleClass": "font-black text-2xl md:text-3xl",
+      "description": "Visualiza el flujo de ingresos y egresos desglosado por cada billetera digital e institución financiera.",
+      "bullets": [
+        "Gráficos interactivos de ingresos",
+        "Comparativa porcentual por app",
+        "Reportes diarios y mensuales"
+      ],
+      "media": {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+        "alt": "Analíticas financieras"
       },
-      "modalData": {
-        "hero": {
-          "title": "Acepta y optimiza pagos en todo el mundo",
-          "description": "Simplifica tu proceso de compra, amplía tu alcance y aumenta la conversión con herramientas que aprovechan la IA para aceptar pagos en cualquier lugar.",
-          "primaryBtn": {
-            "text": "Descubre Analytics >",
-            "url": "#"
-          },
-          "secondaryBtn": {
-            "text": "Consulta las tarifas",
-            "url": "#"
-          },
-          "benefits": [
-            "Crea una experiencia fluida en tu checkout",
-            "Expándete a nuevos mercados con mayor rapidez",
-            "Aumenta las tasas de aceptación y reduce el fraude",
-            "Unifica los pagos por Internet y en persona"
-          ]
-        },
-        "subFeatures": [
-          {
-            "icon": "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M13 7h8m0 0v8m0-8l-8 8-4-4-6 6\"></path>",
-            "text": "Aumenta la conversión con interfaces prediseñadas y análisis detallados del comportamiento de tus usuarios."
-          },
-          {
-            "icon": "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z\"></path>",
-            "text": "Mejora el rendimiento con optimizaciones dinámicas y prevención del fraude en tiempo real."
-          },
-          {
-            "icon": "<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"></path>",
-            "text": "Avanza más rápido reduciendo los tiempos de inactividad con una infraestructura líder."
-          }
-        ],
-        "testimonial": {
-          "logo": "Amazon",
-          "quote": "«Encontrar un socio que pueda hacer frente no solo a los picos de volumen, sino también a otros aspectos relacionados con la escalabilidad, es fundamental.»",
-          "author": "Ben Volk",
-          "role": "Director de Aceptación global, Amazon",
-          "link": {
-            "text": "Conoce su historia >",
-            "url": "#"
-          }
-        }
+      "theme": {
+        "tagColor": "text-blue-500",
+        "hoverBorderGradient": "hover:bg-gradient-to-br hover:from-blue-500 hover:via-indigo-400 hover:to-cyan-400",
+        "hoverTextGradient": "group-hover:from-blue-500 group-hover:via-indigo-400 group-hover:to-cyan-400",
+        "hoverGlow": "group-hover:shadow-[0_10px_30px_rgba(59,130,246,0.2)]"
       }
     },
     {
       "id": "cashier",
+      "tag": "03 • Seguridad",
       "title": "Modo Cajero Seguro",
-      "description": "Empleados notificados, dueños en control.",
-      "colSpan": "md:col-span-1 lg:col-span-1",
-      "rowSpan": "lg:row-span-1",
-      "icon": "<path fill-rule='evenodd' d='M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z' clip-rule='evenodd' />",
-      "theme": {
-        "iconColor": "text-amber-500",
-        "borderGradient": "bg-gradient-to-br from-amber-500 via-amber-500/30 to-transparent",
-        "glowHover": "group-hover:shadow-[0_0_30px_rgba(245,158,11,0.15)]"
+      "slogan": "Delega sin perder el control absoluto.",
+      "titleClass": "font-black text-2xl md:text-3xl",
+      "description": "Permite que tus empleados confirmen cobros sin darles acceso a tus saldos generales o cuentas bancarias.",
+      "bullets": [
+        "Control de accesos por roles",
+        "Oculta saldos confidenciales",
+        "Prevención anti-estafas"
+      ],
+      "media": {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=800&auto=format&fit=crop",
+        "alt": "Seguridad en caja"
       },
-      "modalData": {
-        "hero": {
-          "title": "Control total para los dueños",
-          "description": "Protege tu información sensible permitiendo a tus empleados verificar pagos sin tener acceso a los saldos o reportes globales.",
-          "primaryBtn": { "text": "Ver Seguridad", "url": "#" },
-          "secondaryBtn": { "text": "Más Información", "url": "#" },
-          "benefits": ["Privacidad garantizada", "Gestión de roles"]
-        },
-        "subFeatures": [],
-        "testimonial": null
+      "theme": {
+        "tagColor": "text-amber-500",
+        "hoverBorderGradient": "hover:bg-gradient-to-br hover:from-amber-500 hover:via-yellow-400 hover:to-orange-500",
+        "hoverTextGradient": "group-hover:from-amber-500 group-hover:via-yellow-400 group-hover:to-orange-500",
+        "hoverGlow": "group-hover:shadow-[0_10px_30px_rgba(245,158,11,0.2)]"
       }
     },
     {
       "id": "export",
-      "title": "Exportación Contable",
-      "description": "Data lista para SUNAT con un solo clic.",
-      "colSpan": "md:col-span-1 lg:col-span-1",
-      "rowSpan": "lg:row-span-1",
-      "icon": "<path fill-rule='evenodd' d='M5.625 1.5H9a3.75 3.75 0 0 1 3.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 0 1 3.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 0 1-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875ZM9.75 17.25a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75Zm2.25-3a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75Zm3.75-1.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-5.25Z' clip-rule='evenodd' />",
-      "theme": {
-        "iconColor": "text-purple-500",
-        "borderGradient": "bg-gradient-to-br from-purple-500 via-purple-500/30 to-transparent",
-        "glowHover": "group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]"
+      "tag": "04 • Contabilidad",
+      "title": "Exportación Contable SUNAT",
+      "slogan": "Cierra tu mes en segundos, sin estrés.",
+      "titleClass": "font-black text-2xl md:text-3xl",
+      "description": "Descarga tus reportes de cobros en archivos CSV y Excel listos para tu contador o sistema de facturación.",
+      "bullets": [
+        "Descarga rápida en un clic",
+        "Formatos compatibles con SUNAT",
+        "Historial 100% en la nube"
+      ],
+      "media": {
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop",
+        "alt": "Exportación de archivos"
       },
-      "modalData": {
-        "hero": {
-          "title": "Cierra tu mes sin estrés",
-          "description": "Descarga todos los movimientos financieros de tu negocio conciliados y listos para importar a tu sistema contable.",
-          "primaryBtn": { "text": "Automatizar Finanzas", "url": "#" },
-          "secondaryBtn": { "text": "Formatos Soportados", "url": "#" },
-          "benefits": ["Formatos Excel y CSV", "Compatible con SUNAT"]
-        },
-        "subFeatures": [],
-        "testimonial": null
-      }
-    },
-    {
-      "id": "ai",
-      "title": "Inteligencia Artificial",
-      "description": "Chat guiado sobre las solicitudes y reportes de tu negocio.",
-      "colSpan": "md:col-span-1 lg:col-span-2",
-      "rowSpan": "lg:row-span-1",
-      "icon": "<path fill-rule='evenodd' d='M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z' clip-rule='evenodd' />",
       "theme": {
-        "iconColor": "text-pink-500",
-        "borderGradient": "rainbow-bg",
-        "glowHover": "group-hover:shadow-[0_0_30px_rgba(236,72,153,0.15)]"
-      },
-      "modalData": {
-        "hero": {
-          "title": "Escala con Inteligencia Artificial",
-          "description": "Deja que la IA haga el trabajo pesado.",
-          "primaryBtn": {
-            "text": "Probar IA >",
-            "url": "#"
-          },
-          "secondaryBtn": {
-            "text": "Ver Demo",
-            "url": "#"
-          },
-          "benefits": [
-            "Respuestas automáticas",
-            "Análisis predictivo"
-          ]
-        },
-        "subFeatures": [],
-        "testimonial": null
+        "tagColor": "text-purple-500",
+        "hoverBorderGradient": "hover:bg-gradient-to-br hover:from-purple-500 hover:via-fuchsia-400 hover:to-pink-500",
+        "hoverTextGradient": "group-hover:from-purple-500 group-hover:via-fuchsia-400 group-hover:to-pink-500",
+        "hoverGlow": "group-hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]"
       }
     }
   ]
