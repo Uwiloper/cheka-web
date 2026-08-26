@@ -1,142 +1,270 @@
 ---
-// src/components/FeaturesScroll.astro
+// src/components/FeaturesVideo.astro
 import featuresData from '../data/features.json';
 const { header, items } = featuresData;
 ---
 
-<section id="features-container" class="relative bg-[var(--color-cheka-light-bg)] dark:bg-[var(--color-cheka-dark-bg)] overflow-hidden min-h-screen py-10 md:py-16 flex flex-col justify-between transition-colors duration-300">
+<section 
+  id="funcionalidades" 
+  class="relative bg-[var(--color-cheka-light-bg)] dark:bg-[var(--color-cheka-dark-bg)] py-12 md:py-16 px-4 min-h-screen flex flex-col items-center justify-center transition-colors duration-300"
+  style={`--active-color: ${items[0].color};`}
+>
   
-  <div class="max-w-4xl mx-auto px-6 text-center mb-10 shrink-0 z-20">
-    {header.badge && (
-      <span class={`inline-block uppercase text-xs md:text-sm mb-2 ${header.badgeStyle}`}>
-        {header.badge}
-      </span>
-    )}
+  <div class="w-full max-w-5xl mx-auto flex flex-col h-full">
     
-    {header.title && (
-      <h2 
-        class={`text-slate-900 dark:text-white leading-tight mb-4 ${header.titleClass}`}
-        set:html={header.title}
-      />
-    )}
-    
-    {header.description && (
-      <p class={`text-sm md:text-base max-w-2xl mx-auto ${header.descriptionClass}`}>
-        {header.description}
-      </p>
-    )}
-  </div>
+    <!-- Encabezado -->
+    <div class="text-center mb-8 md:mb-10 shrink-0">
+      {header.badge && (
+        <span class={`inline-block uppercase text-xs md:text-sm mb-2 md:mb-3 ${header.badgeStyle}`}>
+          {header.badge}
+        </span>
+      )}
+      {header.title && (
+        <h2 class={`text-slate-900 dark:text-white leading-tight mb-3 md:mb-4 ${header.titleClass}`} set:html={header.title} />
+      )}
+      {header.description && (
+        <p class={`text-sm md:text-base max-w-2xl mx-auto ${header.descriptionClass}`}>
+          {header.description}
+        </p>
+      )}
+    </div>
 
-  <div id="features-track" class="flex flex-row w-[max-content] items-stretch px-6 md:px-[10vw] gap-10 md:gap-24 pb-6 my-auto">
-    {items.map((item) => (
+    <!-- Envoltura del Borde Degradado Fade (Súper Delgado) -->
+    <div class="gradient-border-wrapper p-[2px] md:p-[3px] rounded-3xl md:rounded-[2rem] mx-auto w-full max-w-5xl transition-all duration-700">
       
-      /* Contenedor Exterior (Card) con Borde Degradado al Hover */
-      <div 
-        class={`group relative p-[2px] rounded-3xl transition-all duration-500 bg-[var(--color-cheka-light-border)] dark:bg-[var(--color-cheka-dark-border)] ${item.theme?.hoverBorderGradient || ''} ${item.theme?.hoverGlow || ''} shrink-0 w-[85vw] md:w-[75vw] max-w-[900px] flex flex-col`}
-      >
-        <div class="relative w-full h-full bg-[var(--color-cheka-light-card)] dark:bg-[var(--color-cheka-dark-card)] rounded-[calc(1.5rem-2px)] p-6 md:p-10 flex flex-col transition-colors duration-300">
-          
-          {item.tag && (
-            <div class={`text-xs md:text-sm font-bold uppercase tracking-widest mb-6 ${item.theme?.tagColor || 'text-slate-500'}`}>
-              {item.tag}
-            </div>
-          )}
+      <!-- Contenedor Interno del Video -->
+      <div id="video-showcase" class="relative w-full aspect-[4/3] sm:aspect-video rounded-[calc(1.5rem-2px)] md:rounded-[calc(2rem-3px)] overflow-hidden bg-slate-900 shadow-2xl shrink-0">
+        
+        <!-- Videos -->
+        {items.map((item, index) => (
+          <video 
+            class={`feature-video absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            src={item.media.url}
+            muted 
+            playsinline
+            preload={index === 0 ? "auto" : "none"}
+            data-index={index}
+          ></video>
+        ))}
 
-          <div class="flex flex-col md:flex-row gap-6 md:gap-10 mb-6">
-            
-            <div class="flex-1 flex flex-col justify-center">
-              {item.title && (
-                <h3 class={`text-slate-900 dark:text-white leading-tight mb-2 transition-all duration-300 group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r ${item.theme?.hoverTextGradient || ''} ${item.titleClass}`}>
-                  {item.title}
-                </h3>
-              )}
-              
-              {item.slogan && (
-                <p class="text-sm md:text-base font-semibold italic text-slate-500 dark:text-slate-400">
-                  {item.slogan}
-                </p>
-              )}
-            </div>
-
-            {item.media && (
-              <div class="flex-1">
-                <div class="w-full aspect-video rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 relative">
-                  {item.media.type === 'image' && (
-                    <img 
-                      src={item.media.url} 
-                      alt={item.media.alt || item.title} 
-                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  )}
-                  {item.media.type === 'video' && (
-                    <video 
-                      src={item.media.url} 
-                      autoplay loop muted playsinline
-                      class="w-full h-full object-cover"
-                    ></video>
-                  )}
-                </div>
-              </div>
-            )}
+        <!-- Título Superpuesto -->
+        {items.map((item, index) => (
+          <div 
+            class={`feature-title-overlay title-overlay absolute top-0 left-0 px-5 md:px-8 py-2 md:py-3.5 rounded-br-2xl md:rounded-br-[2rem] transition-opacity duration-500 shadow-lg ${index === 0 ? 'opacity-100 z-20' : 'opacity-0 z-0 pointer-events-none'}`}
+          >
+            <h3 class="text-white font-bold text-sm md:text-xl lg:text-2xl tracking-tight">
+              {item.title}
+            </h3>
           </div>
+        ))}
 
-          {item.description && (
-            <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 mb-6 max-w-3xl">
-              {item.description}
-            </p>
-          )}
-
-          {item.bullets && item.bullets.length > 0 && (
-            <ul class="flex flex-wrap gap-x-6 gap-y-3 mt-auto pt-4 border-t border-[var(--color-cheka-light-border)] dark:border-[var(--color-cheka-dark-border)]">
-              {item.bullets.map((bullet) => (
-                <li class="flex items-center gap-2 text-xs md:text-sm text-slate-700 dark:text-slate-300">
-                  <svg class="w-4 h-4 text-[var(--color-cheka-primary)] shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                  <span class="font-medium">{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-
+        <!-- Pestañas de Navegación Adentro del Video -->
+        <div class="absolute bottom-5 md:bottom-8 left-0 right-0 flex flex-wrap justify-center gap-2 md:gap-4 px-4 z-30">
+          {items.map((item, index) => (
+            <button 
+              class={`feature-tab group flex items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold border hover:scale-105 transition-all duration-300 backdrop-blur-md
+                ${index === 0 
+                  ? 'active-tab shadow-lg' 
+                  : 'bg-white/90 dark:bg-slate-900/80 border-transparent text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800'
+                }
+              `}
+              data-index={index}
+              data-color={item.color}
+              data-animation={item.animation}
+            >
+              <!-- Ícono con animación asignada del JSON en hover -->
+              <div class={`w-3.5 h-3.5 md:w-5 md:h-5 icon-container flex items-center justify-center group-hover:${item.animation} ${index === 0 ? item.animation : ''}`}>
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" set:html={item.icon}></svg>
+              </div>
+              <span class="pointer-events-none">{item.tabLabel}</span>
+            </button>
+          ))}
         </div>
-      </div>
-    ))}
-    
-    <div class="w-[10vw] shrink-0"></div>
-  </div>
 
+        <!-- Línea Progresiva de Luz (Foto 2) -->
+        <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-white/20 z-40">
+          <div id="feature-progress-bar" class="glow-line h-full w-0 relative transition-none"></div>
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
 </section>
 
+<style is:global>
+  /* 1. Variables Dinámicas de la Sección */
+  #funcionalidades {
+    --active-color: #10b981; /* Fallback */
+  }
+
+  /* 2. Borde en Degradado (Fade hacia abajo) */
+  .gradient-border-wrapper {
+    background: linear-gradient(180deg, var(--active-color) 0%, rgba(255,255,255,0) 80%);
+  }
+  .dark .gradient-border-wrapper {
+    background: linear-gradient(180deg, var(--active-color) 0%, rgba(0,0,0,0) 80%);
+  }
+
+  /* 3. Colores Dinámicos (Título, Pestaña Activa y Luz de Progreso) */
+  .title-overlay {
+    background-color: var(--active-color);
+  }
+  .active-tab {
+    background-color: var(--active-color) !important;
+    color: white !important;
+    border-color: transparent !important;
+  }
+  .glow-line {
+    background-color: var(--active-color);
+    box-shadow: 0 0 8px 1px var(--active-color), 0 0 15px 3px var(--active-color);
+  }
+  
+  /* El destello de luz brillante en la punta de la barra (Efecto Láser) */
+  .glow-line::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -1.5px;
+    width: 15px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    filter: blur(2px);
+  }
+
+  /* 4. KEYFRAMES DE ANIMACIONES PARA LOS ÍCONOS */
+  
+  /* Campanita (Alertas) */
+  @keyframes ring {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-20deg); }
+    50% { transform: rotate(20deg); }
+    75% { transform: rotate(-10deg); }
+  }
+  .animate-ring { animation: ring 0.6s ease-in-out infinite; transform-origin: top center; }
+
+  /* Giro Suave (Analíticas) */
+  @keyframes spin-slow {
+    100% { transform: rotate(360deg); }
+  }
+  .animate-spin-slow { animation: spin-slow 4s linear infinite; }
+
+  /* Latido de Escudo (Cajero/Seguridad) */
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  .animate-heartbeat { animation: heartbeat 1s ease-in-out infinite; }
+
+  /* Documento / Envío balanceándose (Exportación) */
+  @keyframes swing {
+    20% { transform: rotate(15deg); }
+    40% { transform: rotate(-10deg); }
+    60% { transform: rotate(5deg); }
+    80% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .animate-swing { animation: swing 1.2s ease infinite; transform-origin: bottom center; }
+</style>
+
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
   document.addEventListener("DOMContentLoaded", () => {
-    const container = document.getElementById("features-container");
-    const track = document.getElementById("features-track");
+    const section = document.getElementById('funcionalidades');
+    const videos = document.querySelectorAll<HTMLVideoElement>('.feature-video');
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.feature-tab');
+    const overlays = document.querySelectorAll<HTMLDivElement>('.feature-title-overlay');
+    const progressBar = document.getElementById('feature-progress-bar');
+    
+    let currentIndex = 0;
+    let animationFrameId;
 
-    if (!container || !track) return;
+    if (!section || videos.length === 0) return;
 
-    function getScrollAmount() {
-      return track.scrollWidth - window.innerWidth;
+    // Actualizador Ultra-fluido de la barra de luz usando RequestAnimationFrame
+    function updateProgress() {
+      const activeVideo = videos[currentIndex];
+      if (activeVideo && progressBar) {
+        const progress = (activeVideo.currentTime / (activeVideo.duration || 1)) * 100;
+        progressBar.style.width = `${progress}%`;
+      }
+      animationFrameId = requestAnimationFrame(updateProgress);
     }
 
-    const tween = gsap.to(track, {
-      x: () => -getScrollAmount(),
-      ease: "none"
+    // Cambiar de sección
+    function activateSection(index) {
+      const targetColor = tabs[index].getAttribute('data-color');
+      const targetAnimation = tabs[index].getAttribute('data-animation');
+
+      // 1. Inyectar el Color al CSS Variable Global de la sección
+      section.style.setProperty('--active-color', targetColor);
+
+      // 2. Gestionar Pestañas
+      tabs.forEach((tab, i) => {
+        const iconContainer = tab.querySelector('.icon-container');
+        const anim = tab.getAttribute('data-animation');
+        
+        if (i === index) {
+          // Pestaña Activa
+          tab.classList.add('active-tab', 'shadow-lg');
+          tab.classList.remove('bg-white/90', 'dark:bg-slate-900/80', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-white', 'dark:hover:bg-slate-800');
+          if (anim && iconContainer) iconContainer.classList.add(anim);
+        } else {
+          // Pestañas Inactivas
+          tab.classList.remove('active-tab', 'shadow-lg');
+          tab.classList.add('bg-white/90', 'dark:bg-slate-900/80', 'text-slate-700', 'dark:text-slate-300', 'hover:bg-white', 'dark:hover:bg-slate-800');
+          if (anim && iconContainer) iconContainer.classList.remove(anim);
+        }
+      });
+
+      // 3. Gestionar Videos y Títulos superpuestos
+      videos.forEach((video, i) => {
+        if (i === index) {
+          video.classList.replace('opacity-0', 'opacity-100');
+          video.classList.replace('z-0', 'z-10');
+          
+          overlays[i].classList.replace('opacity-0', 'opacity-100');
+          overlays[i].classList.replace('z-0', 'z-20');
+          overlays[i].classList.remove('pointer-events-none');
+          
+          video.currentTime = 0; 
+          video.play().catch(e => console.log("Autoplay prevenido", e)); 
+        } else {
+          video.classList.replace('opacity-100', 'opacity-0');
+          video.classList.replace('z-10', 'z-0');
+          
+          overlays[i].classList.replace('opacity-100', 'opacity-0');
+          overlays[i].classList.replace('z-20', 'z-0');
+          overlays[i].classList.add('pointer-events-none');
+          
+          video.pause(); 
+        }
+      });
+    }
+
+    // Al terminar el video, saltar al siguiente automáticamente
+    videos.forEach((video, index) => {
+      video.addEventListener('ended', () => {
+        if (index === currentIndex) {
+          currentIndex = (currentIndex + 1) % videos.length;
+          activateSection(currentIndex);
+        }
+      });
     });
 
-    ScrollTrigger.create({
-      trigger: container,
-      pin: true,
-      animation: tween,
-      scrub: 1,
-      invalidateOnRefresh: true,
-      end: () => `+=${getScrollAmount()}`
+    // Clic en las pestañas por el usuario
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        if (currentIndex === index) return; 
+        currentIndex = index;
+        activateSection(currentIndex);
+      });
     });
+
+    // Iniciar loop de barra de progreso
+    animationFrameId = requestAnimationFrame(updateProgress);
+
+    // Auto-reproducir el primero
+    videos[0].play().catch(e => console.log("Autoplay inicial prevenido", e));
   });
 </script>

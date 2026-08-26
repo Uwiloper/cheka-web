@@ -18,11 +18,11 @@
         "style": "outline"
       },
       "features": [
-        { "name": "Historial de 24 horas", "included": true },
+        { "name": "Historial Diario", "included": true },
         { "name": "Con anuncios", "included": true },
-        { "name": "50 Notificaciones", "included": true },
-        { "name": "Yape y Plin", "included": true },
-        { "name": "Compartir Notificaciones", "included": true }
+        { "name": "Notificaciones Ilimitados", "included": true },
+        { "name": "Yape, Plin y Sip", "included": true },
+        { "name": "Compartir por Whatsapp", "included": true }
       ]
     },
     {
@@ -41,7 +41,7 @@
       },
       "features": [
         { "name": "Todo lo del plan Pro", "included": true },
-        { "name": "Historial de 3 meses días", "included": true },
+        { "name": "Historial Mensual", "included": true },
         { "name": "Sincronización a Excel o Google Sheets", "included": true, "highlight": true },
         { "name": "Analíticas avanzadas", "included": true },
         { "name": "Cajero Seguro", "included": true },
@@ -63,13 +63,14 @@
         "style": "outline"
       },
       "features": [
-        { "name": "Historial de 7 días", "included": true },
+        { "name": "Todo lo del plan Gratuito", "included": true },
+        { "name": "Historial Semanal", "included": true },
         { "name": "Analíticas básicas", "included": true },
         { "name": "Experiencia sin anuncios", "included": true }
       ]
     },
     {
-      "id": "empresao",
+      "id": "empresa",
       "name": "Empresa",
       "priceMonthly": "Hablemos",
       "priceAnnual": "Hablemos",
@@ -82,6 +83,7 @@
         "style": "outline"
       },
       "features": [
+        { "name": "Todo lo del plan Negocio", "included": true },
         { "name": "Múltiples locales", "included": true },
         { "name": "Cajas y dispositivos ilimitados", "included": true },
         { "name": "Integración API", "included": true }
