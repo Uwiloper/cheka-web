@@ -1,0 +1,117 @@
+---
+// src/components/Chatbot.astro
+import chatConfig from '../data/chatbot.json';
+const { ui } = chatConfig;
+---
+
+<!-- Variables inyectadas desde el JSON -->
+<div style={`--chat-theme: ${ui.themeColor}; --chat-text: ${ui.textColor};`}>
+  
+  <!-- Botón Flotante -->
+  <button id="chatbot-toggle" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background-color: var(--chat-theme); color: var(--chat-text);">
+    <svg id="chat-icon" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+    <svg id="close-icon" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+  </button>
+
+  <!-- Ventana del Chat -->
+  <div id="chatbot-window" class="fixed bottom-24 right-6 z-50 w-[90vw] md:w-96 max-w-sm bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 opacity-0 pointer-events-none translate-y-10">
+    
+    <!-- Cabecera dinámica -->
+    <div class="p-4 flex items-center gap-3" style="background-color: var(--chat-theme); color: var(--chat-text);">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background-color: var(--chat-text); color: var(--chat-theme);">
+        <span class="font-black text-sm italic">{ui.botInitial}</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-sm leading-tight">{ui.botName}</h4>
+        <p class="text-xs font-medium opacity-90">{ui.statusText}</p>
+      </div>
+    </div>
+
+    <!-- Área de mensajes -->
+    <div id="chat-messages" class="flex-1 p-4 h-80 overflow-y-auto flex flex-col gap-3 bg-slate-50 dark:bg-[#0A0F1C]">
+      <div class="self-start bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2.5 rounded-2xl rounded-tl-sm text-sm max-w-[85%]">
+        {ui.welcomeMessage}
+      </div>
+    </div>
+
+    <!-- Input de texto -->
+    <form id="chat-form" class="p-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] flex gap-2">
+      <input type="text" id="chat-input" placeholder={ui.inputPlaceholder} class="flex-1 bg-slate-100 dark:bg-slate-800 text-sm px-4 py-2.5 rounded-xl border-none outline-none text-slate-900 dark:text-white" autocomplete="off" required>
+      <button type="submit" class="w-10 h-10 rounded-xl flex items-center justify-center hover:scale-105 transition-transform" style="background-color: var(--chat-theme); color: var(--chat-text);">
+        <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3 21l18-9L3 3l3 9zm0 0h7.5"></path></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script define:vars={{ errorMessage: ui.errorMessage }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('chatbot-toggle');
+    const chatWindow = document.getElementById('chatbot-window');
+    const chatIcon = document.getElementById('chat-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const messagesContainer = document.getElementById('chat-messages');
+
+    toggleBtn?.addEventListener('click', () => {
+      chatWindow?.classList.toggle('opacity-0');
+      chatWindow?.classList.toggle('pointer-events-none');
+      chatWindow?.classList.toggle('translate-y-10');
+      chatIcon?.classList.toggle('hidden');
+      closeIcon?.classList.toggle('hidden');
+    });
+
+    function appendMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      // Si es el usuario, usa el color del theme definido por CSS variable en el contenedor padre
+      if (sender === 'user') {
+        msgDiv.style.backgroundColor = 'var(--chat-theme)';
+        msgDiv.style.color = 'var(--chat-text)';
+        msgDiv.className = 'self-end font-medium px-4 py-2.5 rounded-2xl rounded-tr-sm text-sm max-w-[85%]';
+      } else {
+        msgDiv.className = 'self-start bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2.5 rounded-2xl rounded-tl-sm text-sm max-w-[85%]';
+      }
+      msgDiv.textContent = text;
+      messagesContainer?.appendChild(msgDiv);
+      messagesContainer?.scrollTo(0, messagesContainer.scrollHeight);
+    }
+
+    chatForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      appendMessage(message, 'user');
+      chatInput.value = '';
+      
+      const loadingId = 'loading-' + Date.now();
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = loadingId;
+      loadingDiv.className = 'self-start bg-transparent text-slate-500 text-xs flex gap-1 items-center px-4 py-1';
+      loadingDiv.innerHTML = '<span class="animate-bounce">●</span><span class="animate-bounce delay-100">●</span><span class="animate-bounce delay-200">●</span>';
+      messagesContainer?.appendChild(loadingDiv);
+      messagesContainer?.scrollTo(0, messagesContainer.scrollHeight);
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        document.getElementById(loadingId)?.remove();
+        
+        if(response.ok) {
+          appendMessage(data.reply, 'bot');
+        } else {
+          appendMessage(errorMessage, 'bot');
+        }
+      } catch (err) {
+        document.getElementById(loadingId)?.remove();
+        appendMessage('Error de red. Revisa tu conexión.', 'bot');
+      }
+    });
+  });
+</script>

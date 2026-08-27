@@ -1,6 +1,12 @@
 ---
 import '../styles/global.css';
 
+// 1. Importamos nuestros componentes globales
+import CookieConsent from '../components/CookieConsent.astro';
+import Footer from '../components/Footer.astro';
+import ChatBot from '../components/Chatbot.astro';
+
+
 interface Props {
     title: string;
     description?: string;
@@ -45,7 +51,26 @@ const { title, description = "Cheka - Validación automatizada de pagos en tiemp
             }
         </script>
     </head>
-    <body class="bg-cheka-light-bg dark:bg-cheka-dark-bg text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-300">
-        <slot />
+    
+    <!-- Agregamos flexbox para asegurar que el footer siempre quede abajo -->
+    <body class="bg-cheka-light-bg dark:bg-cheka-dark-bg text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-300 flex flex-col min-h-screen">
+        
+        <!-- Si tienes un componente <Navbar />, iría justo aquí arriba -->
+
+        <!-- 2. Envolvemos el slot (contenido de cada página) para que ocupe el espacio restante -->
+        <main class="flex-grow">
+            <slot />
+        </main>
+
+        <!-- el Footer al final del contenido principal -->
+        <Footer />
+
+        <!-- Colocamos el Footer al final del contenido principal -->
+        <ChatBot />
+
+        <!--El banner de Cookies va al final para que superponga todo y no afecte el flujo -->
+        <CookieConsent />
+
+        
     </body>
 </html>

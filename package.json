@@ -12,6 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^11.1.4",
+    "@google/generative-ai": "^0.24.1",
     "@tailwindcss/vite": "^4.3.2",
     "astro": "^7.0.7",
     "gsap": "^3.15.0",
