@@ -31,7 +31,7 @@ Un libro como Excel con todo lo que entra y sale.
 
 Toca una celda para verla completa. Si seleccionas varias, abajo verás la suma.
 
-**«Entre cuentas»** es lo que te pasas entre tus propias billeteras o cuentas, por ejemplo de BCP a BCP. No cuenta como venta ni como gasto.
+**«Entre cuentas»** es lo que te pasas entre tus propias billeteras o cuentas, por ejemplo de BCP a BCP, o lo que mandas a una cuenta a tu nombre en otro banco. No cuenta como venta ni como gasto.
 
 ## Exportación
 
