@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
+import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 
 // Dominio público. Cambiar aquí cuando haya dominio propio (cheka.pe u otro):
@@ -15,7 +16,33 @@ export default defineConfig({
   site: SITIO,
   trailingSlash: 'never',
   adapter: vercel({ webAnalytics: { enabled: false } }),
-  integrations: [sitemap(), mdx()],
+  integrations: [
+    // Documentación pública en /docs (src/content/docs/docs/*.md).
+    starlight({
+      title: 'Ayuda de Cheka',
+      defaultLocale: 'root',
+      locales: { root: { label: 'Español', lang: 'es-PE' } },
+      disable404Route: true,
+      lastUpdated: false,
+      sidebar: [
+        { label: 'Primeros pasos', items: ['docs', 'docs/empezar', 'docs/no-perder-pagos'] },
+        {
+          label: 'Usar Cheka',
+          items: [
+            'docs/inicio',
+            'docs/cobros',
+            'docs/cajero-seguro',
+            'docs/finanzas',
+            'docs/gastos-automaticos',
+            'docs/asistente',
+          ],
+        },
+        { label: 'Tu cuenta', items: ['docs/cuenta', 'docs/privacidad', 'docs/preguntas-frecuentes'] },
+      ],
+    }),
+    sitemap(),
+    mdx(),
+  ],
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   vite: {
     plugins: [tailwindcss()],
