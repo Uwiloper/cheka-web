@@ -1,34 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-
-import BanksCarousel from '../components/BanksCarousel.astro';
-
-import FeaturesScroll from '../components/FeaturesScroll.astro';
-
-import Pricing from '../components/Pricing.astro';
-
-import Faq from '../components/Faq.astro';
-import Contact from '../components/Contact.astro';
-
-
+// Página temporal mientras se aprueba la propuesta de diseño.
+import Base from '../layouts/Base.astro';
 ---
 
-<Layout title="Cheka | Valida tus ingresos en automático">
-
-  
-
-  <Header />
-  <Hero />
-
-  <BanksCarousel />
-  <FeaturesScroll / >
-
-  <Pricing />
-
-  <Contact />
-  <Faq />
-
-
-</Layout>
+<Base
+  titulo="Cheka | Valida tus Yapes y Plins al instante"
+  descripcion="Cheka confirma cada pago de Yape, Plin y bancos en segundos y te avisa por voz. Hecho para negocios del Perú."
+  noIndexar
+>
+  <main class="grid min-h-dvh place-items-center p-4">
+    <p>Cheka: nueva web en construcción.</p>
+  </main>
+</Base>
