@@ -1,16 +1,16 @@
 ---
-// Esqueleto de todas las páginas: idioma, metadatos, canónica y tarjetas para redes.
-// El diseño (cabecera, pie, tema) se agrega cuando se apruebe la propuesta.
+// Esqueleto de todas las páginas: idioma, metadatos, canónica, tarjetas para redes y medición.
 import '../styles/global.css';
+import Cookies from '../components/Cookies.astro';
+import { CLARITY_ID, ES_PRODUCCION } from '../config/sitio';
 
 interface Props {
   titulo: string;
   descripcion: string;
   imagen?: string;
-  noIndexar?: boolean;
 }
 
-const { titulo, descripcion, imagen = '/og.png', noIndexar = false } = Astro.props;
+const { titulo, descripcion, imagen = '/og.png' } = Astro.props;
 const canonica = new URL(Astro.url.pathname, Astro.site);
 const imagenAbs = new URL(imagen, Astro.site);
 ---
@@ -19,11 +19,13 @@ const imagenAbs = new URL(imagen, Astro.site);
 <html lang="es-PE">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
     <link rel="canonical" href={canonica} />
-    {noIndexar && <meta name="robots" content="noindex, nofollow" />}
+    {!ES_PRODUCCION && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#F3F5F4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B0F0D" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -35,8 +37,22 @@ const imagenAbs = new URL(imagen, Astro.site);
     <meta property="og:url" content={canonica} />
     <meta property="og:image" content={imagenAbs} />
     <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
   </head>
   <body>
     <slot />
+    <Cookies />
+    {/* Clarity: solo en producción y solo después de que el visitante acepta (ver Cookies.astro). */}
+    <script is:inline define:vars={{ CLARITY_ID, ES_PRODUCCION }}>
+      window.chekaCargarClarity = function () {
+        if (!ES_PRODUCCION || window.clarity) return;
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+          y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, 'clarity', 'script', CLARITY_ID);
+      };
+      try { if (localStorage.getItem('cheka-cookies') === 'si') window.chekaCargarClarity(); } catch (e) {}
+    </script>
   </body>
 </html>

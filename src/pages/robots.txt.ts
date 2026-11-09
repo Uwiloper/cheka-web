@@ -1,10 +1,11 @@
 import type { APIRoute } from 'astro';
+import { ES_PRODUCCION } from '../config/sitio';
 
-// Mientras la web nueva está en vista previa, no se indexa nada.
-// Al publicar en producción, cambiar a Allow y dejar el sitemap.
+// Producción se indexa; las vistas previas de Vercel y el local, no.
 export const GET: APIRoute = ({ site }) => {
   const sitemap = new URL('sitemap-index.xml', site).href;
-  return new Response(`User-agent: *\nDisallow: /\n\nSitemap: ${sitemap}\n`, {
+  const regla = ES_PRODUCCION ? 'Allow: /' : 'Disallow: /';
+  return new Response(`User-agent: *\n${regla}\n\nSitemap: ${sitemap}\n`, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   });
 };

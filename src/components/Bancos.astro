@@ -1,0 +1,23 @@
+---
+import { seccion } from '../lib/contenido';
+const b = await seccion('bancos');
+---
+
+<section class="bancos aparece" aria-labelledby="bancos-titulo">
+  <div class="contenedor fila">
+    <h2 id="bancos-titulo" class="etiqueta">{b.titulo}</h2>
+    <ul>
+      {b.logos.map((l) => <li><img src={l.imagen} alt={l.nombre} width="96" height="40" loading="lazy" decoding="async" /></li>)}
+      {b.otros.map((o) => <li class="texto">{o}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .bancos { padding: 8px 0 40px; }
+  .fila { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  li { height: 64px; min-width: 112px; padding: 0 18px; box-sizing: border-box; display: grid; place-items: center; background: var(--sup); border-radius: var(--r-control); }
+  img { height: 30px; width: auto; max-width: 96px; object-fit: contain; }
+  .texto { font-size: 16px; font-weight: 700; letter-spacing: -.01em; color: var(--suave); }
+</style>

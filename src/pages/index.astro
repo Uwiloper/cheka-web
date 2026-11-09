@@ -1,14 +1,47 @@
 ---
-// Página temporal mientras se aprueba la propuesta de diseño.
 import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Portada from '../components/Portada.astro';
+import Bancos from '../components/Bancos.astro';
+import Funciones from '../components/Funciones.astro';
+import Pasos from '../components/Pasos.astro';
+import Probar from '../components/Probar.astro';
+import Preguntas from '../components/Preguntas.astro';
+import Pie from '../components/Pie.astro';
+
+const app = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Cheka',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Android, Web',
+  inLanguage: 'es-PE',
+  description: 'Cheka confirma al instante los pagos de Yape, Plin y bancos del Perú leyendo los avisos del celular, y avisa por voz quién pagó.',
+  url: Astro.site?.href,
+};
 ---
 
 <Base
-  titulo="Cheka | Valida tus Yapes y Plins al instante"
-  descripcion="Cheka confirma cada pago de Yape, Plin y bancos en segundos y te avisa por voz. Hecho para negocios del Perú."
-  noIndexar
+  titulo="Cheka | Tus yapes y plins confirmados al instante"
+  descripcion="Cheka lee los avisos de Yape, Plin y tus bancos en tu celular y los confirma al instante en un panel, con voz. Para negocios del Perú. Gratis durante la prueba."
 >
-  <main class="grid min-h-dvh place-items-center p-4">
-    <p>Cheka: nueva web en construcción.</p>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(app)} />
+  <Cabecera />
+  <main>
+    <Portada />
+    <Bancos />
+    <Funciones />
+    <Pasos />
+    <Probar />
+    <Preguntas />
   </main>
+  <Pie />
 </Base>
+
+<script>
+  // Aparición suave de las secciones al entrar en pantalla.
+  const ver = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('visto'); ver.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.aparece').forEach((el) => ver.observe(el));
+</script>

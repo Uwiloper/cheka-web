@@ -1,0 +1,83 @@
+---
+import { seccion } from '../lib/contenido';
+import { PANEL_URL } from '../config/sitio';
+const c = await seccion('cabecera');
+---
+
+<header class="cabecera" id="cabecera">
+  <div class="contenedor fila">
+    <a href="/" class="logo marca" aria-label="Cheka, inicio">cheka</a>
+
+    <nav aria-label="Principal" class="nav">
+      {c.enlaces.map((e) => <a href={e.url}>{e.texto}</a>)}
+    </nav>
+
+    <div class="acciones">
+      <a class="btn btn-suave ingresar" href={PANEL_URL}>{c.ingresar}</a>
+      <a class="btn btn-marca" href="#probar">{c.probar}</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="menu-movil" class="menu-movil" aria-label="Menú" hidden>
+    <div class="contenedor">
+      {c.enlaces.map((e) => <a href={e.url}>{e.texto}</a>)}
+      <a href={PANEL_URL}>{c.ingresar}</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const cab = document.getElementById('cabecera')!;
+  const btn = cab.querySelector<HTMLButtonElement>('.menu-btn')!;
+  const menu = document.getElementById('menu-movil')!;
+
+  // Al bajar, la cabecera toma fondo de superficie; arriba se funde con la página.
+  const marcar = () => cab.classList.toggle('bajo', scrollY > 8);
+  marcar();
+  addEventListener('scroll', marcar, { passive: true });
+
+  const cerrar = () => { btn.setAttribute('aria-expanded', 'false'); cab.classList.remove('abierto'); menu.hidden = true; };
+  btn.addEventListener('click', () => {
+    const abrir = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(abrir));
+    btn.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+    cab.classList.toggle('abierto', abrir);
+    menu.hidden = !abrir;
+  });
+  menu.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) cerrar(); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
+</script>
+
+<style>
+  .cabecera { position: sticky; top: 0; z-index: 50; transition: background-color .25s ease; }
+  .cabecera.bajo, .cabecera.abierto { background: color-mix(in srgb, var(--fondo) 82%, transparent); backdrop-filter: blur(14px) saturate(1.4); }
+  .fila { height: 72px; display: flex; align-items: center; gap: 24px; }
+  .marca { font-size: 30px; color: var(--tinta); text-decoration: none; line-height: 1; }
+  .nav { display: flex; gap: 4px; margin-inline: auto; }
+  .nav a { padding: 10px 14px; border-radius: var(--r-control); color: var(--suave); font-size: 14.5px; font-weight: 600; text-decoration: none; transition: color .15s ease, background-color .15s ease; }
+  .nav a:hover { color: var(--tinta); background: var(--sup); }
+  .acciones { display: flex; gap: 8px; align-items: center; }
+  .acciones .btn { height: 42px; font-size: 14px; padding: 0 16px; }
+
+  .menu-btn { display: none; width: 44px; height: 44px; border: 0; border-radius: var(--r-control); background: var(--sup); cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
+  .menu-btn span { width: 18px; height: 2px; border-radius: 2px; background: var(--tinta); transition: transform .25s var(--curva); }
+  .abierto .menu-btn span:first-child { transform: translateY(3.5px) rotate(45deg); }
+  .abierto .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
+  .menu-movil { padding: 4px 0 20px; }
+  .menu-movil[hidden] { display: none; }
+  .menu-movil .contenedor { display: flex; flex-direction: column; gap: 2px; }
+  .menu-movil a { padding: 14px 12px; border-radius: var(--r-control); color: var(--tinta); font-size: 17px; font-weight: 600; text-decoration: none; animation: baja .3s var(--salida) both; }
+  .menu-movil a:hover { background: var(--sup); }
+  @keyframes baja { from { opacity: 0; transform: translateY(-6px); } }
+
+  @media (max-width: 900px) {
+    .nav, .ingresar { display: none; }
+    .acciones { margin-left: auto; }
+    .menu-btn { display: flex; }
+  }
+  @media (max-width: 400px) { .acciones .btn-marca { display: none; } }
+</style>
