@@ -48,3 +48,67 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* El escenario del recorrido nunca es más alto que la pantalla: su ancho sigue al alto disponible */
+@media (min-width: 641px) {
+  #funcionalidades .escenario { width: min(100%, calc((100svh - 390px) * 1.85)); margin-inline: auto; }
+}
+
+/* Laptops de 720p y 768p (y ventanas bajas): cada sección entra en una pantalla.
+   Va fuera de las capas de Tailwind para ganarle a sus utilidades sin !important. */
+@media (min-width: 1024px) and (max-height: 860px) {
+  #funcionalidades, #precios, #contacto, #faq { padding-top: 28px; padding-bottom: 28px; }
+
+  #funcionalidades > div > div:first-child { margin-bottom: 18px; }
+  #funcionalidades h2 { font-size: 40px; margin-bottom: 6px; }
+  #funcionalidades .rec-texto { min-height: 0; }
+  #funcionalidades .rec-texto h3 { font-size: 20px; }
+  #funcionalidades [role="tablist"] { margin-top: 0; }
+  #funcionalidades > div > div:last-child { margin-top: 18px; gap: 12px; }
+
+  #precios h2 { font-size: 30px; margin-bottom: 6px; }
+  #precios h2 + p { margin-bottom: 12px; }
+  #precios > div > div:first-child { margin-bottom: 4px; }
+  #pricing-track { padding-top: 22px; padding-bottom: 16px; }
+  #precios h2 + p { max-width: none; font-size: 14px; }
+  #pricing-track .plan-card > div.relative.z-10 { padding: 16px 20px; }
+  #pricing-track .plan-card h3 + p { height: auto; font-size: 13px; }
+  #pricing-track .plan-card div.mb-4 { margin-bottom: 8px; }
+  #pricing-track .plan-card div.mb-5 { margin-bottom: 10px; }
+  #pricing-track ul { margin-bottom: 12px; }
+  #pricing-track ul > li { font-size: 13px; }
+  #pricing-track ul > li + li { margin-top: 4px; }
+  #pricing-track .price-amount { font-size: 30px; }
+
+  #contacto h2 { font-size: 44px; line-height: 1.05; margin-bottom: 8px; }
+  #contacto h2 + p { margin-bottom: 18px; }
+  #contacto #card-inner { padding: 22px 28px; }
+  #contacto form > * + * { margin-top: 14px; }
+  #contacto textarea { height: 64px; }
+
+  #faq h2 { font-size: 36px; margin-bottom: 6px; }
+  #faq > div > div:first-child { margin-bottom: 16px; max-width: none; }
+  #faq h2 + p { font-size: 15px; }
+  #faq .faq-item { margin: 0; }
+  #faq .faq-item:has(+ .faq-item) { margin-bottom: -8px; } /* gap-4 → 8 px */
+  #faq .accordion-header { padding-top: 10px; padding-bottom: 10px; }
+}
+/* Pantalla baja y ancha: pestañas y texto a la izquierda, escenario grande a la derecha */
+@media (min-width: 1024px) and (max-height: 860px) {
+  #funcionalidades > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr); grid-template-areas: "cab cab" "texto escena"; column-gap: 40px; align-items: center; }
+  #funcionalidades > div > div:first-child { grid-area: cab; }
+  #funcionalidades .escenario { grid-area: escena; width: min(100%, calc((100svh - 290px) * 1.75)); margin-inline: auto 0; }
+  #funcionalidades > div > div:last-child { grid-area: texto; margin-top: 0; align-items: flex-start; }
+  #funcionalidades [role="tablist"] { flex-direction: column; align-items: stretch; width: 100%; }
+  #funcionalidades .rec-tab { justify-content: flex-start; }
+  #funcionalidades .rec-texto { text-align: left; }
+}
+/* 720p: un ajuste más fino */
+@media (min-width: 1024px) and (max-height: 740px) {
+  #funcionalidades, #precios, #contacto, #faq { padding-top: 18px; padding-bottom: 18px; }
+  #precios h2, #faq h2 { font-size: 28px; }
+  #pricing-track { padding-top: 18px; padding-bottom: 10px; }
+  #pricing-track ul > li + li { margin-top: 2px; }
+  #faq > div > div:first-child { margin-bottom: 12px; }
+  #faq .accordion-header { padding-top: 8px; padding-bottom: 8px; }
+}

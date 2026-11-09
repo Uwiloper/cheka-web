@@ -91,6 +91,9 @@ const { formspreeKey, header, form } = contactData;
     100% { background-position: 0% 50%; }
   }
 
+  /* El degradado solo aparece al enviar: antes se asomaba como un filo en las esquinas */
+  .moving-gradient-wrapper:not(.enviado) { background: none; }
+
   .moving-gradient-wrapper {
     background: linear-gradient(120deg, var(--color-cheka-primary), #059669, #34d399, #10b981, var(--color-cheka-primary));
     background-size: 300% 300%;
@@ -130,6 +133,7 @@ const { formspreeKey, header, form } = contactData;
           });
 
           if (response.ok) {
+            document.getElementById("contact-morph-container")?.classList.add("enviado");
             // MORPHING: 
             // Step 1. Desaparece el formulario
             gsap.to(formWrapper, {
