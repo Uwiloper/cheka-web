@@ -1,0 +1,58 @@
+---
+// src/components/CookieConsent.astro
+---
+<div id="cookie-banner" class="fixed bottom-0 inset-x-0 z-50 hidden translate-y-full transition-transform duration-500">
+  <div class="bg-slate-900 dark:bg-[#0A0F1C] text-white p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="text-xs md:text-sm text-slate-300 max-w-3xl">
+      <p>Usamos Microsoft Clarity para ver cómo se usa esta página y mejorarla. No vendemos tus datos. <a href="/docs/privacidad" class="underline text-[#10b981] font-medium hover:text-emerald-400">Leer política completa</a>.</p>
+    </div>
+    <div class="flex w-full md:w-auto gap-3 shrink-0">
+      <button id="btn-reject-cookies" class="flex-1 md:flex-none px-4 py-2.5 text-xs md:text-sm font-bold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors">Solo esenciales</button>
+      <button id="btn-accept-cookies" class="flex-1 md:flex-none px-4 py-2.5 text-xs md:text-sm font-bold bg-[#10b981] text-slate-900 rounded-xl hover:bg-emerald-400 transition-colors">Aceptar todas</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('cookie-banner');
+    const btnAccept = document.getElementById('btn-accept-cookies');
+    const btnReject = document.getElementById('btn-reject-cookies');
+
+    // 1. Verificar estado del consentimiento
+    const consent = localStorage.getItem('cheka_cookie_consent');
+
+    if (!consent && banner) {
+      // Mostrar banner con animación
+      banner.classList.remove('hidden');
+      setTimeout(() => banner.classList.remove('translate-y-full'), 100);
+    } else if (consent === 'granted') {
+      // Si ya aceptó antes, inicializamos los scripts de terceros
+      loadAnalyticsScripts();
+    }
+
+    // 2. Acciones de los botones
+    btnAccept?.addEventListener('click', () => {
+      localStorage.setItem('cheka_cookie_consent', 'granted');
+      hideBanner();
+      loadAnalyticsScripts(); // Inyectamos los scripts de inmediato
+    });
+
+    btnReject?.addEventListener('click', () => {
+      localStorage.setItem('cheka_cookie_consent', 'denied');
+      hideBanner();
+      // No hacemos nada más, respetando la privacidad
+    });
+
+    function hideBanner() {
+      banner?.classList.add('translate-y-full');
+      setTimeout(() => banner?.classList.add('hidden'), 500);
+    }
+
+    // 3. El "Inyector" de Scripts
+    // Clarity (y luego GA4 y Meta Pixel) solo cargan con permiso; Base.astro los carga solo en producción.
+    function loadAnalyticsScripts() {
+      (window as any).chekaCargarClarity?.();
+    }
+  });
+</script>

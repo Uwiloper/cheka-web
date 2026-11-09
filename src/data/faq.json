@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Preguntas Frecuentes",
+    "description": "Encuentra respuestas rápidas a las dudas más comunes sobre Cheka. Si necesitas más ayuda, nuestro equipo está listo para asistirte."
+  },
+  "categories": [
+    { "id": "general", "name": "General" },
+    { "id": "integraciones", "name": "Integraciones" },
+    { "id": "pagos", "name": "Planes y Pagos" },
+    { "id": "seguridad", "name": "Seguridad" }
+  ],
+  "faqs": [
+    {
+      "categoryId": "general",
+      "question": "¿Qué es Cheka y cómo ayuda a mi negocio?",
+      "answer": "Cheka es una plataforma centralizada que te permite gestionar ventas, cuadrar cajas y monitorear los pagos de tus clientes desde distintas billeteras digitales y bancos en un solo lugar y en tiempo real."
+    },
+    {
+      "categoryId": "general",
+      "question": "¿Necesito hardware especial para usar la plataforma?",
+      "answer": "No. Cheka funciona 100% en la nube y puedes acceder desde cualquier computadora, tablet o smartphone con conexión a internet."
+    },
+    {
+      "categoryId": "integraciones",
+      "question": "¿Con qué billeteras y bancos se integra?",
+      "answer": "Actualmente soportamos validación de pagos con Yape, Plin, BCP, BBVA, Interbank y Scotiabank, además de pasarelas como Niubiz, Izipay y Culqi."
+    },
+    {
+      "categoryId": "integraciones",
+      "question": "¿La validación de pagos es automática?",
+      "answer": "Sí, el sistema verifica las transacciones en tiempo real, permitiendo a tus cajeros confirmar los pagos sin necesidad de revisar el celular de la empresa o entrar a la app del banco."
+    },
+    {
+      "categoryId": "pagos",
+      "question": "¿Puedo cambiar o cancelar mi plan en cualquier momento?",
+      "answer": "Absolutamente. Puedes subir, bajar o cancelar tu plan en cualquier momento desde tu panel de configuración sin cargos ocultos ni penalidades."
+    },
+    {
+      "categoryId": "pagos",
+      "question": "¿Qué métodos de pago aceptan para la suscripción?",
+      "answer": "Aceptamos pagos con tarjeta de crédito/débito (Visa, Mastercard, Amex) y también transferencias bancarias para planes anuales o empresariales."
+    },
+    {
+      "categoryId": "seguridad",
+      "question": "¿Qué tan seguros están mis datos financieros?",
+      "answer": "Tus datos están protegidos con encriptación de nivel bancario (AES-256). Nunca almacenamos contraseñas de tus cuentas bancarias ni tenemos acceso a mover tus fondos."
+    },
+    {
+      "categoryId": "seguridad",
+      "question": "¿Qué pasa si mis cajeros intentan borrar una transacción?",
+      "answer": "El sistema cuenta con un registro inmutable (log de auditoría). Cualquier modificación o eliminación queda registrada con el nombre del usuario y la hora exacta, asegurando control total para el administrador."
+    }
+  ]
+}

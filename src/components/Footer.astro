@@ -1,0 +1,100 @@
+---
+// src/components/Footer.astro
+import footerData from '../data/footer.json';
+
+// Obtenemos el año actual dinámicamente para el copyright
+const currentYear = new Date().getFullYear();
+const copyrightText = footerData.legal.copyright.replace('{year}', currentYear.toString());
+---
+
+<footer class="relative bg-[var(--color-cheka-light-bg)] dark:bg-[var(--color-cheka-dark-bg)] pt-16 pb-8 px-6 overflow-hidden transition-colors duration-300">
+  
+  <!-- Línea divisoria superior con degradado sutil -->
+  <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent"></div>
+
+  <div class="max-w-6xl mx-auto">
+    
+    <!-- Cuadrícula Principal -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-16">
+      
+      <!-- Columna 1: Branding (Ocupa más espacio en desktop) -->
+      <div class="lg:col-span-4 flex flex-col items-start">
+        <a href="#" class="inline-block mb-4">
+          {footerData.brand.logoUrl ? (
+            <img src={footerData.brand.logoUrl} alt={footerData.brand.name} class="h-8 auto" />
+          ) : (
+            <span class="text-2xl font-black text-slate-900 dark:text-white tracking-tight italic">
+              {footerData.brand.name}
+            </span>
+          )}
+        </a>
+        
+        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed max-w-xs">
+          {footerData.brand.description}
+        </p>
+
+        <!-- Redes Sociales -->
+        <div class="flex items-center gap-4">
+          {footerData.socials.map((social) => (
+            <a 
+              href={social.url} 
+              aria-label={social.name}
+              class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800/50 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-[var(--color-cheka-primary)] hover:text-white dark:hover:bg-[var(--color-cheka-primary)] dark:hover:text-white transition-all duration-300 hover:scale-110"
+            >
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" set:html={social.icon}></svg>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Columnas Dinámicas de Navegación -->
+      <div class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+        {footerData.columns.map((column) => (
+          <div>
+            <h4 class="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-5">
+              {column.title}
+            </h4>
+            <ul class="space-y-3">
+              {column.links.map((link) => (
+                <li>
+                  <a 
+                    href={link.url} 
+                    class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-[var(--color-cheka-primary)] dark:hover:text-[var(--color-cheka-primary)] transition-colors duration-300 flex items-center group"
+                  >
+                    <span class="relative overflow-hidden">
+                      {link.label}
+                      <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[var(--color-cheka-primary)] transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+    <!-- Sección Inferior: Legal y Copyright -->
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <p class="text-xs font-medium text-slate-500 dark:text-slate-500">
+        {copyrightText}
+      </p>
+
+      <ul class="flex flex-wrap items-center gap-4 md:gap-6">
+        {footerData.legal.links.map((link) => (
+          <li>
+            <a 
+              href={link.url} 
+              class="text-xs font-medium text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      
+    </div>
+  </div>
+</footer>

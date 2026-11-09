@@ -1,13 +1,13 @@
 ---
+// Portada: diseño original del usuario (sin sombras ni bordes) + recorrido de funciones hecho con código.
 import Base from '../layouts/Base.astro';
-import Cabecera from '../components/Cabecera.astro';
-import Portada from '../components/Portada.astro';
-import Bancos from '../components/Bancos.astro';
-import Funciones from '../components/Funciones.astro';
-import Pasos from '../components/Pasos.astro';
-import Probar from '../components/Probar.astro';
-import Preguntas from '../components/Preguntas.astro';
-import Pie from '../components/Pie.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import BanksCarousel from '../components/BanksCarousel.astro';
+import Recorrido from '../components/Recorrido.astro';
+import Pricing from '../components/Pricing.astro';
+import Contact from '../components/Contact.astro';
+import Faq from '../components/Faq.astro';
 
 const app = {
   '@context': 'https://schema.org',
@@ -22,26 +22,15 @@ const app = {
 ---
 
 <Base
-  titulo="Cheka | Tus yapes y plins confirmados al instante"
-  descripcion="Cheka lee los avisos de Yape, Plin y tus bancos en tu celular y los confirma al instante en un panel, con voz. Para negocios del Perú. Gratis durante la prueba."
+  titulo="Cheka | Valida tus ingresos en automático"
+  descripcion="Cheka lee los avisos de Yape, Plin y tus bancos en tu celular y los confirma al instante en un panel, con voz. Para negocios del Perú."
 >
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(app)} />
-  <Cabecera />
-  <main>
-    <Portada />
-    <Bancos />
-    <Funciones />
-    <Pasos />
-    <Probar />
-    <Preguntas />
-  </main>
-  <Pie />
+  <Header />
+  <Hero />
+  <BanksCarousel />
+  <Recorrido />
+  <Pricing />
+  <Contact />
+  <Faq />
 </Base>
-
-<script>
-  // Aparición suave de las secciones al entrar en pantalla.
-  const ver = new IntersectionObserver((es) => es.forEach((e) => {
-    if (e.isIntersecting) { e.target.classList.add('visto'); ver.unobserve(e.target); }
-  }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.aparece').forEach((el) => ver.observe(el));
-</script>

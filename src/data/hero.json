@@ -1,0 +1,55 @@
+{
+  "badge": "En prueba gratuita",
+  "title": {
+    "prefix": "Tus ",
+    "typewriter": [
+      {
+        "text": "yapes",
+        "color1": "#720586",
+        "color2": "#a221af",
+        "cursorColor": "#00e0c5"
+      },
+      {
+        "text": "plins",
+        "color1": "#0581f6",
+        "color2": "#16dec8",
+        "cursorColor": "#fb78c5"
+      },
+      {
+        "text": "sips",
+        "color1": "#00b1ff",
+        "color2": "#00ddff",
+        "cursorColor": "#000000"
+      },
+      {
+        "text": "pagos BCP",
+        "color1": "#110044",
+        "color2": "#0b1ea1",
+        "cursorColor": "#e36a31"
+      },
+      {
+        "text": "pagos BBVA",
+        "color1": "#103668",
+        "color2": "#254d7d",
+        "cursorColor": "#254d7d"
+      }
+    ],
+    "suffix": "validados en automático"
+  },
+  "description": "Adiós al error humano y fraude en tus pagos digitales. Cheka conecta tus dispositivos Android con un panel web inteligente y privado para monitorear tu pagos en tiempo real.",
+  "buttons": {
+    "primary": {
+      "text": "Ingresar al panel →",
+      "url": "https://panel-cheka.wilmeran12438.workers.dev"
+    },
+    "secondary": {
+      "text": "Solicitar acceso",
+      "url": "#registro"
+    }
+  },
+  "trust": {
+    "avatars": [],
+    "highlight": "",
+    "text": ""
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "formspreeKey": "myegkovw",
+  "header": {
+    "badge": "CONTACTO",
+    "badgeClass": "text-[var(--color-cheka-primary)] font-bold tracking-widest text-xs md:text-sm uppercase mb-2 block",
+    "title": "Hablemos de tu <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-cheka-primary)] to-emerald-400 font-black italic\">siguiente paso</span>",
+    "titleClass": "font-black text-3xl md:text-5xl lg:text-6xl tracking-tight text-slate-900 dark:text-white leading-tight mb-3",
+    "description": "Déjanos tus datos y un especialista en automatización financiera se pondrá en contacto contigo.",
+    "descriptionClass": "font-medium text-slate-600 dark:text-slate-400 text-sm md:text-base max-w-xl mx-auto mb-8"
+  },
+  "form": {
+    "defaultLabelClass": "block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2",
+    "defaultInputClass": "w-full font-sans px-4 py-3.5 rounded-[10px] bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-2 focus:outline-[var(--color-cheka-primary)] transition-colors text-sm font-medium",
+    "fields": [
+      {
+        "id": "name",
+        "name": "name",
+        "label": "Nombre o Empresa",
+        "type": "text",
+        "placeholder": "Ej. Mary Store",
+        "required": true,
+        "colSpan": "col-span-1"
+      },
+      {
+        "id": "phone",
+        "name": "phone",
+        "label": "Celular",
+        "type": "tel",
+        "placeholder": "987 654 321",
+        "required": false,
+        "colSpan": "col-span-1"
+      },
+      {
+        "id": "message",
+        "name": "message",
+        "label": "Mensaje",
+        "type": "textarea",
+        "rows": 2,
+        "placeholder": "Cuéntanos sobre tu negocio o consulta...",
+        "required": true,
+        "colSpan": "col-span-1 md:col-span-2"
+      }
+    ],
+    "submitButton": {
+      "text": "Enviar Mensaje",
+      "textSending": "Enviando...",
+      "textClass": "relative z-10 font-bold text-sm md:text-base text-slate-900 dark:text-[#090D16]",
+      "buttonClass": "group/btn relative overflow-hidden flex items-center justify-center gap-2.5 text-sm md:text-base font-bold text-slate-900 dark:text-[#090D16] bg-[var(--color-cheka-primary)] w-full py-3.5 md:py-4 rounded-[10px] hover:scale-105 transition-all duration-300 cursor-pointer"
+    },
+    "successState": {
+      "text": "Enviado",
+      "textClass": "text-3xl md:text-4xl font-black text-slate-900 dark:text-[#090D16]",
+      "iconClass": "w-16 h-16 md:w-20 md:h-20 text-slate-900 dark:text-[#090D16] mb-3"
+    }
+  }
+}
