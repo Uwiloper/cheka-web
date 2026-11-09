@@ -16,7 +16,10 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 - Español peruano, `lang="es-PE"`. Textos cortos y concretos: el público es dueño de negocio en Gamarra, mercados y bodegas (skill `cheka-marketing`).
 - Fuentes: Mulish solo en el logo, Inter en el resto. Sin sombras ni bordes; movimiento con propósito (skills `emil-design-eng`, `animate`, `review-animations`).
 - Cada página usa `src/layouts/Base.astro` (título, descripción, canónica, Open Graph). Nada de páginas sin descripción.
-- `robots.txt` bloquea todo mientras la web nueva está en vista previa; abrirlo al pasar a producción.
+- `robots.txt` e indexación se abren solos en producción (`ES_PRODUCCION` en `src/config/sitio.ts`); vistas previas y local no se indexan ni miden.
+- Diseño: es el del usuario (componentes originales) sin sombras ni bordes; las capas se separan por tono. No reemplazarlo por plantillas propias.
+- Pantallas bajas (720p/768p): reglas en `src/styles/global.css` para que cada sección entre en una pantalla. Probar en 1280×720 y 1366×768 al cambiar una sección.
+- Chat (`src/components/Chatbot.astro` + `src/pages/api/chat.ts`, función de Vercel): Gemini 3.1 Flash Lite → Groq gpt-oss-120b; sabe lo que dice `/docs`. Variables: `GEMINI_API_KEY` y `GROQ_API_KEY` en `.env` (local, no se sube) y en Vercel › Settings › Environment Variables.
 
 ## Skills instaladas (en `.claude/skills`, fijadas en `skills-lock.json`)
 

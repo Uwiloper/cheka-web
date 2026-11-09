@@ -3,6 +3,7 @@
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import Chatbot from '../components/Chatbot.astro';
 import { CLARITY_ID, ES_PRODUCCION } from '../config/sitio';
 
 interface Props {
@@ -58,6 +59,7 @@ const imagenAbs = new URL(imagen, Astro.site);
       <slot />
     </main>
     <Footer />
+    <Chatbot />
     <CookieConsent />
   </body>
 </html>

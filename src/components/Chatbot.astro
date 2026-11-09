@@ -1,0 +1,163 @@
+---
+// Chat de la web: burbuja flotante (diseño original del usuario, sin sombras ni bordes).
+// Habla con /api/chat (Gemini → Groq). Solo convierte en enlace la ayuda (/docs), anclas de esta página y WhatsApp.
+import chatConfig from '../data/chatbot.json';
+const { ui } = chatConfig;
+---
+
+<div id="chatbot" style={`--chat-theme: ${ui.themeColor}; --chat-text: ${ui.textColor};`} data-error={ui.errorMessage} data-limite={ui.limitMessage}>
+  <button id="chatbot-toggle" type="button" aria-expanded="false" aria-controls="chatbot-window" aria-label="Abrir el chat de ayuda"
+    class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+    style="background-color: var(--chat-theme); color: var(--chat-text);">
+    <svg id="chat-icon" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+    <svg id="close-icon" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+  </button>
+
+  <div id="chatbot-window" role="dialog" aria-label={ui.botName} hidden
+    class="chat-ventana fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white dark:bg-[#111827] rounded-2xl flex flex-col overflow-hidden">
+
+    <div class="p-4 flex items-center gap-3" style="background-color: var(--chat-theme); color: var(--chat-text);">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--chat-text); color: var(--chat-theme);">
+        <span class="font-black text-sm italic">{ui.botInitial}</span>
+      </div>
+      <div>
+        <h2 class="font-bold text-sm leading-tight">{ui.botName}</h2>
+        <p class="text-xs font-medium opacity-80">{ui.statusText}</p>
+      </div>
+    </div>
+
+    <div id="chat-messages" class="flex-1 p-4 h-80 max-h-[50svh] overflow-y-auto flex flex-col gap-3 bg-slate-50 dark:bg-[#0A0F1C]" aria-live="polite">
+      <div class="burbuja bot self-start bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-2xl rounded-tl-sm text-sm max-w-[85%]">{ui.welcomeMessage}</div>
+      <div id="chat-sugerencias" class="flex flex-wrap gap-2">
+        {ui.suggestions.map((s) => (
+          <button type="button" class="sugerencia text-xs font-bold px-3 py-2 rounded-xl bg-white dark:bg-white/5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">{s}</button>
+        ))}
+      </div>
+    </div>
+
+    <form id="chat-form" class="p-3 bg-white dark:bg-[#111827] flex flex-col gap-1.5">
+      <div class="flex gap-2">
+        <label for="chat-input" class="sr-only">Tu pregunta</label>
+        <input type="text" id="chat-input" placeholder={ui.inputPlaceholder} maxlength={ui.maxLength} autocomplete="off" required
+          class="flex-1 min-w-0 bg-slate-100 dark:bg-slate-800 text-sm px-4 py-2.5 rounded-xl outline-none focus:outline-2 focus:outline-[var(--chat-theme)] text-slate-900 dark:text-white" />
+        <button type="submit" aria-label="Enviar" class="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center transition-transform active:scale-95 disabled:opacity-50"
+          style="background-color: var(--chat-theme); color: var(--chat-text);">
+          <svg class="w-5 h-5 ml-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3 21l18-9L3 3l3 9zm0 0h7.5"></path></svg>
+        </button>
+      </div>
+      <span id="chat-contador" class="self-end text-[11px] font-semibold text-slate-400 tabular-nums">0/{ui.maxLength}</span>
+    </form>
+  </div>
+</div>
+
+<script>
+  type Mensaje = { rol: 'yo' | 'bot'; texto: string };
+
+  const raiz = document.getElementById('chatbot')!;
+  const boton = document.getElementById('chatbot-toggle') as HTMLButtonElement;
+  const ventana = document.getElementById('chatbot-window')!;
+  const iconoChat = document.getElementById('chat-icon')!;
+  const iconoCerrar = document.getElementById('close-icon')!;
+  const form = document.getElementById('chat-form') as HTMLFormElement;
+  const input = document.getElementById('chat-input') as HTMLInputElement;
+  const enviar = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const contador = document.getElementById('chat-contador')!;
+  const lista = document.getElementById('chat-messages')!;
+  const sugerencias = document.getElementById('chat-sugerencias');
+  const historial: Mensaje[] = [];
+  let ocupado = false;
+
+  const abrir = (si: boolean) => {
+    ventana.hidden = !si;
+    boton.setAttribute('aria-expanded', String(si));
+    boton.setAttribute('aria-label', si ? 'Cerrar el chat' : 'Abrir el chat de ayuda');
+    iconoChat.classList.toggle('hidden', si);
+    iconoCerrar.classList.toggle('hidden', !si);
+    if (si) setTimeout(() => input.focus(), 50);
+  };
+  boton.addEventListener('click', () => abrir(ventana.hidden));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !ventana.hidden) { abrir(false); boton.focus(); } });
+
+  // Texto plano con enlaces markdown permitidos: ayuda (/docs…), anclas (#…) y WhatsApp. Nada de HTML del modelo.
+  const enlacePermitido = (u: string) => /^\/docs(\/[a-z0-9-]+)*$/.test(u) || /^#[a-z0-9-]+$/.test(u) || /^https:\/\/wa\.me\/\d+$/.test(u);
+  function pintar(destino: HTMLElement, texto: string) {
+    const re = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([^*]+)\*\*/g;
+    let ultimo = 0, m: RegExpExecArray | null;
+    while ((m = re.exec(texto))) {
+      destino.append(texto.slice(ultimo, m.index));
+      if (m[3]) {
+        const b = document.createElement('strong'); b.textContent = m[3]; destino.append(b);
+      } else if (enlacePermitido(m[2])) {
+        const a = document.createElement('a');
+        a.textContent = m[1]; a.href = m[2];
+        a.className = 'font-bold underline underline-offset-2';
+        if (m[2].startsWith('https://')) { a.target = '_blank'; a.rel = 'noopener'; }
+        if (m[2].startsWith('#')) a.addEventListener('click', () => abrir(false));
+        destino.append(a);
+      } else destino.append(m[1]);
+      ultimo = re.lastIndex;
+    }
+    destino.append(texto.slice(ultimo));
+  }
+
+  function burbuja(texto: string, rol: 'yo' | 'bot') {
+    const d = document.createElement('div');
+    if (rol === 'yo') {
+      d.className = 'burbuja self-end font-medium px-4 py-2.5 rounded-2xl rounded-tr-sm text-sm max-w-[85%]';
+      d.style.backgroundColor = 'var(--chat-theme)';
+      d.style.color = 'var(--chat-text)';
+      d.textContent = texto;
+    } else {
+      d.className = 'burbuja bot self-start bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-2xl rounded-tl-sm text-sm max-w-[85%] whitespace-pre-line';
+      pintar(d, texto);
+    }
+    lista.append(d);
+    lista.scrollTo({ top: lista.scrollHeight, behavior: 'smooth' });
+  }
+
+  input.addEventListener('input', () => { contador.textContent = `${input.value.length}/${input.maxLength}`; });
+
+  async function preguntar(texto: string) {
+    texto = texto.trim().slice(0, input.maxLength);
+    if (!texto || ocupado) return;
+    ocupado = true; enviar.disabled = true;
+    sugerencias?.remove();
+    burbuja(texto, 'yo');
+    historial.push({ rol: 'yo', texto });
+    input.value = ''; contador.textContent = `0/${input.maxLength}`;
+
+    const cargando = document.createElement('div');
+    cargando.className = 'self-start text-slate-400 text-xs flex gap-1 items-center px-4 py-1';
+    cargando.innerHTML = '<span class="animate-bounce">●</span><span class="animate-bounce [animation-delay:.1s]">●</span><span class="animate-bounce [animation-delay:.2s]">●</span>';
+    cargando.setAttribute('aria-label', 'Escribiendo');
+    lista.append(cargando);
+    lista.scrollTo({ top: lista.scrollHeight });
+
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mensajes: historial.slice(-8) }) });
+      const d = await r.json().catch(() => ({}));
+      cargando.remove();
+      if (r.ok && d.reply) { burbuja(d.reply, 'bot'); historial.push({ rol: 'bot', texto: d.reply }); }
+      else { burbuja(r.status === 429 ? raiz.dataset.limite! : raiz.dataset.error!, 'bot'); historial.pop(); }
+    } catch {
+      cargando.remove();
+      burbuja(raiz.dataset.error!, 'bot');
+      historial.pop();
+    } finally {
+      ocupado = false; enviar.disabled = false; input.focus();
+    }
+  }
+
+  form.addEventListener('submit', (e) => { e.preventDefault(); preguntar(input.value); });
+  sugerencias?.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('.sugerencia');
+    if (b) preguntar(b.textContent ?? '');
+  });
+</script>
+
+<style>
+  .chat-ventana { animation: chat-nace .26s cubic-bezier(.23, 1, .32, 1); transform-origin: bottom right; }
+  .chat-ventana[hidden] { display: none; }
+  @keyframes chat-nace { from { opacity: 0; transform: translateY(10px) scale(.97); } }
+  @media (prefers-reduced-motion: reduce) { .chat-ventana { animation: none; } }
+</style>

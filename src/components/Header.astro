@@ -31,7 +31,7 @@ const { links, buttons } = navigationData;
             <!-- Dropdown Desktop -->
             <div class="desktop-dropdown absolute top-full left-0 w-56 pt-2 z-50">
               <div class="overflow-hidden">
-                <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-2 flex flex-col gap-1">
+                <div class="bg-slate-100 dark:bg-[#1E293B] rounded-2xl p-2 flex flex-col gap-1">
                   {link.items?.map((item) => (
                     <a href={item.url} class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 active:scale-95 transition-all duration-200 group/item">
                       <div class={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${item.colorTheme === 'green' ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-blue-500/10 text-blue-500'}`}>
