@@ -1,0 +1,387 @@
+{
+  "_comentario": "Textos de la portada tipo app (una pantalla por pestaña). Solo se promete lo que Cheka hace hoy (skill cheka-marketing).",
+  "panelUrl": "https://panel-cheka.wilmeran12438.workers.dev",
+  "whatsapp": "51992594145",
+  "whatsappMensaje": "CHEKA: quiero probarla en mi negocio",
+  "pestanas": [
+    {
+      "id": "inicio",
+      "nombre": "Inicio",
+      "icono": "inicio"
+    },
+    {
+      "id": "funciones",
+      "nombre": "Funciones",
+      "icono": "chispa"
+    },
+    {
+      "id": "planes",
+      "nombre": "Planes",
+      "icono": "etiqueta"
+    },
+    {
+      "id": "seguro",
+      "nombre": "¿Es seguro?",
+      "corto": "Seguro",
+      "icono": "escudo"
+    },
+    {
+      "id": "preguntas",
+      "nombre": "Preguntas",
+      "icono": "ayuda"
+    }
+  ],
+  "cta": {
+    "texto": "Quiero probar",
+    "id": "probar"
+  },
+  "inicio": {
+    "sello": "Gratis mientras está en prueba",
+    "titulo": {
+      "antes": "Que no te pasen",
+      "articulo": "un",
+      "palabras": [
+        "yape",
+        "plin",
+        "sip",
+        "pago BCP",
+        "pago BBVA"
+      ],
+      "despues": "falso"
+    },
+    "texto": "Cheka lee el aviso real de Yape, Plin y tu banco en tu celular y lo canta al instante. Tu cajero ve el check verde, no tu saldo.",
+    "boton": "Quiero probar gratis",
+    "boton2": "Ver cómo funciona",
+    "garantias": [
+      "No pide claves",
+      "No mueve tu plata",
+      "Te la instalamos contigo"
+    ],
+    "bancosTitulo": "Lee los avisos de",
+    "bancos": [
+      {
+        "nombre": "Yape",
+        "logo": "/assets/icons/banks/yape.svg",
+        "pronto": false
+      },
+      {
+        "nombre": "Plin",
+        "logo": "/assets/icons/banks/plin.svg",
+        "pronto": false
+      },
+      {
+        "nombre": "BCP",
+        "logo": "/assets/icons/banks/bcp.svg",
+        "pronto": false
+      },
+      {
+        "nombre": "BBVA",
+        "logo": "/assets/icons/banks/bbva.svg",
+        "pronto": false
+      },
+      {
+        "nombre": "Sip",
+        "logo": "/assets/icons/banks/sip.svg",
+        "pronto": false
+      },
+      {
+        "nombre": "Interbank",
+        "logo": "/assets/icons/proximamente/interbank.svg",
+        "pronto": true
+      },
+      {
+        "nombre": "Scotiabank",
+        "logo": "/assets/icons/proximamente/scotiabank.svg",
+        "pronto": true
+      }
+    ],
+    "bancosPronto": "En proceso"
+  },
+  "pagos": [
+    {
+      "nombre": "Juan Pérez",
+      "billetera": "Yape",
+      "monto": 25,
+      "frase": "Juan Pérez te yapeó",
+      "gasto": false
+    },
+    {
+      "nombre": "Rosa Díaz",
+      "billetera": "Plin",
+      "monto": 48,
+      "frase": "Rosa Díaz te pagó con Plin",
+      "gasto": false
+    },
+    {
+      "nombre": "Distribuidora San José",
+      "billetera": "Yape",
+      "monto": 85,
+      "frase": "",
+      "gasto": true
+    },
+    {
+      "nombre": "Luis Quispe",
+      "billetera": "BCP",
+      "monto": 120,
+      "frase": "Luis Quispe te pagó por BCP",
+      "gasto": false
+    },
+    {
+      "nombre": "María Torres",
+      "billetera": "Yape",
+      "monto": 12.5,
+      "frase": "María Torres te yapeó",
+      "gasto": false
+    },
+    {
+      "nombre": "Carmen Rojas",
+      "billetera": "Plin",
+      "monto": 67,
+      "frase": "Carmen Rojas te pagó con Plin",
+      "gasto": false
+    },
+    {
+      "nombre": "Pedro Huamán",
+      "billetera": "Yape",
+      "monto": 38,
+      "frase": "Pedro Huamán te yapeó",
+      "gasto": false
+    },
+    {
+      "nombre": "Luz del Sur",
+      "billetera": "BCP",
+      "monto": 64.3,
+      "frase": "",
+      "gasto": true
+    },
+    {
+      "nombre": "Ana Flores",
+      "billetera": "BBVA",
+      "monto": 210,
+      "frase": "Ana Flores te pagó por BBVA",
+      "gasto": false
+    },
+    {
+      "nombre": "José Mamani",
+      "billetera": "Yape",
+      "monto": 15,
+      "frase": "José Mamani te yapeó",
+      "gasto": false
+    },
+    {
+      "nombre": "Lucía Vargas",
+      "billetera": "Plin",
+      "monto": 54.9,
+      "frase": "Lucía Vargas te pagó con Plin",
+      "gasto": false
+    }
+  ],
+  "funciones": {
+    "titulo": "Así trabaja Cheka en tu negocio",
+    "items": [
+      {
+        "id": "voz",
+        "nombre": "Voz",
+        "titulo": "Te avisa por voz",
+        "texto": "Llega el Yape, suena la caja y oyes «Juan Pérez te yapeó». No dice el monto, para que nadie alrededor lo escuche."
+      },
+      {
+        "id": "cajero",
+        "nombre": "Cajero",
+        "titulo": "Cajero seguro",
+        "texto": "Tu cajero entra con un PIN tipo placa (ABC-123) que vence con su turno. Ve el check verde de cada pago, nunca cuánto vendiste."
+      },
+      {
+        "id": "analiticas",
+        "nombre": "Analíticas",
+        "titulo": "Cuánto vendes y por dónde",
+        "texto": "Ingresos y gastos por día, cuánto entra por cada billetera y quiénes son tus mejores clientes."
+      },
+      {
+        "id": "conta",
+        "nombre": "Contabilidad",
+        "titulo": "Nadie altera un cobro",
+        "texto": "Lo que leyó el banco no se edita ni se borra. Exporta a Excel y mándaselo a tu contador por WhatsApp."
+      },
+      {
+        "id": "ia",
+        "nombre": "Asistente",
+        "titulo": "Asistente con IA",
+        "texto": "Pregúntale cuánto vendiste hoy o cómo se hace algo en Cheka, y te responde al toque."
+      }
+    ],
+    "chat": [
+      {
+        "yo": true,
+        "texto": "¿Cuánto vendí hoy?"
+      },
+      {
+        "yo": false,
+        "texto": "Hoy llevas S/ 1,309.50 en 23 cobros. Lo que más te entra es Yape."
+      },
+      {
+        "yo": true,
+        "texto": "¿Cómo abro un turno para mi cajera?"
+      },
+      {
+        "yo": false,
+        "texto": "Entra a Cajero seguro › Turnos y toca «Abrir turno». Le das su PIN y listo."
+      }
+    ]
+  },
+  "planes": {
+    "titulo": "Hoy es gratis",
+    "texto": "Cheka está en prueba con sus primeros negocios. No hay cobros ni tarjetas: si algún día cambia, te avisamos antes.",
+    "lista": [
+      {
+        "id": "gratis",
+        "nombre": "Gratis",
+        "sello": "Lo que hay hoy",
+        "precio": "S/ 0",
+        "nota": "mientras dura la prueba",
+        "incluye": [
+          "Avisos de Yape, Plin, BCP, BBVA y Sip",
+          "Voz que canta cada pago",
+          "Terminal de cajero con PIN que vence",
+          "Efectivo y caja chica",
+          "Analíticas y exportación a Excel"
+        ],
+        "boton": "Quiero probar gratis"
+      },
+      {
+        "id": "premium",
+        "nombre": "Premium",
+        "sello": "Pronto",
+        "precio": "Aún sin precio",
+        "nota": "lo estamos construyendo",
+        "incluye": [
+          "Voces más naturales, hechas con IA",
+          "Google Sheets que se llena solo",
+          "Alertas que se adelantan a lo que viene",
+          "Resumen de tu año de ventas"
+        ],
+        "boton": "Avísenme cuando salga"
+      }
+    ]
+  },
+  "seguro": {
+    "titulo": "Tu plata se queda donde está",
+    "texto": "Cheka no es un banco ni una billetera. No guarda tu dinero ni puede moverlo: solo lee el aviso que ya te llega.",
+    "ve": {
+      "titulo": "Lo que Cheka ve",
+      "items": [
+        "El aviso del pago: quién te pagó y cuánto",
+        "De qué billetera o banco vino",
+        "La hora en que llegó"
+      ]
+    },
+    "nunca": {
+      "titulo": "Lo que nunca toca",
+      "items": [
+        "Tu clave del banco, de Yape o de Plin",
+        "Tu dinero: no puede pagar ni transferir",
+        "Tus chats, fotos y avisos que no son de pagos"
+      ]
+    },
+    "notas": [
+      {
+        "icono": "descarga",
+        "titulo": "Te la instalamos nosotros",
+        "texto": "Aún no está en Play Store: es una versión de prueba que se instala con un archivo. Lo hacemos contigo, por videollamada o en tu puesto."
+      },
+      {
+        "icono": "pausa",
+        "titulo": "La pausas cuando quieras",
+        "texto": "Detienes el envío desde Ajustes o la desinstalas. Tus datos son tuyos."
+      },
+      {
+        "icono": "persona",
+        "titulo": "Hay una persona detrás",
+        "texto": "Cheka se hace en Perú, junto a los negocios que la prueban. Te responde su creador por WhatsApp."
+      }
+    ]
+  },
+  "preguntas": {
+    "titulo": "Lo que más nos preguntan",
+    "items": [
+      {
+        "p": "¿Cheka puede mover mi dinero?",
+        "r": "No. Cheka no pide la clave de tu banco ni de Yape y no puede hacer pagos ni transferencias. Solo lee el aviso que ya aparece en tu pantalla cuando te pagan."
+      },
+      {
+        "p": "¿Por qué pide leer mis notificaciones?",
+        "r": "Es la forma de saber que el pago llegó de verdad, sin conectarse a tu banco. Solo usa los avisos de las apps de pagos; los demás los ignora."
+      },
+      {
+        "p": "¿Mi cajero puede engañarme con una captura?",
+        "r": "No. El pago aparece en su terminal solo cuando llega el aviso real del banco a tu teléfono. Además, tu cajero entra con un código que vence y no ve cuánto vendiste."
+      },
+      {
+        "p": "¿Funciona en iPhone?",
+        "r": "El panel web sí. Para leer tus pagos necesitas un celular Android, que puede ser uno que ya no uses."
+      },
+      {
+        "p": "¿Por qué no está en Play Store?",
+        "r": "Es una versión de prueba. Mientras llegamos a Play Store se instala con un archivo y te ayudamos a hacerlo; Android te pedirá permiso una sola vez."
+      },
+      {
+        "p": "¿Cuánto cuesta?",
+        "r": "Es gratis mientras está en prueba. Si algún día hay planes de pago, te avisamos antes."
+      }
+    ],
+    "mas": {
+      "texto": "Ver el manual completo",
+      "url": "/docs"
+    },
+    "chat": "Pregúntale al asistente"
+  },
+  "probar": {
+    "titulo": "Prueba Cheka gratis en tu negocio",
+    "texto": "Buscamos negocios con cajero o con muchos Yapes al día. Te la instalamos contigo y tú nos cuentas qué mejorar.",
+    "campos": {
+      "nombre": "Tu nombre",
+      "negocio": "¿Qué vendes?",
+      "negocioEj": "Ropa, abarrotes, comida…",
+      "lugar": "¿Dónde queda?",
+      "lugarEj": "Gamarra, tu mercado, tu distrito…",
+      "whatsapp": "Tu WhatsApp",
+      "whatsappEj": "9XX XXX XXX",
+      "android": "¿Tienes un celular Android?"
+    },
+    "boton": "Quiero probar Cheka",
+    "enviando": "Enviando…",
+    "listo": {
+      "titulo": "¡Listo! Te escribimos por WhatsApp",
+      "texto": "Normalmente respondemos el mismo día."
+    },
+    "o": "o escríbenos directo",
+    "whatsappBoton": "Escribir «CHEKA» por WhatsApp",
+    "whatsappCorto": "O escríbenos por WhatsApp",
+    "pie": [
+      {
+        "texto": "Privacidad",
+        "url": "/docs/privacidad"
+      },
+      {
+        "texto": "Términos y condiciones",
+        "url": "https://panel-cheka.wilmeran12438.workers.dev/terminos"
+      },
+      {
+        "texto": "Legal",
+        "url": "/legal"
+      },
+      {
+        "texto": "Promociones",
+        "url": "/promociones"
+      },
+      {
+        "texto": "Libro de reclamaciones",
+        "url": "/libro-de-reclamaciones"
+      },
+      {
+        "texto": "Ingreso admin",
+        "url": "https://panel-cheka.wilmeran12438.workers.dev/admin"
+      }
+    ]
+  }
+}

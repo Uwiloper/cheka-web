@@ -1,0 +1,18 @@
+---
+// Información legal: quién opera Cheka y dónde está cada documento.
+import Texto from '../layouts/Texto.astro';
+import d from '../data/portada.json';
+---
+<Texto titulo="Información legal" descripcion="Quién opera Cheka y dónde encontrar sus términos, su política de privacidad y el libro de reclamaciones.">
+  <h2>Quién opera Cheka</h2>
+  <p>Cheka es desarrollada y operada por <b>Wilmer Angel Carrasco Hernandez</b>, persona natural con <b>RUC N.º 10747185013</b>, en Perú.</p>
+  <p>Cheka no es un banco ni una billetera: no guarda tu dinero ni puede moverlo. No tiene relación comercial con Yape, Plin ni con los bancos cuyos avisos lee; sus nombres y logos pertenecen a sus dueños.</p>
+  <h2>Documentos</h2>
+  <ul>
+    <li><a href={`${d.panelUrl}/terminos`}>Términos y condiciones</a></li>
+    <li><a href="/docs/privacidad">Política de privacidad</a></li>
+    <li><a href="/libro-de-reclamaciones">Libro de reclamaciones</a></li>
+  </ul>
+  <h2>Contacto</h2>
+  <p>Escríbenos por <a href={`https://wa.me/${d.whatsapp}`}>WhatsApp</a>.</p>
+</Texto>

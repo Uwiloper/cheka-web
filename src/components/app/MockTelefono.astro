@@ -1,0 +1,130 @@
+---
+// Maqueta de la app Android: Inicio (total verde, KPIs, movimientos y barra azul marino), Analíticas,
+// movimientos con exportación y la terminal del cajero. `soloInicio` deja solo la primera (portada).
+import Ic from './Ic.astro';
+import Qr from './Qr.astro';
+import datos from '../../data/portada.json';
+
+interface Props { soloInicio?: boolean; burbuja?: string; recorta?: string }
+const { soloInicio = false, burbuja, recorta } = Astro.props;
+
+const hora = ['9:41', '9:36', '9:28', '9:15', '9:02'];
+// Del más reciente al más antiguo; el bucle de src/scripts/app.ts sigue con el quinto pago
+const filas = [...datos.pagos.slice(0, 4).reverse(), datos.pagos[8]].map((p, i) => ({ ...p, hora: `${hora[i]} a. m.` }));
+const sol = (n: number) => `S/ ${n.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+const dias = [['L', 52, 18], ['M', 64, 12], ['M', 48, 22], ['J', 70, 15], ['V', 82, 26], ['S', 100, 20], ['D', 58, 9]] as const;
+const billeteras = [['Yape', 62, '#742284'], ['Plin', 21, '#0B9FC4'], ['BCP', 9, '#0A3A9E'], ['Efectivo', 8, '#1A9E62']] as const;
+---
+<div class="tel" data-maqueta data-escena="voz" data-escala="300x620" data-recorta={recorta} aria-hidden="true">
+  <div class="tel-pant">
+    <div class="tel-estado"><span>9:41</span><span>4G ▮▮▮</span></div>
+    <div class="vistas">
+      <!-- Inicio -->
+      <div class="vista viva tel-vista" data-vista="voz" data-ciclo="pagos" data-burbuja={burbuja}>
+        <div class="app-cab">
+          <div><small>Buenos días</small><b>Bodega Rosita</b></div>
+          <span class="m-chip ok"><i></i>Lector activo</span>
+          <span class="app-ojo"><Ic n="ojo" t={17} /></span>
+        </div>
+        <span class="m-seg"><span class="on">Hoy</span><span>Ayer</span><span>Semana</span></span>
+        <div class="app-total">
+          <span>Cobrado hoy</span>
+          <b data-total data-valor="1309.5">S/ 1,309.50</b>
+          <span class="app-pildoras"><i><span data-cobros>23</span> cobros</i><i class="sale">Gastos <span data-gastos data-valor="85">S/ 85.00</span></i></span>
+        </div>
+        <div class="kpis">
+          <div><span>Gastos de hoy</span><b style="color:var(--egreso)" data-gastos data-valor="85">S/ 85.00</b></div>
+          <div><span>Por confirmar</span><b>2</b></div>
+        </div>
+        <span class="app-h">Movimientos</span>
+        <ul class="lista app-lista" data-lista data-max="5">
+          {filas.slice(0, 4).map((p) => (
+            <li class="fila"><span class="av" data-b={p.billetera}>{p.billetera[0]}</span><span class="quien"><b>{p.nombre}</b><small>{p.billetera} · {p.hora}</small></span><span class:list={['mas', { menos: p.gasto }]}>{p.gasto ? '−' : '+'} {sol(p.monto)}</span></li>
+          ))}
+        </ul>
+        <div class="noti" data-noti>
+          <span class="av" data-noti-av data-b="Yape">Y</span>
+          <span class="quien"><small data-noti-app>Yape · ahora</small><b data-noti-txt>Juan Pérez te envió un pago por S/ 25.00</b></span>
+        </div>
+      </div>
+
+      {!soloInicio && (
+        <>
+          <!-- Analíticas -->
+          <div class="vista tel-vista" data-vista="analiticas" data-ciclo="analiticas">
+            <div class="app-cab"><div><small>Finanzas</small><b>Analíticas</b></div></div>
+            <span class="m-seg"><span class="on">7 días</span><span>Mes</span><span>Año</span></span>
+            <div class="app-total"><span data-vendido-et>Vendido en 7 días</span><b data-vendido data-valor="8420">S/ 8,420.00</b><small data-vendido-nota>148 cobros</small></div>
+            <div class="m-card">
+              <span class="m-h">Ingresos y gastos</span>
+              <div class="columnas">{dias.map(([d, a, b], i) => <div><span><i style={`height:${a}%;--n:${i}`}></i><i style={`height:${b}%;--n:${i + 1}`}></i></span><small>{d}</small></div>)}</div>
+            </div>
+            <div class="m-card">
+              <span class="m-h">Por billetera</span>
+              <div class="horiz">{billeteras.map(([n, p, c], i) => <div>{n}<span><i style={`width:${p}%;background:${c};--n:${i}`}></i></span><em>{p}%</em></div>)}</div>
+            </div>
+          </div>
+
+          <!-- Movimientos que no se editan + exportar -->
+          <div class="vista tel-vista" data-vista="conta">
+            <div class="app-cab"><div><small>Finanzas</small><b>Contabilidad</b></div><span class="m-chip ok"><Ic n="candado" t={12} />Sin cambios</span></div>
+            <span class="m-seg"><span class="on">Hoy</span><span>Ayer</span><span>Semana</span></span>
+            <ul class="lista app-lista">
+              {filas.map((p, i) => (
+                <li class="fila tr-tel" style={`--n:${i}`}><span class="av" data-b={p.billetera}>{p.billetera[0]}</span><span class="quien"><b>{p.nombre}</b><small>{p.billetera} · leído del banco</small></span><span class:list={['mas', { menos: p.gasto }]}>{p.gasto ? '− ' : ''}{sol(p.monto)}</span><span class="candado"><Ic n="candado" t={13} /></span></li>
+              ))}
+              <li class="fila"><span class="av" data-b="Efectivo">E</span><span class="quien"><b>Venta en efectivo</b><small>Anotado por Mary</small></span><span class="mas" style="color:var(--manual)">{sol(35)}</span></li>
+            </ul>
+            <div class="hoja-exp">
+              <b>Exportar</b>
+              <span><Ic n="hoja" t={16} />Excel (.xlsx)</span>
+              <span><Ic n="barras" t={16} />Google Sheets</span>
+              <span><Ic n="whatsapp" t={16} />Enviar por WhatsApp</span>
+            </div>
+          </div>
+
+          <!-- Asistente con IA -->
+          <div class="vista tel-vista" data-vista="ia" data-ciclo="ia">
+            <div class="app-cab"><div><small>Pregúntame lo que sea de Cheka</small><b>Asistente</b></div><span class="app-ojo" style="background:var(--marca);color:var(--sobre)"><Ic n="ia" t={18} /></span></div>
+            <div class="chat">{datos.funciones.chat.map((m, i) => <span class:list={['msj', m.yo ? 'yo' : 'bot']} style={`--n:${i}`}>{m.texto}</span>)}</div>
+            <span class="ia-caja ia-caja-tel">Escribe tu duda…<i><Ic n="flecha" t={14} g={2.4} /></i></span>
+          </div>
+
+          <!-- Terminal del cajero en el celular -->
+          <div class="vista tel-term" data-vista="cajero" data-ciclo="cajero">
+            <div class="term-cab">
+              <div class="term-quien"><b>Caja 1 · Mary</b><span><i></i>En línea</span></div>
+              <span class="term-vence">Vence en<b>05:42:10</b></span>
+            </div>
+            <div class="term-qr">
+              <div class="term-tabs"><span class="on">Yape</span><span>Plin</span></div>
+              <Qr />
+              <span class="espera">Esperando el pago<span><i></i><i></i><i></i></span></span>
+              <div class="pagado-capa">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" /><path d="M29 52 44 66 72 36" /></svg>
+                <span>Pago recibido</span>
+                <b data-pagado-nombre>Juan Pérez</b>
+                <em data-pagado-monto>S/ 25.00 · Yape</em>
+              </div>
+            </div>
+            <div class="term-pagos">
+              <header><h4>Pagos de tu turno</h4><span class="m-chip" style="background:#1C2521;color:#9AABA3">Hoy</span></header>
+              <ul class="lista" data-lista data-max="3">
+                {filas.filter((p) => !p.gasto).slice(0, 2).map((p) => (
+                  <li class="fila"><span class="av" data-b={p.billetera}>{p.billetera[0]}</span><span class="quien"><b>{p.nombre}</b><small>{p.billetera} · {p.hora}</small></span><span class:list={['mas', { menos: p.gasto }]}>{p.gasto ? '−' : '+'} {sol(p.monto)}</span></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+    <div class="app-nav">
+      <span data-n="inicio"><Ic n="inicio" t={18} />Inicio</span>
+      <span data-n="analiticas"><Ic n="barras" t={18} />Analíticas</span>
+      <span class="qr-btn"><Ic n="qr" t={20} /></span>
+      <span><Ic n="usuarios" t={18} />Cajeros</span>
+      <span><Ic n="ajustes" t={18} />Ajustes</span>
+    </div>
+  </div>
+</div>

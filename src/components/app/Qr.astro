@@ -1,0 +1,17 @@
+---
+// QR de adorno (no lleva a ningún lado): 21 × 21 con los tres ojos y relleno fijo.
+let s = 7;
+const azar = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
+const ojo = (f: number, c: number, f0: number, c0: number) => {
+  const a = f - f0, b = c - c0;
+  if (a < 0 || a > 6 || b < 0 || b > 6) return null;
+  return a === 0 || a === 6 || b === 0 || b === 6 || (a >= 2 && a <= 4 && b >= 2 && b <= 4);
+};
+const celdas: boolean[] = [];
+for (let f = 0; f < 21; f++) for (let c = 0; c < 21; c++) {
+  const o = ojo(f, c, 0, 0) ?? ojo(f, c, 0, 14) ?? ojo(f, c, 14, 0);
+  const borde = (f < 8 && c < 8) || (f < 8 && c > 12) || (f > 12 && c < 8);
+  celdas.push(o ?? (borde ? false : azar() > 0.52));
+}
+---
+<div class="qr" aria-hidden="true">{celdas.map((n) => <i class={n ? 'n' : undefined}></i>)}</div>

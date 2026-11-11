@@ -1,13 +1,15 @@
 ---
-// Portada: diseño original del usuario (sin sombras ni bordes) + recorrido de funciones hecho con código.
+// Portada tipo app: cada pestaña es una pantalla completa (la página no se desplaza) y se pasa de una a otra
+// con la barra, deslizando o con las flechas. Textos en src/data/portada.json; movimiento en src/scripts/app.ts.
 import Base from '../layouts/Base.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import BanksCarousel from '../components/BanksCarousel.astro';
-import Recorrido from '../components/Recorrido.astro';
-import Pricing from '../components/Pricing.astro';
-import Contact from '../components/Contact.astro';
-import Faq from '../components/Faq.astro';
+import Ic from '../components/app/Ic.astro';
+import MockPanel from '../components/app/MockPanel.astro';
+import MockTelefono from '../components/app/MockTelefono.astro';
+import d from '../data/portada.json';
+import '../styles/maquetas.css';
+
+const wa = `https://wa.me/${d.whatsapp}?text=${encodeURIComponent(d.whatsappMensaje)}`;
+const iconoFuncion: Record<string, string> = { voz: 'voz', cajero: 'qr', analiticas: 'barras', conta: 'hoja', ia: 'ia' };
 
 const app = {
   '@context': 'https://schema.org',
@@ -16,21 +18,214 @@ const app = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Android, Web',
   inLanguage: 'es-PE',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'PEN' },
   description: 'Cheka confirma al instante los pagos de Yape, Plin y bancos del Perú leyendo los avisos del celular, y avisa por voz quién pagó.',
   url: Astro.site?.href,
+};
+const faq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: d.preguntas.items.map((x) => ({ '@type': 'Question', name: x.p, acceptedAnswer: { '@type': 'Answer', text: x.r } })),
 };
 ---
 
 <Base
-  titulo="Cheka | Valida tus ingresos en automático"
-  descripcion="Cheka lee los avisos de Yape, Plin y tus bancos en tu celular y los confirma al instante en un panel, con voz. Para negocios del Perú."
+  app
+  titulo="Cheka | Que no te pasen un yape falso"
+  descripcion="Cheka lee el aviso real de Yape, Plin y tu banco en tu celular y lo canta al instante. Tu cajero ve el check verde, no tu saldo. Gratis para los primeros negocios."
 >
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(app)} />
-  <Header />
-  <Hero />
-  <BanksCarousel />
-  <Recorrido />
-  <Pricing />
-  <Contact />
-  <Faq />
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(faq)} />
+
+  <div class="app" data-datos={JSON.stringify(d.pagos)}>
+    <span class="forma forma-a" aria-hidden="true"></span>
+    <span class="forma forma-b" aria-hidden="true"></span>
+
+    <header class="cab">
+      <a href="#inicio" class="cab-logo" aria-label="Cheka, inicio"><img src="/assets/icons/logocheka-light.svg" alt="Cheka" width="88" height="46" /></a>
+      <div class="cab-der">
+        <a href={d.panelUrl} class="cab-enlace">Ingresar</a>
+        <a href={`#${d.cta.id}`} class="boton boton-tinta boton-chico">{d.cta.texto}</a>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="Secciones">
+      <span class="nav-ind" aria-hidden="true"></span>
+      {d.pestanas.map((p) => (
+        <a href={`#${p.id}`} data-pestana={p.id}><Ic n={p.icono} t={19} /><span class="largo">{p.nombre}</span><span class="corto">{p.corto ?? p.nombre}</span></a>
+      ))}
+    </nav>
+
+    <main class="pantallas">
+      <!-- Inicio -->
+      <section class="pantalla activa" id="inicio" data-pantalla aria-label="Inicio">
+        <div class="dentro p-inicio">
+          <div class="ini-texto">
+            <span class="sello" data-e style="--e:0"><i></i>{d.inicio.sello}</span>
+            <h1 class="h1" data-e style="--e:1">
+              <span class="linea">{d.inicio.titulo.antes}</span>
+              <span class="linea">{d.inicio.titulo.articulo} <span class="rota" data-rota={JSON.stringify(d.inicio.titulo.palabras)}>{d.inicio.titulo.palabras[0]}</span><i class="cursor" aria-hidden="true"></i></span>
+              <span class="linea">{d.inicio.titulo.despues}</span>
+            </h1>
+            <p class="texto" data-e style="--e:2">{d.inicio.texto}</p>
+            <div class="ini-botones" data-e style="--e:3">
+              <a href="#probar" class="boton boton-tinta">{d.inicio.boton}<Ic n="flecha" t={20} g={2.4} class="va" /></a>
+              <a href="#funciones" class="boton boton-blanco solo-escritorio">{d.inicio.boton2}</a>
+            </div>
+            <ul class="garantias" data-e style="--e:4">
+              {d.inicio.garantias.map((g) => <li><Ic n="check" t={17} g={2.8} />{g}</li>)}
+            </ul>
+            <div class="bancos solo-escritorio" data-e style="--e:5">
+              <span>{d.inicio.bancosTitulo}</span>
+              {d.inicio.bancos.filter((b) => !b.pronto).map((b) => <img src={b.logo} alt={b.nombre} width="54" height="34" loading="lazy" />)}
+              <span class="pronto">{d.inicio.bancosPronto}</span>
+              {d.inicio.bancos.filter((b) => b.pronto).map((b) => <img class="en-proceso" src={b.logo} alt={`${b.nombre} (en proceso)`} width="54" height="34" loading="lazy" />)}
+            </div>
+          </div>
+          <div class="ini-escena" data-e style="--e:3">
+            <div class="tel-caja">
+              <MockTelefono soloInicio burbuja="#burbuja-inicio" recorta="0.86" />
+              <div class="burbuja" id="burbuja-inicio" aria-hidden="true">
+                <span class="ondas"><i></i><i></i><i></i><i></i><i></i></span>
+                <span><small>Cheka dice</small><span data-burbuja-txt>«{d.pagos[0].frase}»</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Funciones -->
+      <section class="pantalla" id="funciones" data-pantalla aria-labelledby="t-funciones">
+        <div class="dentro p-funciones">
+          <div class="fun-lado">
+            <h2 class="h2" id="t-funciones" data-e style="--e:0">{d.funciones.titulo}</h2>
+            <div class="fun-tabs" role="tablist" aria-label="Funciones" data-e style="--e:1">
+              {d.funciones.items.map((f, i) => (
+                <button type="button" class="fun-tab" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-funcion={f.id} data-texto={f.texto}>
+                  <span class="fun-ic"><Ic n={iconoFuncion[f.id]} t={20} /></span>
+                  <b><span class="largo">{f.titulo}</span><span class="corto">{f.nombre}</span></b>
+                  <span class="fun-desc"><span>{f.texto}</span></span>
+                </button>
+              ))}
+            </div>
+            <p class="fun-movil-desc solo-movil" data-fun-desc>{d.funciones.items[0].texto}</p>
+          </div>
+          <div class="fun-escena" data-e style="--e:2">
+            <div class="solo-escritorio"><MockPanel /></div>
+            <div class="solo-movil"><MockTelefono recorta="0.84" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Planes -->
+      <section class="pantalla" id="planes" data-pantalla aria-labelledby="t-planes">
+        <div class="dentro p-centro">
+          <h2 class="h2" id="t-planes" data-e style="--e:0">{d.planes.titulo}</h2>
+          <p class="texto" data-e style="--e:1">{d.planes.texto}</p>
+          <div class="segmento" role="group" aria-label="Plan" data-e style="--e:2">
+            {d.planes.lista.map((p, i) => <button type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-plan={p.id}>{p.nombre}</button>)}
+          </div>
+          <div class="planes" data-ver="gratis">
+            {d.planes.lista.map((p, i) => (
+              <article class:list={['plan', p.id === 'premium' ? 'plan-pronto' : 'plan-gratis']} data-e style={`--e:${i + 2}`}>
+                <div class="plan-cab"><b>{p.nombre}</b><span class="chip">{p.sello}</span></div>
+                <div class="plan-precio"><b>{p.precio}</b><span>{p.nota}</span></div>
+                <ul class="lista-ok">{p.incluye.map((x) => <li><Ic n={p.id === 'premium' ? 'chispa' : 'check'} t={18} g={2.4} />{x}</li>)}</ul>
+                <a href="#probar" class:list={['boton', p.id === 'premium' ? '' : 'boton-marca']}>{p.boton}</a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ¿Es seguro? -->
+      <section class="pantalla" id="seguro" data-pantalla aria-labelledby="t-seguro">
+        <div class="dentro p-centro p-seguro">
+          <h2 class="h2" id="t-seguro" data-e style="--e:0">{d.seguro.titulo}</h2>
+          <p class="texto" data-e style="--e:1">{d.seguro.texto}</p>
+          <div class="ve-toca">
+            <div class="tarjeta ve" data-e style="--e:2">
+              <span class="ve-cab"><span><Ic n="ojo" t={19} /></span>{d.seguro.ve.titulo}</span>
+              <ul class="lista-ok">{d.seguro.ve.items.map((x) => <li><Ic n="check" t={18} g={2.6} />{x}</li>)}</ul>
+            </div>
+            <div class="tarjeta nunca" data-e style="--e:3">
+              <span class="ve-cab"><span><Ic n="candado" t={19} /></span>{d.seguro.nunca.titulo}</span>
+              <ul class="lista-ok">{d.seguro.nunca.items.map((x) => <li><Ic n="x" t={18} g={2.6} />{x}</li>)}</ul>
+            </div>
+          </div>
+          <div class="notas">
+            {d.seguro.notas.map((n, i) => (
+              <div class="nota" data-e style={`--e:${i + 4}`}><span><Ic n={n.icono} t={18} /></span><b>{n.titulo}</b><p>{n.texto}</p></div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Preguntas -->
+      <section class="pantalla" id="preguntas" data-pantalla aria-labelledby="t-preguntas">
+        <div class="dentro p-centro">
+          <h2 class="h2" id="t-preguntas" data-e style="--e:0">{d.preguntas.titulo}</h2>
+          <div class="dudas">
+            {d.preguntas.items.map((x, i) => (
+              <details class="duda" name="dudas" open={i === 0} data-e style={`--e:${i + 1}`}>
+                <summary>{x.p}<Ic n="abajo" t={20} g={2.4} /></summary>
+                <p>{x.r}</p>
+              </details>
+            ))}
+          </div>
+          <div class="mas-ayuda" data-e style="--e:7">
+            <button type="button" class="enlace" data-abrir-chat><Ic n="ayuda" t={18} g={2.2} />{d.preguntas.chat}</button>
+            <a href={d.preguntas.mas.url} class="enlace">{d.preguntas.mas.texto}<Ic n="flecha" t={18} g={2.4} /></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Probar -->
+      <section class="pantalla" id="probar" data-pantalla aria-labelledby="t-probar">
+        <div class="dentro p-probar">
+          <div class="pro-texto">
+            <span class="sello solo-escritorio" data-e style="--e:0"><i></i>{d.inicio.sello}</span>
+            <h2 class="h2" id="t-probar" data-e style="--e:1">{d.probar.titulo}</h2>
+            <p class="texto" data-e style="--e:2">{d.probar.texto}</p>
+            <div class="pro-extra solo-escritorio" data-e style="--e:3">
+              <a href={wa} target="_blank" rel="noopener" class="boton boton-blanco"><Ic n="whatsapp" t={20} />{d.probar.whatsappBoton}</a>
+            </div>
+          </div>
+          <form class="formulario" id="form-probar" novalidate data-e style="--e:2" data-enviando={d.probar.enviando}>
+            <label class="campo"><span>{d.probar.campos.nombre}</span><input name="nombre" autocomplete="given-name" maxlength="60" required /></label>
+            <div class="dos">
+              <label class="campo"><span>{d.probar.campos.negocio}</span><input name="negocio" placeholder={d.probar.campos.negocioEj} maxlength="80" required /></label>
+              <label class="campo"><span>{d.probar.campos.lugar}</span><input name="lugar" placeholder={d.probar.campos.lugarEj} maxlength="60" /></label>
+            </div>
+            <label class="campo"><span>{d.probar.campos.whatsapp}</span><input name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder={d.probar.campos.whatsappEj} maxlength="15" required /></label>
+            <fieldset class="campo">
+              <legend>{d.probar.campos.android}</legend>
+              <div class="opciones">
+                <label><input type="radio" name="android" value="si" checked />Sí</label>
+                <label><input type="radio" name="android" value="no" />No</label>
+                <label><input type="radio" name="android" value="no_se" />No sé</label>
+              </div>
+            </fieldset>
+            <label class="trampa" aria-hidden="true">No llenar<input name="sitio" tabindex="-1" autocomplete="off" /></label>
+            <p class="form-error" role="alert" hidden></p>
+            <button type="submit" class="boton boton-marca">{d.probar.boton}<Ic n="flecha" t={20} g={2.4} class="va" /></button>
+            <a href={wa} target="_blank" rel="noopener" class="enlace solo-movil" style="justify-content:center;color:var(--ingreso)"><Ic n="whatsapp" t={18} />{d.probar.whatsappCorto}</a>
+            <div class="form-listo" role="status">
+              <span class="palomita circulo"><Ic n="check" t={40} g={3} /></span>
+              <b>{d.probar.listo.titulo}</b>
+              <span>{d.probar.listo.texto}</span>
+            </div>
+          </form>
+          <footer class="pie" data-e style="--e:5">
+            <nav aria-label="Legal y más">{d.probar.pie.map((x) => <a href={x.url}>{x.texto}</a>)}</nav>
+            <span>© {new Date().getFullYear()} Cheka · Hecho en Perú</span>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    import '../scripts/app.ts';
+  </script>
 </Base>

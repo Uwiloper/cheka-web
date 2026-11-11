@@ -1,7 +1,6 @@
 ---
 // Esqueleto de todas las páginas: idioma, metadatos, canónica, tarjetas para redes y medición.
 import '../styles/global.css';
-import Footer from '../components/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import Chatbot from '../components/Chatbot.astro';
 import { CLARITY_ID, ES_PRODUCCION } from '../config/sitio';
@@ -10,9 +9,11 @@ interface Props {
   titulo: string;
   descripcion: string;
   imagen?: string;
+  /** Portada tipo app: la página no se desplaza. Las páginas de texto no lo usan. */
+  app?: boolean;
 }
 
-const { titulo, descripcion, imagen = '/og.png' } = Astro.props;
+const { titulo, descripcion, imagen = '/og.png', app = false } = Astro.props;
 const canonica = new URL(Astro.url.pathname, Astro.site);
 const imagenAbs = new URL(imagen, Astro.site);
 ---
@@ -26,8 +27,9 @@ const imagenAbs = new URL(imagen, Astro.site);
     <meta name="description" content={descripcion} />
     <link rel="canonical" href={canonica} />
     {!ES_PRODUCCION && <meta name="robots" content="noindex, nofollow" />}
-    <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#090D16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#1DD382" />
+    {/* Con JavaScript la portada funciona como app (sin desplazar); sin él queda como página larga. */}
+    {app && <script is:inline>document.documentElement.classList.add('js');</script>}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -54,12 +56,9 @@ const imagenAbs = new URL(imagen, Astro.site);
       };
     </script>
   </head>
-  <body class="bg-cheka-light-bg dark:bg-cheka-dark-bg text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-300 flex flex-col min-h-screen">
-    <main class="flex-grow">
-      <slot />
-    </main>
-    <Footer />
-    <Chatbot />
+  <body>
+    <slot />
+    {app && <Chatbot />}
     <CookieConsent />
   </body>
 </html>

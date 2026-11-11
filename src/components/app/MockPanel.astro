@@ -1,0 +1,223 @@
+---
+// Maqueta del panel del dueño (tema claro, barra azul marino) y, encima, la terminal oscura del cajero.
+// Copia la distribución real: Inicio en bento, Analíticas, Contabilidad y la terminal con QR y check verde.
+import Ic from './Ic.astro';
+import Qr from './Qr.astro';
+import datos from '../../data/portada.json';
+
+const hora = ['9:41', '9:36', '9:28', '9:15'];
+// Del más reciente al más antiguo; el bucle de src/scripts/app.ts sigue con el quinto pago
+const filas = datos.pagos.slice(0, 4).reverse().map((p, i) => ({ ...p, hora: `${hora[i]} a. m.` }));
+const sol = (n: number) => `S/ ${n.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+const dias = [['L', 52, 18], ['M', 64, 12], ['M', 48, 22], ['J', 70, 15], ['V', 82, 26], ['S', 100, 20], ['D', 58, 9]] as const;
+const billeteras = [['Yape', 62, '#742284'], ['Plin', 21, '#0B9FC4'], ['BCP', 9, '#0A3A9E'], ['Efectivo', 8, '#1A9E62']] as const;
+const tabla = [
+  { h: '9:41 a. m.', n: 'Juan Pérez', b: 'Yape', m: 25 },
+  { h: '9:36 a. m.', n: 'Rosa Díaz', b: 'Plin', m: 48 },
+  { h: '9:28 a. m.', n: 'Luis Quispe', b: 'BCP', m: 120 },
+  { h: '9:20 a. m.', n: 'Venta en efectivo', b: 'Efectivo', m: 35, manual: 'Anotado por Mary' },
+  { h: '9:15 a. m.', n: 'María Torres', b: 'Yape', m: 12.5 },
+  { h: '9:02 a. m.', n: 'Carmen Rojas', b: 'Plin', m: 67 },
+];
+---
+<div class="caja-pan" data-maqueta data-escena="voz" data-escala="880x540" aria-hidden="true">
+  <div class="pan" data-escena="voz">
+    <div class="pan-lat">
+      <img src="/assets/icons/logocheka-light.svg" alt="" width="61" height="32" />
+      <span class="pan-nav" data-n="inicio"><Ic n="inicio" t={16} />Inicio</span>
+      <span class="pan-nav"><Ic n="qr" t={16} />Cobros</span>
+      <span class="pan-nav"><Ic n="usuarios" t={16} />Cajero seguro</span>
+      <span class="pan-nav" data-n="finanzas"><Ic n="barras" t={16} />Finanzas</span>
+      <div class="pan-sub">
+        <span class="pan-nav" data-n="analiticas">Analíticas</span>
+        <span class="pan-nav">Caja chica</span>
+        <span class="pan-nav" data-n="conta">Contabilidad y auditoría</span>
+        <span class="pan-nav">Exportación</span>
+      </div>
+      <span class="pan-asis"><i></i><span>Asistente<small>Pregúntame de Cheka</small></span></span>
+    </div>
+    <div class="pan-cont">
+      <div class="pan-barra">
+        <span class="pan-busca"><b><Ic n="buscar" t={13} />Todo</b>Busca un pago o un cliente…</span>
+        <span class="pan-bot esp"><Ic n="ojo" t={16} /></span>
+        <span class="pan-yo"><i>RM</i>Rosa</span>
+      </div>
+      <div class="pan-miga">
+        <span data-m="voz">Inicio</span>
+        <span data-m="analiticas"><small>Finanzas ›</small>Analíticas</span>
+        <span data-m="conta"><small>Finanzas ›</small>Contabilidad y auditoría</span>
+        <span data-m="ia">Asistente Cheka</span>
+      </div>
+      <div class="vistas">
+        <!-- Inicio -->
+        <div class="vista viva" data-vista="voz" data-ciclo="pagos">
+          <div class="bento">
+            <div class="m-card b-hero">
+              <span class="m-et">Ingresos de hoy</span>
+              <span style="display:flex;flex-direction:column;gap:6px">
+                <span class="b-monto" data-total data-valor="1309.5">S/ 1,309.50</span>
+                <small><span data-cobros>23</span> cobros · toca para ver tus analíticas</small>
+              </span>
+              <span class="barritas">{[30, 42, 38, 55, 48, 62, 44, 70, 58, 76, 66, 88].map((h) => <i style={`height:${h}%`}></i>)}</span>
+            </div>
+            <div class="m-card b-w2">
+              <span class="m-cab"><span class="m-et">Última alerta de voz</span><Ic n="voz" t={15} /></span>
+              <span class="b-frase"><span class="ondas"><i></i><i></i><i></i><i></i><i></i></span><span data-frase>«{filas[0].frase}»</span></span>
+              <span class="m-nota">Así sonó tu último cobro.</span>
+            </div>
+            <div class="m-card">
+              <span class="m-cab"><span class="m-et">Por confirmar</span><Ic n="ojo" t={15} /></span>
+              <span class="m-cifra">2</span>
+              <span class="m-nota">Avisos que llegaron sin monto.</span>
+            </div>
+            <div class="m-card">
+              <span class="m-cab"><span class="m-et">Turnos activos</span><Ic n="usuarios" t={15} /></span>
+              <span style="font-size:12px;font-weight:600">Mary · Caja 1</span>
+              <span class="m-nota">Vence 6:00 p. m.</span>
+            </div>
+            <div class="m-card b-lista">
+              <span class="m-cab"><span class="m-h">Movimientos en vivo<i></i></span><span class="m-et" style="color:var(--ingreso)">Ver todos</span></span>
+              <ul class="lista" data-lista data-max="4">
+                {filas.map((p) => (
+                  <li class="fila"><span class="av" data-b={p.billetera}>{p.billetera[0]}</span><span class="quien"><b>{p.nombre}</b><small>{p.billetera} · {p.hora}</small></span><span class:list={['mas', { menos: p.gasto }]}>{p.gasto ? '−' : '+'} {sol(p.monto)}</span></li>
+                ))}
+              </ul>
+            </div>
+            <div class="m-card">
+              <span class="m-et">Por billetera · hoy</span>
+              <span class="reparto">{billeteras.map(([, p, c]) => <i style={`width:${p}%;background:${c}`}></i>)}</span>
+              <span class="leyenda">{billeteras.map(([n, p, c]) => <span><b style={`background:${c}`}></b>{n} {p}%</span>)}</span>
+            </div>
+            <div class="m-card">
+              <span class="m-cab"><span class="m-et">Ticket promedio</span><Ic n="hoja" t={15} /></span>
+              <span class="m-cifra">S/ 56.90</span>
+            </div>
+            <div class="m-card">
+              <span class="m-cab"><span class="m-et">Egresos de hoy</span><Ic n="salir" t={15} /></span>
+              <span class="m-cifra" style="color:var(--egreso)" data-gastos data-valor="85">S/ 85.00</span>
+            </div>
+            <div class="m-card">
+              <span class="m-cab"><span class="m-et">Caja chica</span><Ic n="efectivo" t={15} /></span>
+              <span class="m-cifra">S/ 140.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analíticas -->
+        <div class="vista" data-vista="analiticas" data-ciclo="analiticas">
+          <div class="ana">
+            <div class="ana-top">
+              <span class="m-seg"><span class="on">7 días</span><span>Mes</span><span>Año</span></span>
+              <span class="m-chip ok"><i></i>Día estrella: sábado</span>
+            </div>
+            <div class="m-card ana-graf">
+              <span class="m-cab"><span class="m-h">Ingresos y gastos</span><span class="leyenda" style="display:flex;gap:10px"><span><b style="background:#1A9E62"></b>Ingresos</span><span><b style="background:#E0662A"></b>Gastos</span></span></span>
+              <div class="columnas">
+                {dias.map(([d, a, b], i) => <div><span><i style={`height:${a}%;--n:${i}`}></i><i style={`height:${b}%;--n:${i + 1}`}></i></span><small>{d}</small></div>)}
+              </div>
+            </div>
+            <div class="m-card">
+              <span class="m-h">Por billetera</span>
+              <div class="horiz">{billeteras.map(([n, p, c], i) => <div>{n}<span><i style={`width:${p}%;background:${c};--n:${i}`}></i></span><em>{p}%</em></div>)}</div>
+            </div>
+            <div class="m-card">
+              <span class="m-et" data-vendido-et>Vendido en 7 días</span>
+              <span class="m-cifra" data-vendido data-valor="8420">S/ 8,420.00</span>
+              <span class="m-nota" data-vendido-nota>148 cobros</span>
+            </div>
+            <div class="m-card">
+              <span class="m-et">Ticket promedio</span>
+              <span class="m-cifra">S/ 56.90</span>
+              <span class="m-nota">Por cada cobro</span>
+            </div>
+            <div class="m-card b-w2">
+              <span class="m-h">Tus mejores clientes</span>
+              <div class="top">
+                <div>1. Luis Quispe<em>S/ 640.00</em></div>
+                <div>2. Rosa Díaz<em>S/ 412.00</em></div>
+                <div>3. Juan Pérez<em>S/ 305.00</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contabilidad y auditoría -->
+        <div class="vista" data-vista="conta">
+          <div class="conta">
+            <div class="conta-top">
+              <span class="m-chip">Hoy<Ic n="abajo" t={12} /></span>
+              <span class="m-chip">Todas las billeteras<Ic n="abajo" t={12} /></span>
+              <span class="m-btn"><Ic n="descarga" t={14} g={2.2} />Exportar</span>
+            </div>
+            <div class="m-card tabla">
+              {tabla.map((t, i) => (
+                <div class="tr" style={`--n:${i}`}>
+                  <span>{t.h}</span>
+                  <span class="nombre"><span class="av" data-b={t.b}>{t.b[0]}</span>{t.n}</span>
+                  <span><span class="m-chip">{t.b}</span></span>
+                  <span class="origen">{t.manual ? <>{t.manual}</> : <><Ic n="candado" t={13} />Leído del banco</>}</span>
+                  <span class:list={['monto', { manual: t.manual }]}>{sol(t.m)}</span>
+                </div>
+              ))}
+            </div>
+            <div class="exp-menu">
+              <span><Ic n="hoja" t={15} />Excel (.xlsx)</span>
+              <span><Ic n="barras" t={15} />Google Sheets</span>
+              <span><Ic n="whatsapp" t={15} />Enviar por WhatsApp</span>
+            </div>
+            <span class="exp-aviso"><Ic n="check" t={15} g={2.6} />Tu Excel está listo para tu contador</span>
+          </div>
+        </div>
+
+        <!-- Asistente con IA -->
+        <div class="vista" data-vista="ia" data-ciclo="ia">
+          <div class="ia">
+            <div class="m-card ia-chat">
+              <div class="chat">{datos.funciones.chat.map((m, i) => <span class:list={['msj', m.yo ? 'yo' : 'bot']} style={`--n:${i}`}>{m.texto}</span>)}</div>
+              <span class="ia-caja">Escribe tu duda…<i><Ic n="flecha" t={14} g={2.4} /></i></span>
+            </div>
+            <div class="ia-lado">
+              <div class="m-card"><span class="m-h">Tus números</span><span class="ia-chips"><span class="m-chip">¿Cuánto vendí hoy?</span><span class="m-chip">¿Cuál es mi mejor día?</span><span class="m-chip">¿Quién me compra más?</span></span></div>
+              <div class="m-card"><span class="m-h">Temas frecuentes</span><span class="ia-chips"><span class="m-chip">Abrir un turno</span><span class="m-chip">No llega un pago</span><span class="m-chip">Exportar a Excel</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal del cajero -->
+  <div class="term" data-ciclo="cajero">
+    <div class="term-cab">
+      <div class="term-quien"><b>Caja 1 · Mary</b><span><i></i>En línea</span></div>
+      <div class="term-acc">
+        <span class="term-pin">Entró con el PIN<b>ABC-123</b></span>
+        <span class="term-vence">Vence en · Alargar<b>05:42:10</b></span>
+        <span class="term-salir"><Ic n="salir" t={18} /></span>
+      </div>
+    </div>
+    <div class="term-cuerpo">
+      <div class="term-qr">
+        <div class="term-tabs"><span class="on">Yape</span><span>Plin</span></div>
+        <Qr />
+        <p>El cliente escanea y escribe el monto en su app</p>
+        <span class="espera">Esperando el pago<span><i></i><i></i><i></i></span></span>
+        <div class="pagado-capa">
+          <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" /><path d="M29 52 44 66 72 36" /></svg>
+          <span>Pago recibido</span>
+          <b data-pagado-nombre>Juan Pérez</b>
+          <em data-pagado-monto>S/ 25.00 · Yape</em>
+        </div>
+      </div>
+      <div class="term-pagos">
+        <header><h4>Pagos de tu turno</h4><span class="m-chip">Hoy</span></header>
+        <ul class="lista" data-lista data-max="5">
+          {filas.filter((p) => !p.gasto).map((p) => (
+            <li class="fila"><span class="av" data-b={p.billetera}>{p.billetera[0]}</span><span class="quien"><b>{p.nombre}</b><small>{p.billetera} · {p.hora}</small></span><span class:list={['mas', { menos: p.gasto }]}>{p.gasto ? '−' : '+'} {sol(p.monto)}</span></li>
+          ))}
+        </ul>
+        <span class="term-pie"><Ic n="candado" t={13} />Mary ve cada pago, no el total del día.</span>
+      </div>
+    </div>
+  </div>
+</div>

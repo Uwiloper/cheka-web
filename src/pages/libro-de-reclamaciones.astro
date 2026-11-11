@@ -1,0 +1,19 @@
+---
+// Libro de reclamaciones. Versión provisional: recibe por WhatsApp mientras se termina el formulario virtual.
+import Texto from '../layouts/Texto.astro';
+import d from '../data/portada.json';
+const wa = `https://wa.me/${d.whatsapp}?text=${encodeURIComponent('Libro de reclamaciones de Cheka: ')}`;
+---
+<Texto titulo="Libro de reclamaciones" descripcion="Presenta un reclamo o una queja sobre Cheka.">
+  <p class="hoja-pendiente">Estamos terminando el formulario virtual. Mientras tanto, recibimos tu reclamo o queja por WhatsApp y te respondemos por el mismo medio.</p>
+  <h2>Qué necesitamos que nos escribas</h2>
+  <ul>
+    <li>Tu nombre completo y tu número de documento.</li>
+    <li>Un correo o celular para responderte.</li>
+    <li>Si es un <b>reclamo</b> (no estás conforme con el servicio) o una <b>queja</b> (no estás conforme con la atención).</li>
+    <li>Qué pasó y qué pides.</li>
+  </ul>
+  <a href={wa} target="_blank" rel="noopener" class="boton boton-marca">Presentar por WhatsApp</a>
+  <h2>Quién responde</h2>
+  <p>Wilmer Angel Carrasco Hernandez, RUC N.º 10747185013, quien desarrolla y opera Cheka.</p>
+</Texto>
