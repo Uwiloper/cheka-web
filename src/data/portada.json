@@ -52,6 +52,13 @@
     "texto": "Cheka lee el aviso real de Yape, Plin y tu banco en tu celular y lo canta al instante. Tu cajero ve el check verde, no tu saldo.",
     "boton": "Quiero probar gratis",
     "boton2": "Ver cómo funciona",
+    "escuchar": "Escuchar la voz",
+    "escuchando": "Escuchando…",
+    "escucharFrases": [
+      "Juan Pérez te yapeó 25 soles.",
+      "María Torres te pagó 48 soles con Plin.",
+      "Pagaste 85 soles con tu tarjeta BCP en Distribuidora San José."
+    ],
     "garantias": [
       "No pide claves",
       "No mueve tu plata",

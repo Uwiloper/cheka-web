@@ -91,7 +91,7 @@ addEventListener('wheel', (e) => {
 // Deslizar de lado en el celular
 let tx = 0, ty = 0, tocando = false;
 addEventListener('touchstart', (e) => {
-  tocando = !dentroDe(e, '#chatbot, input, .nav');
+  tocando = !dentroDe(e, '#chatbot, input, .nav, .menu-movil');
   tx = e.touches[0].clientX; ty = e.touches[0].clientY;
 }, { passive: true });
 addEventListener('touchend', (e) => {
@@ -377,3 +377,32 @@ $('[data-abrir-chat]')?.addEventListener('click', () => $<HTMLButtonElement>('#c
 mostrar(location.hash.slice(1) || 'inicio', false);
 document.fonts?.ready.then(() => { moverIndicador(); ajustarEscalas(); });
 new ResizeObserver(() => ajustarEscalas()).observe($('.pantallas')!);
+
+/* ── Escuchar la voz (portada) ──────────────────────────────────────────
+   Tres avisos como los del panel, cada uno con su moneda: un Yape, un Plin y un consumo con tarjeta BCP (gasto, con
+   la moneda de gasto). Audios fijos en public/audio con la voz Celeste, generados una sola vez: escucharlos no llama
+   a ningún servicio ni cuesta nada. Las frases están en portada.json (inicio.escucharFrases). */
+{
+  const btn = document.querySelector<HTMLButtonElement>('[data-escuchar]');
+  const txt = btn?.querySelector<HTMLElement>('[data-escuchar-txt]');
+  if (btn && txt) {
+    const cola = ['/audio/moneda.wav', '/audio/voz-yape.mp3', '/audio/moneda.wav', '/audio/voz-plin.mp3', '/audio/moneda-gasto.wav', '/audio/voz-bcp.mp3'];
+    const audio = new Audio();
+    let paso = -1;
+    const fin = () => { paso = -1; btn.classList.remove('sonando'); txt.textContent = btn.dataset.texto!; };
+    const siguiente = () => {
+      paso += 1;
+      if (paso >= cola.length) return fin();
+      audio.src = cola[paso];
+      audio.play().catch(fin);
+    };
+    // Una pausa corta entre un aviso y el siguiente, como cuando llegan pagos seguidos
+    audio.onended = () => (paso % 2 === 1 ? setTimeout(() => { if (paso >= 0) siguiente(); }, 450) : siguiente());
+    btn.addEventListener('click', () => {
+      if (paso >= 0) { audio.pause(); return fin(); }
+      btn.classList.add('sonando');
+      txt.textContent = btn.dataset.sonando!;
+      siguiente();
+    });
+  }
+}

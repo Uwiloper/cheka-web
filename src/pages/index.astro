@@ -3,6 +3,7 @@
 // con la barra, deslizando o con las flechas. Textos en src/data/portada.json; movimiento en src/scripts/app.ts.
 import Base from '../layouts/Base.astro';
 import Ic from '../components/app/Ic.astro';
+import Cabecera from '../components/Cabecera.astro';
 import MockPanel from '../components/app/MockPanel.astro';
 import MockTelefono from '../components/app/MockTelefono.astro';
 import d from '../data/portada.json';
@@ -41,20 +42,7 @@ const faq = {
     <span class="forma forma-a" aria-hidden="true"></span>
     <span class="forma forma-b" aria-hidden="true"></span>
 
-    <header class="cab">
-      <a href="#inicio" class="cab-logo" aria-label="Cheka, inicio"><img src="/assets/icons/logocheka-light.svg" alt="Cheka" width="88" height="46" /></a>
-      <div class="cab-der">
-        <a href={d.panelUrl} class="cab-enlace">Ingresar</a>
-        <a href={`#${d.cta.id}`} class="boton boton-tinta boton-chico">{d.cta.texto}</a>
-      </div>
-    </header>
-
-    <nav class="nav" aria-label="Secciones">
-      <span class="nav-ind" aria-hidden="true"></span>
-      {d.pestanas.map((p) => (
-        <a href={`#${p.id}`} data-pestana={p.id}><Ic n={p.icono} t={19} /><span class="largo">{p.nombre}</span><span class="corto">{p.corto ?? p.nombre}</span></a>
-      ))}
-    </nav>
+    <Cabecera app />
 
     <main class="pantallas">
       <!-- Inicio -->
@@ -70,7 +58,9 @@ const faq = {
             <p class="texto" data-e style="--e:2">{d.inicio.texto}</p>
             <div class="ini-botones" data-e style="--e:3">
               <a href="#probar" class="boton boton-tinta">{d.inicio.boton}<Ic n="flecha" t={20} g={2.4} class="va" /></a>
-              <a href="#funciones" class="boton boton-blanco solo-escritorio">{d.inicio.boton2}</a>
+              <button type="button" class="boton boton-blanco escuchar" data-escuchar data-texto={d.inicio.escuchar} data-sonando={d.inicio.escuchando} aria-label={`${d.inicio.escuchar}: ${d.inicio.escucharFrases.map((f) => `«${f}»`).join(" ")}`}>
+                <span class="esc-ic" aria-hidden="true"><Ic n="voz" t={20} g={2.4} /><span class="ondas"><i></i><i></i><i></i><i></i></span></span><span data-escuchar-txt>{d.inicio.escuchar}</span>
+              </button>
             </div>
             <ul class="garantias" data-e style="--e:4">
               {d.inicio.garantias.map((g) => <li><Ic n="check" t={17} g={2.8} />{g}</li>)}

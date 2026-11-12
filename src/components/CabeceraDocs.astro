@@ -1,0 +1,87 @@
+---
+// Cabecera de /docs (reemplaza la de Starlight): la misma que el resto de la web, con los colores de la documentación.
+// Logo, las pestañas de la portada solo con texto, el buscador de la documentación y, a la derecha, «Para ti»
+// (Blog y Documentación, que es donde estás), «Ingresar», «Quiero probar» y el tema claro u oscuro.
+// En pantallas angostas quedan el logo, el buscador y el menú de Starlight; las pestañas y «Para ti» se esconden.
+import Search from 'virtual:starlight/components/Search';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import d from '../data/portada.json';
+
+const paraTi = [
+  { url: '/blog', titulo: 'Blog', nota: 'Consejos para vender y cobrar mejor', actual: false },
+  { url: '/docs', titulo: 'Documentación', nota: 'Cómo usar Cheka paso a paso', actual: true },
+];
+---
+
+<div class="cd">
+  <a href="/" class="cd-logo" aria-label="Cheka, inicio">
+    <img src="/assets/icons/logocheka-light.svg" alt="Cheka" width="76" height="40" class="cd-claro" />
+    <img src="/assets/icons/logocheka-dark.svg" alt="Cheka" width="76" height="40" class="cd-oscuro" />
+  </a>
+  <nav class="cd-nav" aria-label="Secciones de Cheka">
+    {d.pestanas.map((p) => <a href={`/#${p.id}`}>{p.nombre}</a>)}
+  </nav>
+  <div class="cd-buscar"><Search /></div>
+  <div class="cd-der">
+    <div class="cd-para-ti" data-cd-para-ti>
+      <button type="button" class="cd-enlace" aria-expanded="false" aria-controls="cd-menu">
+        Para ti
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+      </button>
+      <div class="cd-menu" id="cd-menu" hidden>
+        {paraTi.map((x) => <a href={x.url} aria-current={x.actual ? 'page' : undefined}><b>{x.titulo}</b><span>{x.nota}</span></a>)}
+      </div>
+    </div>
+    <a href={d.panelUrl} class="cd-enlace">Ingresar</a>
+    <a href={`/#${d.cta.id}`} class="cd-probar">{d.cta.texto}</a>
+    <ThemeSelect />
+  </div>
+</div>
+
+<style>
+  .cd { height: 100%; display: flex; align-items: center; gap: 16px; }
+  .cd-logo { flex: none; display: flex; }
+  .cd-logo img { height: 40px; width: auto; }
+  .cd-oscuro { display: none; }
+  :global([data-theme='dark']) .cd-claro { display: none; }
+  :global([data-theme='dark']) .cd-oscuro { display: block; }
+  .cd-nav { display: none; gap: 2px; }
+  .cd-nav a { padding: 8px 10px; border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--sl-color-gray-2); text-decoration: none; white-space: nowrap; }
+  .cd-nav a:hover { color: var(--sl-color-white); background: var(--sl-color-gray-6); }
+  .cd-buscar { flex: 1; min-width: 0; display: flex; justify-content: flex-end; }
+  .cd-der { display: none; align-items: center; gap: 6px; }
+  .cd-enlace { all: unset; box-sizing: border-box; cursor: pointer; height: 40px; padding: 0 12px; display: inline-flex; align-items: center; gap: 4px; border-radius: 10px; font-size: 14px; font-weight: 700; color: var(--sl-color-white); text-decoration: none; white-space: nowrap; }
+  .cd-enlace:hover, .cd-enlace[aria-expanded='true'] { background: var(--sl-color-gray-6); }
+  .cd-enlace:focus-visible, .cd-probar:focus-visible { outline: 2px solid var(--sl-color-accent); outline-offset: 2px; }
+  .cd-enlace svg { transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+  .cd-enlace[aria-expanded='true'] svg { transform: rotate(180deg); }
+  .cd-probar { height: 40px; padding: 0 16px; display: inline-flex; align-items: center; border-radius: 12px; background: #1DD382; color: #06281A; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; margin-right: 8px; }
+  .cd-probar:hover { filter: brightness(1.05); }
+  .cd-para-ti { position: relative; }
+  .cd-para-ti::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+  .cd-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 40; width: 260px; display: flex; flex-direction: column; gap: 2px; padding: 6px; border-radius: 14px; background: var(--sl-color-bg-nav); border: 1px solid var(--sl-color-hairline); box-shadow: var(--sl-shadow-md); }
+  .cd-menu[hidden] { display: none; }
+  .cd-menu a { display: flex; flex-direction: column; gap: 2px; padding: 9px 12px; border-radius: 10px; color: var(--sl-color-white); text-decoration: none; }
+  .cd-menu a:hover, .cd-menu a[aria-current='page'] { background: var(--sl-color-gray-6); }
+  .cd-menu b { font-size: 14px; }
+  .cd-menu span { font-size: 12.5px; color: var(--sl-color-gray-3); }
+  @media (min-width: 50rem) { .cd-der { display: flex; } .cd-buscar { justify-content: center; } }
+  @media (min-width: 50rem) and (max-width: 64rem) { .cd-der .cd-enlace[href] { display: none; } }
+  @media (min-width: 82rem) { .cd-nav { display: flex; } }
+</style>
+
+<script>
+  const caja = document.querySelector<HTMLElement>('[data-cd-para-ti]');
+  const btn = caja?.querySelector<HTMLButtonElement>('button');
+  const menu = caja?.querySelector<HTMLElement>('.cd-menu');
+  if (caja && btn && menu) {
+    let espera: ReturnType<typeof setTimeout> | undefined;
+    const fijar = (abierto: boolean) => { clearTimeout(espera); menu.hidden = !abierto; btn.setAttribute('aria-expanded', String(abierto)); };
+    btn.addEventListener('click', () => fijar(menu.hidden));
+    const conMouse = matchMedia('(hover: hover) and (pointer: fine)');
+    caja.addEventListener('mouseenter', () => { if (conMouse.matches) fijar(true); });
+    caja.addEventListener('mouseleave', () => { if (conMouse.matches) espera = setTimeout(() => fijar(false), 180); });
+    document.addEventListener('click', (e) => { if (!caja.contains(e.target as Node)) fijar(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { fijar(false); btn.focus(); } });
+  }
+</script>

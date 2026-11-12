@@ -1,0 +1,89 @@
+---
+// Cabecera de todas las vistas. A la izquierda, el logo y junto a él las pestañas sueltas, solo texto y sin recuadro
+// (una rayita se desliza bajo la pestaña donde estás). A la derecha, aparte: «Para ti» (Blog y Documentación),
+// «Ingresar» y «Quiero probar». En el celular todo eso va en el menú de la hamburguesa.
+// En la portada (`app`) las pestañas cambian de pantalla (src/scripts/app.ts); en las demás vistas llevan a /#pestaña.
+import d from '../data/portada.json';
+
+interface Props { app?: boolean }
+const { app = false } = Astro.props;
+const enlace = (id: string) => (app ? `#${id}` : `/#${id}`);
+const paraTi = [
+  { url: '/blog', titulo: 'Blog', nota: 'Consejos para vender y cobrar mejor' },
+  { url: '/docs', titulo: 'Documentación', nota: 'Cómo usar Cheka paso a paso' },
+];
+---
+
+<header class="cab">
+  <div class="cab-izq">
+    <a href={app ? '#inicio' : '/'} class="cab-logo" aria-label="Cheka, inicio"><img src="/assets/icons/logocheka-light.svg" alt="Cheka" width="88" height="46" /></a>
+    <nav class="nav" aria-label="Secciones">
+      <span class="nav-ind" aria-hidden="true"></span>
+      {d.pestanas.map((p) => <a href={enlace(p.id)} data-pestana={app ? p.id : undefined}>{p.nombre}</a>)}
+    </nav>
+  </div>
+
+  <div class="cab-der">
+    <div class="para-ti" data-para-ti>
+      <button type="button" class="cab-enlace para-ti-btn" aria-expanded="false" aria-controls="menu-para-ti">
+        Para ti
+        <svg class="para-ti-flecha" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+      </button>
+      <div class="para-ti-menu" id="menu-para-ti" hidden>
+        {paraTi.map((x) => <a href={x.url}><b>{x.titulo}</b><span>{x.nota}</span></a>)}
+        <a href={d.panelUrl} class="menu-ingresar"><b>Ingresar</b><span>Entra a tu panel</span></a>
+      </div>
+    </div>
+    <a href={d.panelUrl} class="cab-enlace cab-ingresar">Ingresar</a>
+    <a href={enlace(d.cta.id)} class="boton boton-tinta boton-chico">{d.cta.texto}</a>
+    <button type="button" class="hamburguesa" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir el menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Celular: el menú de la hamburguesa cae bajo la cabecera -->
+  <div class="menu-movil" id="menu-movil" hidden>
+    <nav aria-label="Secciones">
+      {d.pestanas.map((p) => <a href={enlace(p.id)} data-pestana={app ? p.id : undefined} class="mm-pestana">{p.nombre}</a>)}
+    </nav>
+    <div class="mm-grupo">
+      <span class="mm-t">Para ti</span>
+      {paraTi.map((x) => <a href={x.url}><b>{x.titulo}</b><span>{x.nota}</span></a>)}
+      <a href={d.panelUrl}><b>Ingresar</b><span>Entra a tu panel</span></a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // «Para ti»: se abre al tocarlo (o con el mouse encima en computadora); se cierra con Esc o al tocar fuera
+  const caja = document.querySelector<HTMLElement>('[data-para-ti]');
+  const btn = caja?.querySelector<HTMLButtonElement>('.para-ti-btn');
+  const menu = caja?.querySelector<HTMLElement>('.para-ti-menu');
+  if (caja && btn && menu) {
+    let espera: ReturnType<typeof setTimeout> | undefined;
+    const fijar = (abierto: boolean) => { clearTimeout(espera); menu.hidden = !abierto; btn.setAttribute('aria-expanded', String(abierto)); };
+    btn.addEventListener('click', () => fijar(menu.hidden));
+    const conMouse = matchMedia('(hover: hover) and (pointer: fine)');
+    caja.addEventListener('mouseenter', () => { if (conMouse.matches) fijar(true); });
+    caja.addEventListener('mouseleave', () => { if (conMouse.matches) espera = setTimeout(() => fijar(false), 180); });
+    document.addEventListener('click', (e) => { if (!caja.contains(e.target as Node)) fijar(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { fijar(false); btn.focus(); } });
+    caja.addEventListener('focusout', (e) => { if (!caja.contains(e.relatedTarget as Node)) fijar(false); });
+  }
+
+  // Hamburguesa (celular): abre y cierra el menú; elegir algo lo cierra
+  const ham = document.querySelector<HTMLButtonElement>('.hamburguesa');
+  const mm = document.getElementById('menu-movil');
+  if (ham && mm) {
+    const abrir = (si: boolean) => {
+      mm.hidden = !si;
+      ham.setAttribute('aria-expanded', String(si));
+      ham.setAttribute('aria-label', si ? 'Cerrar el menú' : 'Abrir el menú');
+    };
+    ham.addEventListener('click', () => abrir(mm.hidden));
+    mm.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) abrir(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !mm.hidden) { abrir(false); ham.focus(); } });
+    document.addEventListener('click', (e) => { if (!mm.hidden && !mm.contains(e.target as Node) && !ham.contains(e.target as Node)) abrir(false); });
+    matchMedia('(min-width: 900px)').addEventListener('change', (m) => { if (m.matches) abrir(false); });
+  }
+</script>

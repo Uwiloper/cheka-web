@@ -24,6 +24,8 @@ export default defineConfig({
       locales: { root: { label: 'Español', lang: 'es-PE' } },
       disable404Route: true,
       lastUpdated: false,
+      // La misma cabecera que el resto de la web (pestañas, Para ti, Ingresar y Quiero probar)
+      components: { Header: './src/components/CabeceraDocs.astro' },
       sidebar: [
         { label: 'Primeros pasos', items: ['docs', 'docs/empezar', 'docs/no-perder-pagos'] },
         {

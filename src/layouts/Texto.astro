@@ -1,15 +1,14 @@
 ---
-// Página de texto simple (legal, promociones, libro de reclamaciones): se desplaza normal, con el mismo verde.
+// Página de texto simple (legal, promociones, libro de reclamaciones, blog): se desplaza normal, con el mismo verde y
+// la misma cabecera que la portada.
 import Base from './Base.astro';
+import Cabecera from '../components/Cabecera.astro';
 interface Props { titulo: string; descripcion: string }
 const { titulo, descripcion } = Astro.props;
 ---
 <Base titulo={`${titulo} | Cheka`} descripcion={descripcion}>
+  <Cabecera />
   <div class="hoja">
-    <header class="hoja-cab">
-      <a href="/" class="cab-logo" aria-label="Cheka, inicio"><img src="/assets/icons/logocheka-light.svg" alt="Cheka" width="88" height="46" /></a>
-      <a href="/" class="boton boton-tinta boton-chico">Volver al inicio</a>
-    </header>
     <main class="hoja-cuerpo">
       <h1>{titulo}</h1>
       <slot />

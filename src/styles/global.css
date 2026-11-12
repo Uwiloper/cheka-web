@@ -51,21 +51,66 @@ html.js .app { position: fixed; inset: 0; min-height: 0; overflow: clip; }
 .forma-b { width: 34vmax; height: 34vmax; left: -14vmax; bottom: -16vmax; opacity: .7; animation: flota 20s ease-in-out infinite alternate-reverse; }
 @keyframes flota { to { transform: translate3d(-3vmax, 2.5vmax, 0) scale(1.06); } }
 
-.cab { flex: none; position: relative; z-index: 20; height: var(--alto-cab); display: flex; align-items: center; gap: 12px; padding: 0 max(var(--lado), calc((100vw - 1240px) / 2)); }
+.cab { flex: none; position: relative; z-index: 20; height: var(--alto-cab); display: flex; align-items: center; gap: 16px; padding: 0 max(var(--lado), calc((100vw - 1240px) / 2)); }
+.cab-izq { display: flex; align-items: center; gap: clamp(16px, 2.6vw, 36px); min-width: 0; }
 .cab-logo { display: flex; flex: none; }
 .cab-logo img { height: 46px; width: auto; }
+/* A la derecha, aparte: Para ti, Ingresar y Quiero probar */
 .cab-der { margin-left: auto; display: flex; align-items: center; gap: 6px; }
-.cab-enlace { height: 44px; padding: 0 14px; display: inline-flex; align-items: center; border-radius: 12px; font-size: 15px; font-weight: 700; color: var(--sobre); text-decoration: none; transition: background-color .2s; }
-.cab-enlace:hover { background: var(--sobre-suave); }
+.cab-enlace { all: unset; box-sizing: border-box; cursor: pointer; height: 44px; padding: 0 14px; display: inline-flex; align-items: center; gap: 4px; border-radius: 12px; font-size: 15px; font-weight: 700; color: var(--sobre); text-decoration: none; white-space: nowrap; transition: background-color .2s; }
+.cab-enlace:hover, .cab-enlace[aria-expanded="true"] { background: var(--sobre-suave); }
+.cab-enlace:focus-visible { outline: 2.5px solid var(--sobre); outline-offset: 2px; }
 
-/* Pestañas: pastilla azul marino como la barra de la app. Arriba en computadora, abajo en el celular. */
-.nav { position: absolute; z-index: 30; left: 50%; top: calc(var(--alto-cab) / 2); transform: translate(-50%, -50%); display: flex; gap: 2px; padding: 5px; border-radius: 17px; background: var(--marino); }
-.nav a { position: relative; z-index: 1; height: 42px; padding: 0 15px; display: flex; align-items: center; gap: 8px; border-radius: 12px; font-size: 14px; font-weight: 600; white-space: nowrap; color: var(--marino-suave); text-decoration: none; transition: color .25s; }
-.nav a:hover, .nav a[aria-current="page"] { color: #fff; }
-.nav a svg { flex: none; transition: color .25s, transform .4s var(--curva); }
-.nav a[aria-current="page"] svg { color: var(--verde-noche); transform: scale(1.08); }
-.nav a:focus-visible { outline-color: var(--verde-noche); outline-offset: -2px; }
-.nav-ind { position: absolute; z-index: 0; top: 5px; bottom: 5px; left: 0; width: 0; border-radius: 12px; background: var(--marino2); opacity: 0; transition: transform .5s var(--curva), width .5s var(--curva), opacity .25s; }
+/* «Para ti»: menú que cae debajo, con Blog y Documentación */
+.para-ti { position: relative; }
+.para-ti::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 10px; } /* puente para el mouse */
+.para-ti-flecha { transition: transform .3s var(--curva); }
+.para-ti-btn[aria-expanded="true"] .para-ti-flecha { transform: rotate(180deg); }
+.para-ti-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 40; width: 270px; display: flex; flex-direction: column; gap: 2px; padding: 6px; border-radius: 17px; background: var(--marino); transform-origin: top right; animation: menu-cae .26s var(--salida); }
+.para-ti-menu[hidden] { display: none; }
+.para-ti-menu a { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; color: #fff; text-decoration: none; transition: background-color .2s; }
+.para-ti-menu a:hover, .para-ti-menu a:focus-visible { background: var(--marino2); outline: none; }
+.para-ti-menu b { font-size: 14.5px; font-weight: 700; }
+.para-ti-menu span { font-size: 12.5px; color: var(--marino-suave); }
+/* «Ingresar» dentro de Para ti: solo en pantallas medianas, donde no cabe aparte */
+.menu-ingresar { display: none !important; }
+@keyframes menu-cae { from { opacity: 0; transform: translateY(-6px) scale(.97); } }
+
+/* Pestañas: sueltas junto al logo, solo texto y sin recuadro. La rayita (indicador) se desliza bajo la pestaña
+   donde estás; las demás quedan más suaves y se aclaran al pasar el mouse. */
+.nav { position: relative; z-index: 30; display: flex; gap: 2px; }
+.nav a { position: relative; z-index: 1; height: 44px; padding: 0 12px; display: flex; align-items: center; border-radius: 12px; font-size: 15px; font-weight: 600; white-space: nowrap; color: color-mix(in srgb, var(--sobre) 68%, transparent); text-decoration: none; transition: color .25s, background-color .2s; }
+.nav a:hover { color: var(--sobre); background: var(--sobre-suave); }
+.nav a[aria-current="page"] { color: var(--sobre); font-weight: 700; }
+.nav a:focus-visible { outline-offset: -2px; }
+.nav-ind { position: absolute; z-index: 2; bottom: 3px; left: 0; width: 0; height: 3px; border-radius: 3px; background: var(--sobre); opacity: 0; pointer-events: none; transition: transform .5s var(--curva), width .5s var(--curva), opacity .25s; }
+
+/* Hamburguesa y su menú: solo en el celular */
+.hamburguesa { all: unset; box-sizing: border-box; cursor: pointer; display: none; width: 44px; height: 44px; border-radius: 13px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: var(--sobre); }
+.hamburguesa:hover { background: var(--sobre-suave); }
+.hamburguesa:focus-visible { outline: 2.5px solid var(--sobre); outline-offset: 2px; }
+.hamburguesa span { width: 20px; height: 2.4px; border-radius: 2px; background: currentColor; transition: transform .3s var(--curva), opacity .2s; }
+.hamburguesa[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.4px) rotate(45deg); }
+.hamburguesa[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburguesa[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7.4px) rotate(-45deg); }
+.menu-movil { position: fixed; z-index: 45; left: 10px; right: 10px; top: calc(var(--alto-cab) + 2px); max-height: calc(100dvh - var(--alto-cab) - 20px); overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 22px; background: var(--marino); color: #fff; transform-origin: top right; animation: menu-cae .28s var(--salida); }
+.menu-movil[hidden] { display: none; }
+.menu-movil nav { display: flex; flex-direction: column; gap: 2px; }
+.menu-movil .mm-pestana { display: flex; align-items: center; min-height: 50px; padding: 0 14px; border-radius: 14px; font-size: 18px; font-weight: 700; color: var(--marino-suave); text-decoration: none; }
+.menu-movil .mm-pestana[aria-current="page"] { color: #fff; background: var(--marino2); }
+.mm-grupo { display: flex; flex-direction: column; gap: 2px; padding-top: 10px; border-top: 1px solid var(--marino2); }
+.mm-t { padding: 0 14px 4px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--marino-suave); }
+.mm-grupo a { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border-radius: 14px; color: #fff; text-decoration: none; }
+.mm-grupo a:hover, .mm-pestana:hover { background: var(--marino2); }
+.mm-grupo b { font-size: 16px; }
+.mm-grupo span { font-size: 13px; color: var(--marino-suave); }
+@media (prefers-reduced-motion: reduce) { .para-ti-flecha, .hamburguesa span { transition: none; } .para-ti-menu, .menu-movil { animation: none; } }
+/* Pantallas medianas: todo un poco más junto, e «Ingresar» pasa dentro de «Para ti» */
+@media (min-width: 900px) and (max-width: 1180px) {
+  .nav a { padding: 0 9px; font-size: 14.5px; }
+  .cab-ingresar { display: none !important; }
+  .menu-ingresar { display: flex !important; }
+}
 .nav .corto, .fun-tab .corto { display: none; }
 
 .pantallas { flex: 1; position: relative; min-height: 0; }
@@ -123,6 +168,15 @@ html.js .pantalla.activa [data-e] { animation: entra .62s var(--curva) both; ani
 .cursor { display: inline-block; width: .07em; height: .82em; margin-left: .05em; border-radius: 2px; background: #fff; vertical-align: -.06em; animation: parpadea 1s steps(1) infinite; }
 @keyframes parpadea { 50% { opacity: 0; } }
 .ini-botones { display: flex; flex-wrap: wrap; gap: 10px; }
+/* Escuchar la voz: la moneda y la frase de Cheka (audio fijo, no gasta nada). Mientras suena, las ondas bailan */
+.escuchar .esc-ic { position: relative; width: 22px; height: 22px; display: grid; place-items: center; color: var(--ingreso); }
+.escuchar .esc-ic > * { grid-area: 1 / 1; transition: opacity .2s, transform .3s var(--curva); }
+.escuchar .ondas { height: 18px; gap: 2px; opacity: 0; transform: scale(.6); }
+.escuchar .ondas i { width: 3px; background: var(--ingreso); }
+.escuchar.sonando .ondas { opacity: 1; transform: none; }
+.escuchar.sonando .ondas i { animation: onda .9s ease-in-out infinite; }
+.escuchar.sonando .esc-ic svg { opacity: 0; transform: scale(.6); }
+.escuchar.sonando { background: var(--ok-fondo); }
 .garantias { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14.5px; font-weight: 600; }
 .garantias li { display: inline-flex; align-items: center; gap: 6px; }
 .bancos { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -274,12 +328,12 @@ html.js .pantalla.activa [data-e] { animation: entra .62s var(--curva) both; ani
 @media (max-width: 899px) {
   :root { --alto-cab: 62px; }
   .cab-logo img { height: 40px; }
-  .cab-enlace { padding: 0 10px; font-size: 14.5px; }
-  .nav { position: fixed; left: 10px; right: 10px; top: auto; bottom: calc(10px + env(safe-area-inset-bottom)); transform: none; justify-content: space-between; border-radius: 22px; padding: 6px; }
-  .nav a { flex: 1; min-width: 0; flex-direction: column; justify-content: center; gap: 3px; height: 54px; padding: 0 2px; border-radius: 16px; font-size: 11px; }
-  .nav-ind { top: 6px; bottom: 6px; border-radius: 16px; }
-  .nav .largo, .fun-tab .largo { display: none; } .nav .corto, .fun-tab .corto { display: inline; }
-  .pantalla { padding: 4px var(--lado) calc(92px + env(safe-area-inset-bottom)); }
+  .cab { gap: 8px; }
+  /* Celular: logo, Quiero probar y la hamburguesa; las pestañas, Para ti e Ingresar van en su menú */
+  .nav, .para-ti, .cab-ingresar { display: none !important; }
+  .hamburguesa { display: flex; }
+  .fun-tab .largo { display: none; } .fun-tab .corto { display: inline; }
+  .pantalla { padding: 4px var(--lado) calc(16px + env(safe-area-inset-bottom)); }
   .solo-movil { display: revert !important; } .solo-escritorio { display: none !important; }
 
   .p-inicio { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 16px; align-items: stretch; }
@@ -287,7 +341,9 @@ html.js .pantalla.activa [data-e] { animation: entra .62s var(--curva) both; ani
   .h1 { font-size: clamp(38px, 11.4vw, 52px); }
   .texto { font-size: 15.5px; line-height: 1.45; }
   .ini-botones { width: 100%; }
-  .ini-botones .boton { flex: 1; }
+  .ini-botones { flex-wrap: nowrap; gap: 8px; }
+  .ini-botones .boton { flex: 1 1 auto; min-width: 0; padding: 0 16px; font-size: 15.5px; }
+  .ini-botones .escuchar { flex: none; }
   .garantias { font-size: 13px; gap: 4px 12px; }
   .ini-escena { min-height: 200px; place-items: start center; overflow: hidden; border-radius: 28px 28px 0 0; }
   .tel-caja { position: static; }
