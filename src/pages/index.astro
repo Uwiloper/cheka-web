@@ -19,9 +19,23 @@ const app = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Android, Web',
   inLanguage: 'es-PE',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'PEN' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'PEN', areaServed: { '@type': 'Country', name: 'Perú' } },
   description: 'Cheka confirma al instante los pagos de Yape, Plin y bancos del Perú leyendo los avisos del celular, y avisa por voz quién pagó.',
   url: Astro.site?.href,
+  areaServed: { '@type': 'Country', name: 'Perú' },
+  audience: { '@type': 'BusinessAudience', name: 'Bodegas, tiendas, puestos de mercado y negocios que cobran con Yape y Plin en el Perú' },
+  publisher: { '@id': `${Astro.site?.href}#organizacion` },
+};
+const organizacion = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${Astro.site?.href}#organizacion`,
+  name: 'Cheka',
+  url: Astro.site?.href,
+  logo: new URL('/favicon.svg', Astro.site).href,
+  areaServed: 'PE',
+  address: { '@type': 'PostalAddress', addressLocality: 'Lima', addressCountry: 'PE' },
+  contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', telephone: `+${d.whatsapp}`, availableLanguage: 'es', areaServed: 'PE' },
 };
 const faq = {
   '@context': 'https://schema.org',
@@ -32,10 +46,11 @@ const faq = {
 
 <Base
   app
-  titulo="Cheka | Que no te pasen un yape falso"
-  descripcion="Cheka lee el aviso real de Yape, Plin y tu banco en tu celular y lo canta al instante. Tu cajero ve el check verde, no tu saldo. Gratis para los primeros negocios."
+  titulo="Cheka | Que no te pasen un yape falso en tu negocio"
+  descripcion="Para negocios del Perú: Cheka lee el aviso real de Yape, Plin y tu banco en tu celular y te dice en voz alta quién pagó. Tu cajero ve el check verde, no tu saldo. Gratis mientras está en prueba."
 >
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(app)} />
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(organizacion)} />
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(faq)} />
 
   <div class="app" data-datos={JSON.stringify(d.pagos)}>

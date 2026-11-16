@@ -2,7 +2,7 @@
   "ui": {
     "botName": "Asistente Cheka",
     "botInitial": "C",
-    "statusText": "Responde al toque",
+    "statusText": "Responde al instante",
     "themeColor": "#10b981",
     "textColor": "#090D16",
     "welcomeMessage": "¡Hola! Soy el asistente de Cheka. Pregúntame cómo funciona, qué bancos lee o cómo empezar.",

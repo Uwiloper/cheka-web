@@ -392,6 +392,22 @@ html.js .pantalla.activa [data-e] { animation: entra .62s var(--curva) both; ani
   .pie a { min-height: 34px; }
   .formulario .enlace.solo-movil { display: inline-flex !important; align-self: center; }
   .dos { align-items: end; }
+  /* Página que baja con el dedo (2026-11-16): las pantallas van una debajo de otra. Nada se desliza de lado:
+     el marco recorta lo que sobresale (formas del fondo) en vez de dejar que la página se mueva hacia un costado. */
+  html.js, html.js body { height: auto; overflow-x: clip; overflow-y: visible; overscroll-behavior-y: auto; }
+  html.js .app { position: relative; inset: auto; min-height: 100svh; overflow: clip; }
+  .forma { position: fixed; }
+  .cab { position: sticky; top: 0; z-index: 40; background: var(--marca); }
+  html.js .pantalla, html.js .pantalla.sale { position: relative; inset: auto; overflow: visible; visibility: visible; opacity: 1; transform: none; transition: none; scroll-margin-top: var(--alto-cab); }
+  html.js .pantalla + .pantalla { padding-top: 40px; }
+  html.js .dentro { height: auto; }
+  html.js #inicio { min-height: calc(100svh - var(--alto-cab)); }
+  html.js #inicio .dentro { min-height: calc(100svh - var(--alto-cab) - 20px); }
+  .ini-escena { height: min(62svh, 520px); }
+  .fun-escena { height: min(60svh, 500px); }
+  /* La cascada corre la primera vez que la sección aparece, no cada vez */
+  html.js .pantalla.activa [data-e] { animation: none; }
+  html.js .pantalla.mostrada [data-e] { animation: entra .62s var(--curva) both; animation-delay: calc(var(--e, 0) * 65ms + 40ms); }
   /* El chat no flota sobre la barra: se abre desde Preguntas y solo entonces aparece su botón de cerrar */
   #chatbot-toggle { display: none; bottom: calc(84px + env(safe-area-inset-bottom)); right: 12px; }
   #chatbot-toggle[aria-expanded="true"] { display: flex; }

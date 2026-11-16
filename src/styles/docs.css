@@ -1,0 +1,48 @@
+/* Movimiento de la documentación (/docs, Starlight). Antes era estática; ahora entra y responde como el resto de la
+   web, sin marear: todo es corto y se apaga con «reducir movimiento». */
+:root { --curva-docs: cubic-bezier(.22, 1, .36, 1); }
+
+/* El contenido entra en cascada al abrir cada página */
+.sl-markdown-content > * { animation: docs-entra .5s var(--curva-docs) both; }
+.sl-markdown-content > :nth-child(1) { animation-delay: 30ms; }
+.sl-markdown-content > :nth-child(2) { animation-delay: 70ms; }
+.sl-markdown-content > :nth-child(3) { animation-delay: 110ms; }
+.sl-markdown-content > :nth-child(4) { animation-delay: 150ms; }
+.sl-markdown-content > :nth-child(5) { animation-delay: 190ms; }
+.sl-markdown-content > :nth-child(n+6) { animation-delay: 230ms; }
+.content-panel h1#_top { animation: docs-entra .55s var(--curva-docs) both; }
+@keyframes docs-entra { from { opacity: 0; transform: translate3d(0, 14px, 0); } }
+
+/* Enlaces: la raya crece al pasar el mouse */
+.sl-markdown-content a:not(.card, .sl-link-card, [class*="button"]) {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  transition: background-size .3s var(--curva-docs), color .2s;
+}
+.sl-markdown-content a:not(.card, .sl-link-card, [class*="button"]):hover { background-size: 100% 1.5px; }
+
+/* Barra lateral: el elegido se marca con una barrita que entra, y los demás se mueven un poco al pasar */
+nav.sidebar a { transition: background-color .2s, color .2s, transform .25s var(--curva-docs); }
+nav.sidebar a:hover { transform: translateX(3px); }
+nav.sidebar a[aria-current="page"] { position: relative; }
+nav.sidebar a[aria-current="page"]::before { content: ""; position: absolute; left: -2px; top: 22%; bottom: 22%; width: 3px; border-radius: 3px; background: var(--sl-color-accent); animation: docs-barra .35s var(--curva-docs) both; }
+@keyframes docs-barra { from { transform: scaleY(0); } }
+nav.sidebar details summary svg { transition: transform .3s var(--curva-docs); }
+
+/* Tarjetas y avisos: se levantan apenas al pasar el mouse */
+.card, .sl-link-card { transition: transform .25s var(--curva-docs), box-shadow .25s, border-color .2s; }
+.card:hover, .sl-link-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px -14px rgb(0 0 0 / .35); }
+.starlight-aside { animation: docs-entra .5s var(--curva-docs) both; }
+
+/* Índice de la derecha: el título actual se ilumina con suavidad */
+starlight-toc a { transition: color .2s, padding-left .25s var(--curva-docs); }
+starlight-toc a[aria-current="true"] { padding-left: calc(var(--depth, 0) * 1rem + .5rem); }
+
+/* Botón «Siguiente / Anterior» al final */
+.pagination-links a { transition: transform .25s var(--curva-docs), border-color .2s; }
+.pagination-links a:hover { transform: translateY(-2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-markdown-content > *, .content-panel h1#_top, .starlight-aside, nav.sidebar a[aria-current="page"]::before { animation: none; }
+  nav.sidebar a:hover, .card:hover, .sl-link-card:hover, .pagination-links a:hover { transform: none; }
+}

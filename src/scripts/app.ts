@@ -18,6 +18,11 @@ const indicador = $('.nav-ind')!;
 // Anclas de la web anterior (las usa el chat y enlaces ya compartidos)
 const ALIAS: Record<string, string> = { contacto: 'probar', registro: 'probar', precios: 'planes', faq: 'preguntas', funcionalidades: 'funciones', seguridad: 'seguro' };
 let actual = 'inicio';
+// En el celular la portada es una página que baja con el dedo (criterio del usuario, 2026-11-16): las pantallas
+// van una debajo de otra, las pestañas llevan a cada una y se marca la que estás viendo. En pantallas anchas sigue
+// siendo la app de pantallas que se pasan.
+const consultaMovil = matchMedia('(max-width: 899px)');
+const enMovil = () => consultaMovil.matches;
 
 /* ── Pantallas ───────────────────────────────────────────────────────── */
 function moverIndicador() {
@@ -28,9 +33,24 @@ function moverIndicador() {
   indicador.style.transform = `translateX(${a.offsetLeft}px)`;
 }
 
+/** Celular: marca la pestaña de la sección que se ve, sin mover nada. */
+function marcar(id: string) {
+  actual = id;
+  pestanas.forEach((p) => p.dataset.pestana === id ? p.setAttribute('aria-current', 'page') : p.removeAttribute('aria-current'));
+  if (id === 'funciones') reiniciarTurno();
+}
+
 function mostrar(id: string, animar = true) {
   id = ALIAS[id] ?? id;
   if (!orden.includes(id)) id = 'inicio';
+  if (enMovil()) {
+    pantallas.forEach((p) => { p.inert = false; p.classList.remove('sale'); });
+    const destino = pantallas.find((p) => p.id === id)!;
+    if (id !== 'inicio' || animar) destino.scrollIntoView({ behavior: animar && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto' });
+    marcar(id);
+    ajustarEscalas();
+    return;
+  }
   const entra = pantallas.find((p) => p.id === id)!;
   const sale = pantallas.find((p) => p.id === actual)!;
   if (entra !== sale) {
@@ -56,12 +76,14 @@ function mostrar(id: string, animar = true) {
 
 function ir(id: string) {
   id = ALIAS[id] ?? id;
-  if (!orden.includes(id) || id === actual) return;
+  if (!orden.includes(id)) return;
+  if (enMovil()) { history.replaceState(null, '', `#${id}`); mostrar(id); return; }
+  if (id === actual) return;
   if (location.hash.slice(1) === id) mostrar(id); else location.hash = id; // el cambio de # dispara mostrar()
 }
 const vecino = (paso: number) => { const i = orden.indexOf(actual) + paso; if (i >= 0 && i < orden.length) ir(orden[i]); };
 
-addEventListener('hashchange', () => { scrollTo(0, 0); mostrar(location.hash.slice(1) || 'inicio'); });
+addEventListener('hashchange', () => { if (!enMovil()) scrollTo(0, 0); mostrar(location.hash.slice(1) || 'inicio'); });
 document.addEventListener('click', (e) => {
   const a = e.target instanceof Element ? e.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
   if (!a) return;
@@ -69,7 +91,7 @@ document.addEventListener('click', (e) => {
   if (orden.includes(ALIAS[id] ?? id)) { e.preventDefault(); ir(id); }
 });
 addEventListener('keydown', (e) => {
-  if (dentroDe(e, 'input, textarea, [contenteditable], #chatbot')) return;
+  if (enMovil() || dentroDe(e, 'input, textarea, [contenteditable], #chatbot')) return;
   if (e.key === 'ArrowRight' || e.key === 'PageDown') vecino(1);
   if (e.key === 'ArrowLeft' || e.key === 'PageUp') vecino(-1);
 });
@@ -77,7 +99,7 @@ addEventListener('keydown', (e) => {
 // Rueda o panel táctil: si la pantalla ya no tiene más que mostrar hacia ese lado, pasa a la siguiente
 let ruedaLibre = 0, ruedaSuma = 0;
 addEventListener('wheel', (e) => {
-  if (dentroDe(e, '#chatbot')) return;
+  if (enMovil() || dentroDe(e, '#chatbot')) return;
   const p = pantallas.find((x) => x.id === actual)!;
   const baja = e.deltaY > 0;
   const tope = baja ? p.scrollTop + p.clientHeight >= p.scrollHeight - 2 : p.scrollTop <= 0;
@@ -88,10 +110,10 @@ addEventListener('wheel', (e) => {
   if (Math.abs(ruedaSuma) > 60) { ruedaSuma = 0; ruedaLibre = ahora + 900; vecino(baja ? 1 : -1); }
 }, { passive: true });
 
-// Deslizar de lado en el celular
+// Deslizar de lado: solo en tabletas anchas con pantalla táctil (en el celular la página baja con el dedo)
 let tx = 0, ty = 0, tocando = false;
 addEventListener('touchstart', (e) => {
-  tocando = !dentroDe(e, '#chatbot, input, .nav, .menu-movil');
+  tocando = !enMovil() && !dentroDe(e, '#chatbot, input, .nav, .menu-movil');
   tx = e.touches[0].clientX; ty = e.touches[0].clientY;
 }, { passive: true });
 addEventListener('touchend', (e) => {
@@ -374,6 +396,27 @@ dudas.forEach((d) => {
 $('[data-abrir-chat]')?.addEventListener('click', () => $<HTMLButtonElement>('#chatbot-toggle')?.click());
 
 /* ── Arranque ────────────────────────────────────────────────────────── */
+// Celular: cada sección entra la primera vez que se ve («mostrada», anima su cascada) y queda «activa» mientras está a
+// la vista (así los pagos de ejemplo solo corren donde los miras). La pestaña marcada es la que ocupa más pantalla.
+const visibles = new Map<string, number>();
+const observador = new IntersectionObserver((entradas) => {
+  if (!enMovil()) return;
+  for (const e of entradas) {
+    const p = e.target as HTMLElement;
+    visibles.set(p.id, e.isIntersecting ? e.intersectionRatio : 0);
+    p.classList.toggle('activa', e.isIntersecting);
+    if (e.isIntersecting) p.classList.add('mostrada');
+  }
+  const [masVista] = [...visibles].sort((a, b) => b[1] - a[1]);
+  if (masVista && masVista[1] > 0 && masVista[0] !== actual) marcar(masVista[0]);
+}, { threshold: [0, .25, .5, .75] });
+pantallas.forEach((p) => observador.observe(p));
+// Al pasar de celular a escritorio (girar una tableta, cambiar el ancho) se vuelve a la app de pantallas
+consultaMovil.addEventListener('change', () => {
+  if (!enMovil()) pantallas.forEach((p) => p.classList.toggle('activa', p.id === actual));
+  mostrar(actual, false);
+});
+
 mostrar(location.hash.slice(1) || 'inicio', false);
 document.fonts?.ready.then(() => { moverIndicador(); ajustarEscalas(); });
 new ResizeObserver(() => ajustarEscalas()).observe($('.pantallas')!);

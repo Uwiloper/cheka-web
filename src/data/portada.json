@@ -61,7 +61,7 @@
     ],
     "garantias": [
       "No pide claves",
-      "No mueve tu plata",
+      "No mueve tu dinero",
       "Te la instalamos contigo"
     ],
     "bancosTitulo": "Lee los avisos de",
@@ -214,7 +214,7 @@
         "id": "ia",
         "nombre": "Asistente",
         "titulo": "Asistente con IA",
-        "texto": "Pregúntale cuánto vendiste hoy o cómo se hace algo en Cheka, y te responde al toque."
+        "texto": "Pregúntale cuánto vendiste hoy o cómo se hace algo en Cheka, y te responde al instante."
       }
     ],
     "chat": [
@@ -272,7 +272,7 @@
     ]
   },
   "seguro": {
-    "titulo": "Tu plata se queda donde está",
+    "titulo": "Tu dinero se queda donde está",
     "texto": "Cheka no es un banco ni una billetera. No guarda tu dinero ni puede moverlo: solo lee el aviso que ya te llega.",
     "ve": {
       "titulo": "Lo que Cheka ve",

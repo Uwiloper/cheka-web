@@ -4,7 +4,7 @@
 <div id="cookie-banner" class="fixed bottom-0 inset-x-0 z-50 hidden translate-y-full transition-transform duration-500">
   <div class="bg-slate-900 dark:bg-[#0A0F1C] text-white p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
     <div class="text-xs md:text-sm text-slate-300 max-w-3xl">
-      <p>Usamos Microsoft Clarity para ver cómo se usa esta página y mejorarla. No vendemos tus datos. <a href="/docs/privacidad" class="underline text-[#10b981] font-medium hover:text-emerald-400">Leer política completa</a>.</p>
+      <p>Usamos Google Analytics (por Google Tag Manager) y Microsoft Clarity para ver cómo se usa esta página y mejorarla, solo si aceptas. No vendemos tus datos. <a href="/docs/privacidad" class="underline text-[#10b981] font-medium hover:text-emerald-400">Leer política completa</a>.</p>
     </div>
     <div class="flex w-full md:w-auto gap-3 shrink-0">
       <button id="btn-reject-cookies" class="flex-1 md:flex-none px-4 py-2.5 text-xs md:text-sm font-bold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors">Solo esenciales</button>
@@ -53,6 +53,7 @@
     // Clarity (y luego GA4 y Meta Pixel) solo cargan con permiso; Base.astro los carga solo en producción.
     function loadAnalyticsScripts() {
       (window as any).chekaCargarClarity?.();
+      (window as any).chekaConsentir?.(); // Google Tag Manager: concede la medición (Base.astro)
     }
   });
 </script>

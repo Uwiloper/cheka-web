@@ -11,6 +11,14 @@ import tailwindcss from '@tailwindcss/vite';
 // lo usan el sitemap, las URL canónicas y las tarjetas para redes.
 const SITIO = process.env.SITIO_URL ?? 'https://cheka-pe-six.vercel.app';
 
+// Google Tag Manager en /docs (Starlight tiene su propio <head>). Mismo id y consentimiento que src/layouts/Base.astro.
+const GTM_DOCS = process.env.VERCEL_ENV
+  ? [{
+      tag: 'script',
+      content: `window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};var a=null;try{a=localStorage.getItem('cheka_cookie_consent')}catch(e){}var s=a==='granted'?'granted':'denied';gtag('consent','default',{analytics_storage:s,ad_storage:s,ad_user_data:s,ad_personalization:s});(function(w,d,s,l,i){w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer','GTM-KKCCKQS8');`,
+    }]
+  : [];
+
 // https://astro.build/config
 export default defineConfig({
   site: SITIO,
@@ -24,6 +32,8 @@ export default defineConfig({
       locales: { root: { label: 'Español', lang: 'es-PE' } },
       disable404Route: true,
       lastUpdated: false,
+      customCss: ['./src/styles/docs.css'],
+      head: GTM_DOCS,
       // La misma cabecera que el resto de la web (pestañas, Para ti, Ingresar y Quiero probar)
       components: { Header: './src/components/CabeceraDocs.astro' },
       sidebar: [

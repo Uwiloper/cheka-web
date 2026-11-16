@@ -3,7 +3,7 @@
 import '../styles/global.css';
 import CookieConsent from '../components/CookieConsent.astro';
 import Chatbot from '../components/Chatbot.astro';
-import { CLARITY_ID, ES_PRODUCCION } from '../config/sitio';
+import { CARGA_GTM, CLARITY_ID, ES_PRODUCCION, GTM_ID } from '../config/sitio';
 
 interface Props {
   titulo: string;
@@ -22,6 +22,28 @@ const imagenAbs = new URL(imagen, Astro.site);
 <html lang="es-PE">
   <head>
     <meta charset="utf-8" />
+    {/* Google Tag Manager con modo de consentimiento: nada guarda cookies de medición ni de anuncios hasta que el
+        visitante toca «Aceptar todas» (CookieConsent llama a chekaConsentir). Ver src/config/sitio.ts. */}
+    {CARGA_GTM && (
+      <script is:inline define:vars={{ GTM_ID }}>
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        var acepto = null;
+        try { acepto = localStorage.getItem('cheka_cookie_consent'); } catch (e) {}
+        var estado = acepto === 'granted' ? 'granted' : 'denied';
+        window.gtag('consent', 'default', { analytics_storage: estado, ad_storage: estado, ad_user_data: estado, ad_personalization: estado, wait_for_update: 500 });
+        window.chekaConsentir = function () {
+          window.gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' });
+          window.dataLayer.push({ event: 'consentimiento_aceptado' });
+        };
+        (function (w, d, s, l, i) {
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+          j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', GTM_ID);
+      </script>
+    )}
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
@@ -57,6 +79,7 @@ const imagenAbs = new URL(imagen, Astro.site);
     </script>
   </head>
   <body>
+    {CARGA_GTM && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>}
     <slot />
     {app && <Chatbot />}
     <CookieConsent />
