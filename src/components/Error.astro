@@ -1,6 +1,6 @@
 ---
-// Página de error de la web pública (404, 403, 500): el mismo verde y la misma cabecera. Dice qué pasó y ofrece tres
-// salidas: la portada, la ayuda y una persona por WhatsApp.
+// Página de error de la web (404, 403, 500), igual que la del panel: fondo verde con las formas que flotan, el código
+// enorme, «Volver atrás» e «Ir al inicio», y una cuenta regresiva que lleva al inicio sola (se puede detener).
 import Base from '../layouts/Base.astro';
 import Cabecera from './Cabecera.astro';
 import Ic from './app/Ic.astro';
@@ -9,44 +9,87 @@ import d from '../data/portada.json';
 interface Props { codigo: 404 | 403 | 500 }
 const { codigo } = Astro.props;
 const TEXTOS = {
-  404: { titulo: 'Esta página no existe', texto: 'Puede que el enlace esté mal escrito o que la página se haya movido. Desde aquí puedes volver a lo importante.' },
-  403: { titulo: 'No tienes acceso a esta página', texto: 'Esta parte de la web no está abierta al público. Si llegaste desde un enlace de Cheka, escríbenos y lo revisamos.' },
-  500: { titulo: 'Algo falló de nuestro lado', texto: 'No fue tu culpa. Vuelve a intentarlo en un momento; si sigue igual, avísanos por WhatsApp.' },
+  404: { titulo: 'Esta página no existe', texto: 'Puede que el enlace esté mal escrito o que la página se haya movido.' },
+  403: { titulo: 'No tienes acceso a esta página', texto: 'Esta parte de la web no está abierta al público. Si llegaste desde un enlace de Cheka, escríbenos.' },
+  500: { titulo: 'Algo falló de nuestro lado', texto: 'No fue tu culpa. Vuelve a intentarlo en un momento.' },
 } as const;
 const x = TEXTOS[codigo];
 const wa = `https://wa.me/${d.whatsapp}?text=${encodeURIComponent(`Hola, en la web de Cheka me salió el error ${codigo}`)}`;
+const SEGUNDOS = 10;
 ---
 <Base titulo={`${x.titulo} | Cheka`} descripcion={x.texto}>
   <meta slot="head" name="robots" content="noindex" />
-  <Cabecera />
-  <main class="error">
-    <span class="error-num" aria-hidden="true">{codigo}</span>
-    <div class="error-tarjeta">
-      <span class="error-cod">Error {codigo}</span>
-      <h1>{x.titulo}</h1>
-      <p>{x.texto}</p>
-      <div class="error-botones">
+  <div class="err" data-segundos={SEGUNDOS}>
+    <span class="err-forma err-forma-a" aria-hidden="true"></span>
+    <span class="err-forma err-forma-b" aria-hidden="true"></span>
+    <Cabecera />
+    <main class="err-main">
+      <h1 class="err-num" aria-label={`Error ${codigo}`}>
+        {String(codigo).split('').map((c, i) => <span style={`--i:${i}`} aria-hidden="true">{c}</span>)}
+      </h1>
+      <p class="err-titulo">{x.titulo}</p>
+      <p class="err-texto">{x.texto}</p>
+      <div class="err-botones">
+        <button type="button" class="boton boton-blanco" data-atras>Volver atrás</button>
         <a href="/" class="boton boton-tinta">Ir al inicio<Ic n="flecha" t={20} g={2.4} /></a>
-        <a href="/docs" class="boton error-ayuda">Ver la ayuda</a>
       </div>
-      <a href={wa} target="_blank" rel="noopener" class="enlace error-wa"><Ic n="whatsapp" t={18} />Escribir por WhatsApp</a>
-    </div>
-  </main>
+      <p class="err-cuenta" data-cuenta aria-live="polite">
+        <span class="err-anillo" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" /></svg><b data-n>{SEGUNDOS}</b></span>
+        <span data-cuenta-txt>Te llevamos al inicio en {SEGUNDOS} segundos</span>
+        <button type="button" class="err-quedar" data-quedar>Quedarme aquí</button>
+      </p>
+      <a href={wa} target="_blank" rel="noopener" class="err-wa"><Ic n="whatsapp" t={18} />Escribir por WhatsApp</a>
+    </main>
+  </div>
 </Base>
 
 <style>
-  .error { position: relative; min-height: calc(100svh - var(--alto-cab)); display: grid; place-items: center; padding: 16px var(--lado) 48px; overflow: hidden; }
-  .error-num { position: absolute; inset: 50% auto auto 50%; transform: translate(-50%, -58%); font-size: clamp(160px, 38vw, 420px); font-weight: 800; letter-spacing: -.07em; line-height: 1; color: var(--marca-clara); pointer-events: none; user-select: none; animation: error-flota 7s ease-in-out infinite alternate; }
-  .error-tarjeta { position: relative; width: min(540px, 100%); display: flex; flex-direction: column; align-items: center; gap: 14px; padding: clamp(28px, 6vw, 44px) 24px; border-radius: 28px; background: var(--sup); color: var(--tinta); text-align: center; animation: error-entra .6s cubic-bezier(.22, 1, .36, 1) both; }
-  .error-cod { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ingreso); }
-  .error-tarjeta h1 { margin: 0; font-size: clamp(28px, 5vw, 38px); font-weight: 800; letter-spacing: -.04em; line-height: 1.08; text-wrap: balance; }
-  .error-tarjeta p { margin: 0; max-width: 420px; font-size: 16px; line-height: 1.55; opacity: .78; text-wrap: pretty; }
-  .error-botones { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
-  .error-botones .boton { justify-content: center; }
-  .error-ayuda { background: var(--sup2); color: var(--tinta); }
-  .error-wa { color: var(--ingreso); }
-  @keyframes error-entra { from { opacity: 0; transform: translateY(18px) scale(.98); } }
-  @keyframes error-flota { to { transform: translate(-50%, -54%) rotate(-2deg); } }
-  @media (max-width: 480px) { .error-botones { grid-template-columns: 1fr; } }
-  @media (prefers-reduced-motion: reduce) { .error-num, .error-tarjeta { animation: none; } }
+  .err { position: relative; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; isolation: isolate; }
+  .err-forma { position: absolute; z-index: -1; border-radius: 50%; background: var(--marca-clara); pointer-events: none; }
+  .err-forma-a { width: 62vmax; height: 62vmax; right: -18vmax; top: -22vmax; animation: flota 16s ease-in-out infinite alternate; }
+  .err-forma-b { width: 34vmax; height: 34vmax; left: -14vmax; bottom: -16vmax; opacity: .7; animation: flota 20s ease-in-out infinite alternate-reverse; }
+  .err-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 8px var(--lado) calc(36px + env(safe-area-inset-bottom)); text-align: center; color: var(--sobre); }
+  .err-num { margin: 0; display: flex; font-size: clamp(130px, 30vw, 300px); font-weight: 800; letter-spacing: -.07em; line-height: .85; }
+  .err-num span { display: inline-block; animation: err-cae .7s cubic-bezier(.22, 1.4, .36, 1) both; animation-delay: calc(var(--i) * 90ms); }
+  .err-num span:nth-child(2) { animation-name: err-cae, err-mece; animation-duration: .7s, 3.2s; animation-delay: 90ms, 1.2s; animation-iteration-count: 1, infinite; animation-timing-function: cubic-bezier(.22, 1.4, .36, 1), ease-in-out; transform-origin: 50% 85%; }
+  @keyframes err-cae { from { opacity: 0; transform: translateY(-60px) rotate(-8deg); } }
+  @keyframes err-mece { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
+  .err-titulo { margin: 6px 0 0; font-size: clamp(26px, 4.4vw, 40px); font-weight: 800; letter-spacing: -.04em; line-height: 1.08; text-wrap: balance; }
+  .err-texto { margin: 0; max-width: 460px; font-size: 16.5px; line-height: 1.5; font-weight: 500; opacity: .82; text-wrap: pretty; }
+  .err-botones { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
+  .err-cuenta { margin: 8px 0 0; display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: 14.5px; font-weight: 700; }
+  .err-anillo { position: relative; width: 34px; height: 34px; display: grid; place-items: center; }
+  .err-anillo svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+  .err-anillo circle { fill: none; stroke: var(--sobre); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 97.4; animation: err-anillo var(--dur, 10s) linear forwards; }
+  .err-anillo b { font-size: 13px; font-variant-numeric: tabular-nums; }
+  @keyframes err-anillo { to { stroke-dashoffset: 97.4; } }
+  .err-cuenta.detenida .err-anillo circle { animation-play-state: paused; opacity: .35; }
+  .err-quedar { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; opacity: .8; }
+  .err-quedar:focus-visible { outline: 2px solid var(--sobre); outline-offset: 2px; border-radius: 4px; }
+  .err-wa { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; font-size: 14px; font-weight: 700; color: var(--sobre); opacity: .85; }
+  @media (max-width: 480px) { .err-botones { width: 100%; flex-direction: column-reverse; } .err-botones .boton { width: 100%; justify-content: center; } }
+  @media (prefers-reduced-motion: reduce) { .err-forma, .err-num span { animation: none !important; } }
 </style>
+
+<script>
+  const raiz = document.querySelector<HTMLElement>('.err')!;
+  const total = Number(raiz.dataset.segundos) || 10;
+  const caja = raiz.querySelector<HTMLElement>('[data-cuenta]')!;
+  const n = caja.querySelector<HTMLElement>('[data-n]')!;
+  const txt = caja.querySelector<HTMLElement>('[data-cuenta-txt]')!;
+  caja.style.setProperty('--dur', `${total}s`);
+  let quedan = total;
+  const reloj = setInterval(() => {
+    quedan--;
+    n.textContent = String(quedan);
+    txt.textContent = quedan === 1 ? 'Te llevamos al inicio en 1 segundo' : `Te llevamos al inicio en ${quedan} segundos`;
+    if (quedan <= 0) { clearInterval(reloj); location.href = '/'; }
+  }, 1000);
+  caja.querySelector('[data-quedar]')!.addEventListener('click', (e) => {
+    clearInterval(reloj);
+    caja.classList.add('detenida');
+    txt.textContent = 'Listo, te quedas aquí.';
+    (e.currentTarget as HTMLElement).remove();
+  });
+  raiz.querySelector('[data-atras]')!.addEventListener('click', () => (history.length > 1 ? history.back() : (location.href = '/')));
+</script>
